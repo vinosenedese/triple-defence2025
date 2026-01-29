@@ -1,0 +1,1526 @@
+DATA DE GERAÇÃO: 2026-01-29T00:43:54.990Z
+TOTAL DE ARQUIVOS: 15
+
+================================================================
+FILE: src/App.tsx
+================================================================
+import React, { useState, useEffect, useRef } from 'react';
+import Navigation from './components/Navigation';
+import Hero from './components/Hero';
+import CountdownBar from './components/CountdownBar';
+import RiskBento from './components/RiskBento';
+import MuppEngine from './components/MuppEngine';
+import CriticalSectors from './components/CriticalSectors';
+import ComplianceTimeline from './components/ComplianceTimeline';
+import ContactForm from './components/ContactForm';
+import Footer from './components/Footer';
+import ConstructionToast from './components/ConstructionToast';
+
+const App: React.FC = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return (
+    <div className="relative min-h-screen bg-charcoal selection:bg-neon-purple/30 text-slate-200">
+      <ConstructionToast />
+      <Navigation />
+      
+      {/* Global Mouse Spotlight */}
+      <div 
+        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(139, 92, 246, 0.07), transparent 40%)`
+        }}
+      />
+
+      {/* Main Content Wrapper - z-10 and bg-charcoal to cover the fixed footer */}
+      <main ref={mainRef} className="relative z-10 bg-charcoal shadow-2xl shadow-black mb-[500px] lg:mb-[400px]">
+        <Hero mousePosition={mousePosition} />
+        <CountdownBar />
+        <RiskBento />
+        <MuppEngine />
+        <CriticalSectors />
+        <ComplianceTimeline />
+        <ContactForm />
+        {/* Spacer to push content up so the footer reveal feels natural */}
+        <div className="h-12 bg-charcoal" />
+      </main>
+
+      {/* Footer - Fixed at bottom, z-0 */}
+      <Footer />
+    </div>
+  );
+};
+
+export default App;
+
+================================================================
+FILE: src/components/ComplianceTimeline.tsx
+================================================================
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+
+const TimelineEvent: React.FC<{ date: string; title: string; desc: string; index: number }> = ({ date, title, desc, index }) => {
+  return (
+    <div className={`relative flex items-center mb-32 last:mb-0 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} justify-between w-full`}>
+      {/* Content */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+        className={`w-[42%] ${index % 2 === 0 ? 'text-right' : 'text-left'}`}
+      >
+        <span className="text-neon-purple font-mono font-bold text-xs tracking-widest uppercase border border-neon-purple/30 bg-neon-purple/10 px-2 py-1 rounded mb-4 inline-block">{date}</span>
+        <h3 className="text-3xl font-display font-bold text-white mt-2 mb-4 tracking-tight">{title}</h3>
+        <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
+      </motion.div>
+
+      {/* Center Node */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+        <div className="w-6 h-6 bg-charcoal border border-slate-700 rounded-full z-10 flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.8)]">
+             <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ComplianceTimeline: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+
+  const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const events = [
+    {
+      date: "DEC 2024",
+      title: "Entry into Force",
+      desc: "Legislative text adopted. Start your Gap Analysis immediately to identify missing capabilities for Article 10 reporting."
+    },
+    {
+      date: "SEP 2026",
+      title: "Reporting Obligations",
+      desc: "Article 11 applies: Manufacturers must report actively exploited vulnerabilities to ENISA within 24 hours of awareness."
+    },
+    {
+      date: "DEC 2027",
+      title: "Full Enforcement",
+      desc: "Products cannot be placed on the EU market without CE marking, valid technical documentation, and completed conformity assessment procedures."
+    }
+  ];
+
+  return (
+    <section ref={containerRef} className="py-32 relative overflow-hidden bg-charcoal">
+      <div className="max-w-5xl mx-auto px-6 relative">
+        <div className="text-center mb-32">
+          <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 text-white">Roadmap to Resilience</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            The regulatory clock is ticking. TripleDefence ensures you stay ahead of every deadline.
+          </p>
+        </div>
+
+        {/* The Line Container - Removed 'hidden md:block' so it shows on mobile */}
+        <div className="absolute left-1/2 top-48 bottom-0 w-0.5 bg-slate-900 -translate-x-1/2 block">
+            {/* The Active Neon Line */}
+            <motion.div 
+                style={{ height }}
+                className="w-full bg-gradient-to-b from-neon-purple via-purple-500 to-neon-red shadow-[0_0_15px_rgba(139,92,246,0.6)]"
+            />
+        </div>
+
+        <div className="relative z-10">
+          {events.map((event, index) => (
+            <TimelineEvent key={index} {...event} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ComplianceTimeline;
+
+================================================================
+FILE: src/components/ConstructionToast.tsx
+================================================================
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Info, X } from 'lucide-react';
+
+const ConstructionToast: React.FC = () => {
+  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // Listen for custom event 'show-toast'
+    const handleToast = (e: any) => {
+      setMessage(e.detail?.message || "Module currently unavailable.");
+      setVisible(true);
+      
+      // Auto dismiss after 3 seconds
+      const timer = setTimeout(() => {
+        setVisible(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    };
+
+    window.addEventListener('show-toast', handleToast);
+    return () => window.removeEventListener('show-toast', handleToast);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="fixed bottom-6 right-6 z-[100] w-full max-w-sm"
+        >
+          <div className="bg-slate-850 border border-slate-700/50 rounded-lg p-4 shadow-2xl flex items-center gap-4">
+            
+            <div className="p-2 bg-slate-800 rounded-full shrink-0">
+              <Info className="w-4 h-4 text-slate-400" />
+            </div>
+            
+            <div className="flex-1 min-w-0">
+              <p className="text-slate-200 text-sm font-medium leading-snug font-sans">
+                {message}
+              </p>
+            </div>
+
+            <button 
+              onClick={() => setVisible(false)} 
+              className="text-slate-500 hover:text-white transition-colors shrink-0 p-1"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default ConstructionToast;
+
+================================================================
+FILE: src/components/ContactForm.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Send, ShieldAlert, ChevronDown } from 'lucide-react';
+
+const ContactForm: React.FC = () => {
+    const handleToast = (e: React.MouseEvent, msg: string) => {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: msg } }));
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Consultation request initiated (Demo Mode)." } }));
+    };
+
+    return (
+        <section id="contact" className="py-32 relative flex items-center justify-center bg-charcoal overflow-hidden">
+            {/* Background gradients */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-neon-purple/10 blur-[120px] rounded-full mix-blend-screen" />
+            </div>
+
+            <div className="max-w-2xl w-full mx-6 relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="bg-[#050505] border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
+                >
+                    {/* Icon */}
+                    <div className="flex justify-center mb-10">
+                        <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 shadow-[inset_0_0_20px_rgba(255,255,255,0.05)]">
+                            <ShieldAlert className="w-7 h-7 text-slate-200" />
+                        </div>
+                    </div>
+
+                    {/* Header */}
+                    <div className="text-center mb-12">
+                        <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 tracking-tighter">
+                            Secure Your <span className="text-neon-purple">Infrastructure</span>
+                        </h2>
+                        <p className="text-slate-400 text-lg font-light tracking-tight">
+                            Request a classified deep-dive demo of the TripleDefence platform.
+                        </p>
+                    </div>
+
+                    {/* Form */}
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Full Name</label>
+                                <input
+                                    type="text"
+                                    placeholder="E.g. Alexander Pierce"
+                                    className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Company</label>
+                                <input
+                                    type="text"
+                                    placeholder="E.g. Cyberdyne Systems"
+                                    className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Work Email</label>
+                            <input
+                                type="email"
+                                placeholder="name@company.com"
+                                className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Sector</label>
+                            <div className="relative">
+                                <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
+                                    <option>Critical Infrastructure</option>
+                                    <option>Medical Devices</option>
+                                    <option>Automotive</option>
+                                    <option>Aerospace</option>
+                                    <option>IoT Manufacturing</option>
+                                </select>
+                                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                                    <ChevronDown size={16} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" className="w-full bg-white text-charcoal font-bold text-sm tracking-wide py-4 rounded-xl hover:bg-slate-200 transition-colors flex items-center justify-center gap-2 mt-8 group shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                            Initiate Consultation
+                            <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </button>
+
+                        <p className="text-center text-[10px] text-slate-600 mt-6 tracking-wide">
+                            By submitting, you agree to our <a href="#" onClick={(e) => handleToast(e, "Privacy Protocol v1.2")} className="underline decoration-slate-600 hover:text-slate-400">Privacy Protocol</a>.
+                        </p>
+                    </form>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
+export default ContactForm;
+
+================================================================
+FILE: src/components/CountdownBar.tsx
+================================================================
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+const CountdownBar: React.FC = () => {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    // Dates based on CRA timeline
+    // Start: Entry into Force (Approx Dec 2024)
+    // End: Full Enforcement (Dec 2027 - 36 months later)
+    const startDate = new Date('2024-12-01T00:00:00').getTime();
+    const targetDate = new Date('2027-12-01T00:00:00').getTime();
+
+    const calculateTime = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      // Calculate progress percentage
+      const totalDuration = targetDate - startDate;
+      const elapsed = now - startDate;
+      const currentProgress = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
+      setProgress(currentProgress);
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        });
+      }
+    };
+
+    const timer = setInterval(calculateTime, 1000);
+    calculateTime(); // Initial call
+
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="w-full px-6 flex justify-center -mt-12 relative z-30">
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="w-full max-w-7xl bg-[#080808] border border-white/10 rounded-[2.5rem] py-8 px-8 md:px-12 shadow-2xl shadow-black relative overflow-hidden"
+      >
+        {/* Subtle red glow effect for urgency */}
+        <div className="absolute inset-0 bg-gradient-to-r from-neon-red/5 via-transparent to-neon-purple/5 pointer-events-none" />
+        
+        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          
+          {/* Section 1: Title */}
+          <div className="text-center lg:text-left min-w-fit">
+            <h3 className="font-display font-bold text-xl text-white tracking-tight mb-1">
+              Countdown to Full Enforcement
+            </h3>
+            <p className="text-slate-500 text-sm font-light">
+              Time remaining until December 2027.
+            </p>
+          </div>
+
+          {/* Section 2: The Digits */}
+          <div className="flex items-start gap-6 md:gap-10">
+            <TimeUnit value={timeLeft.days} label="DAYS" />
+            <TimeUnit value={timeLeft.hours} label="HOURS" />
+            <TimeUnit value={timeLeft.minutes} label="MIN" />
+            <TimeUnit value={timeLeft.seconds} label="SEC" />
+          </div>
+
+          {/* Section 3: Progress Bar */}
+          <div className="w-full lg:w-auto lg:flex-1 flex flex-col justify-center min-w-[250px]">
+             {/* Bar Track */}
+             <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-white/5 relative">
+                {/* Progress Fill */}
+                <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    className="h-full bg-gradient-to-r from-neon-red via-purple-600 to-neon-purple relative"
+                >
+                    {/* Glowing Tip */}
+                    <div className="absolute right-0 top-0 bottom-0 w-2 bg-white blur-[2px]" />
+                </motion.div>
+             </div>
+          </div>
+
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+const TimeUnit: React.FC<{ value: number; label: string }> = ({ value, label }) => (
+  <div className="flex flex-col items-center">
+    <div className="font-display text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter tabular-nums leading-none mb-2">
+      {value.toString().padStart(2, '0')}
+    </div>
+    <span className="text-[10px] font-bold text-slate-600 tracking-widest uppercase">
+      {label}
+    </span>
+  </div>
+);
+
+export default CountdownBar;
+
+================================================================
+FILE: src/components/CriticalSectors.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Server, Wifi, Database, Key, Settings, Cpu, HardDrive, Smartphone } from 'lucide-react';
+
+const SectorCard: React.FC<{ title: string; items: string[]; icon: React.ReactNode; index: number }> = ({ title, items, icon, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: index * 0.1, duration: 0.5 }}
+    className="bg-slate-900/40 border border-white/5 rounded-xl p-6 hover:bg-slate-900/60 hover:border-neon-purple/20 transition-all duration-300 group"
+  >
+    <div className="flex items-center gap-4 mb-4">
+      <div className="p-2 bg-white/5 rounded-lg text-slate-300 group-hover:text-neon-purple group-hover:bg-neon-purple/10 transition-colors">
+        {icon}
+      </div>
+      <h3 className="text-white font-bold text-lg tracking-tight">{title}</h3>
+    </div>
+    <ul className="space-y-2">
+      {items.map((item, i) => (
+        <li key={i} className="text-sm text-slate-400 flex items-start gap-2">
+          <span className="w-1 h-1 bg-slate-600 rounded-full mt-2 group-hover:bg-neon-purple transition-colors" />
+          {item}
+        </li>
+      ))}
+    </ul>
+  </motion.div>
+);
+
+const CriticalSectors: React.FC = () => {
+  const sectors = [
+    {
+      title: "Digital Products & Systems",
+      icon: <Cpu size={24} />,
+      items: [
+        "IoT Devices & Embedded Systems",
+        "Industrial Control Systems (ICS)",
+        "Smart Home Technologies",
+        "Connected Hardware Components"
+      ]
+    },
+    {
+      title: "Network Infrastructure",
+      icon: <Wifi size={24} />,
+      items: [
+        "Routers, Switches & Gateways",
+        "Telecommunication Networks",
+        "5G Infrastructure",
+        "Network Management Systems"
+      ]
+    },
+    {
+      title: "Operational Tech (OT)",
+      icon: <Settings size={24} />,
+      items: [
+        "SCADA Systems",
+        "Energy & Water Control Systems",
+        "Transportation Signaling",
+        "Manufacturing Robotics"
+      ]
+    },
+    {
+      title: "Digital Infrastructure",
+      icon: <Server size={24} />,
+      items: [
+        "Cloud Providers (IaaS, PaaS, SaaS)",
+        "Data Centers & CDNs",
+        "DNS Providers & IXPs",
+        "Satellite Communication"
+      ]
+    },
+    {
+      title: "Data & Storage",
+      icon: <Database size={24} />,
+      items: [
+        "Critical Databases",
+        "Data Processing Systems",
+        "Encrypted Storage Solutions",
+        "Backup Infrastructure"
+      ]
+    },
+    {
+      title: "Identity & Access",
+      icon: <Key size={24} />,
+      items: [
+        "Identity Management Systems",
+        "Multi-Factor Authentication (MFA)",
+        "Single Sign-On (SSO)",
+        "Biometric Access Control"
+      ]
+    }
+  ];
+
+  return (
+    <section id="sectors" className="py-24 bg-charcoal border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="font-display text-4xl font-bold text-white mb-4">Critical Scope</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">
+             Components vital for maintaining societal functions and economic stability are subject to rigorous CRA cybersecurity requirements.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sectors.map((sector, idx) => (
+            <SectorCard key={idx} {...sector} index={idx} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CriticalSectors;
+
+================================================================
+FILE: src/components/Footer.tsx
+================================================================
+import React from 'react';
+import { Twitter, Linkedin, Github } from 'lucide-react';
+
+import logo from '../assets/logo.png';
+
+const CustomLogo: React.FC = () => (
+  <img
+    src={logo}
+    alt="TripleDefence Logo"
+    className="w-8 h-8 object-contain filter drop-shadow-[0_0_5px_rgba(139,92,246,0.5)]"
+  />
+);
+
+const Footer: React.FC = () => {
+  const handleToast = (msg: string) => {
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: msg } }));
+  };
+
+  const preventDefaultAndToast = (e: React.MouseEvent, msg: string) => {
+    e.preventDefault();
+    handleToast(msg);
+  };
+
+  const smoothScrollTo = (e: React.MouseEvent, targetId: string) => {
+    e.preventDefault();
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    const headerOffset = 100;
+    const startPosition = window.pageYOffset;
+    const targetPosition = target.getBoundingClientRect().top + startPosition - headerOffset;
+    const distance = targetPosition - startPosition;
+    const duration = 1200; // Consistent with Navigation
+    let startTime: number | null = null;
+
+    const ease = (t: number, b: number, c: number, d: number) => {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t * t + b;
+      t -= 2;
+      return c / 2 * (t * t * t + 2) + b;
+    };
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      } else {
+        window.scrollTo(0, targetPosition);
+      }
+    };
+    requestAnimationFrame(animation);
+  };
+
+  return (
+    <footer className="fixed bottom-0 left-0 w-full h-[500px] lg:h-[400px] bg-slate-950 flex flex-col justify-between py-12 z-0 border-t border-slate-900">
+      <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col justify-between">
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+          {/* Brand */}
+          <div className="md:col-span-5">
+            <div className="flex items-center gap-2 mb-6">
+              <CustomLogo />
+              <span className="font-display font-bold text-xl text-white">
+                Triple<span className="text-slate-500">Defence</span>
+              </span>
+            </div>
+            <p className="text-slate-400 max-w-sm mb-8 leading-relaxed">
+              Securing the European digital ecosystem. We provide the infrastructure for manufacturers to meet the Cyber Resilience Act standards effortlessly.
+            </p>
+            <div className="flex gap-4">
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "LinkedIn integration coming soon.")} className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white transition-all text-slate-400">
+                <Linkedin size={18} />
+              </a>
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "Twitter feed unavailable.")} className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white transition-all text-slate-400">
+                <Twitter size={18} />
+              </a>
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "GitHub repository is private.")} className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white transition-all text-slate-400">
+                <Github size={18} />
+              </a>
+            </div>
+          </div>
+
+          {/* Links */}
+          <div className="md:col-span-2">
+            <h4 className="text-white font-bold mb-6">Product</h4>
+            <ul className="space-y-4 text-slate-400 text-sm">
+              <li><a href="#risk" onClick={(e) => smoothScrollTo(e, 'risk')} className="hover:text-neon-purple transition-colors">Risk Assessment</a></li>
+              <li><a href="#mupp" onClick={(e) => smoothScrollTo(e, 'mupp')} className="hover:text-neon-purple transition-colors">MUPP Engine</a></li>
+              <li><a href="#cra3d" onClick={(e) => smoothScrollTo(e, 'cra3d')} className="hover:text-neon-purple transition-colors">CRA-3D</a></li>
+            </ul>
+          </div>
+
+          <div className="md:col-span-2">
+            <h4 className="text-white font-bold mb-6">Company</h4>
+            <ul className="space-y-4 text-slate-400 text-sm">
+              <li><a href="#sectors" onClick={(e) => smoothScrollTo(e, 'sectors')} className="hover:text-neon-purple transition-colors">Sectors</a></li>
+              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Legal docs are being updated.")} className="hover:text-neon-purple transition-colors">Legal</a></li>
+              <li><a href="#contact" onClick={(e) => smoothScrollTo(e, 'contact')} className="hover:text-neon-purple transition-colors">Contact</a></li>
+            </ul>
+          </div>
+
+          {/* Newsletter / Contact */}
+          <div className="md:col-span-3">
+            <h4 className="text-white font-bold mb-6">Stay compliant</h4>
+            <p className="text-slate-500 text-xs mb-4">Receive critical CRA regulatory updates.</p>
+            <div className="flex">
+              <input
+                type="email"
+                placeholder="work@email.com"
+                className="bg-white/5 border border-white/10 text-white px-4 py-2 text-sm w-full focus:outline-none focus:border-neon-purple/50"
+              />
+              <button
+                onClick={() => handleToast("Subscription successful (Demo Mode).")}
+                className="bg-neon-purple hover:bg-neon-purple/80 text-white px-4 py-2 text-sm font-medium transition-colors"
+              >
+                Join
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600 font-mono">
+          <p>&copy; 2024 TripleDefence Inc. All rights reserved.</p>
+          <div className="flex gap-6 mt-4 md:mt-0 cursor-pointer">
+            <span onClick={() => handleToast("Privacy Protocol v1.2")}>PRIVACY POLICY</span>
+            <span onClick={() => handleToast("Terms of Service v2.0")}>TERMS OF SERVICE</span>
+            <span onClick={() => handleToast("SLA Dashboard unavailable")}>SLA</span>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+
+================================================================
+FILE: src/components/Hero.tsx
+================================================================
+import React from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
+
+interface HeroProps {
+  mousePosition: { x: number; y: number };
+}
+
+const Hero: React.FC<HeroProps> = ({ mousePosition }) => {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+
+  const handleToast = (msg: string) => {
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: msg } }));
+  };
+
+  const smoothScrollToContact = () => {
+    const targetId = 'contact';
+    const duration = 1500;
+
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    const headerOffset = 100;
+    const startPosition = window.pageYOffset;
+    const targetPosition = target.getBoundingClientRect().top + startPosition - headerOffset;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    const ease = (t: number, b: number, c: number, d: number) => {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t * t + b;
+      t -= 2;
+      return c / 2 * (t * t * t + 2) + b;
+    };
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      } else {
+        window.scrollTo(0, targetPosition);
+      }
+    };
+    requestAnimationFrame(animation);
+  };
+
+  return (
+    <section className="relative h-screen min-h-[800px] w-full flex flex-col justify-center items-center overflow-hidden">
+
+      {/* ---------------------------------------------------------------------------
+          LAYER 1: BACKGROUND (Fixed, Absolute, No Layout Interference)
+         --------------------------------------------------------------------------- */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        {/* Blobs */}
+        <motion.div
+          style={{ y: y1, x: -50 }}
+          className="absolute top-[-10%] left-[10%] w-[600px] h-[600px] bg-neon-purple/15 rounded-full blur-[120px] mix-blend-screen animate-blob"
+        />
+        <motion.div
+          style={{ y: y2, x: 50 }}
+          className="absolute top-[20%] right-[10%] w-[500px] h-[500px] bg-neon-red/10 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"
+        />
+        <div className="absolute bottom-[-20%] left-[30%] w-[600px] h-[600px] bg-indigo-900/20 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000" />
+
+        {/* Noise */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-15 mix-blend-overlay"></div>
+      </div>
+
+      {/* ---------------------------------------------------------------------------
+          LAYER 2: MAIN CONTENT (Centered Flex Column)
+         --------------------------------------------------------------------------- */}
+      <div className="relative z-10 w-full max-w-[90%] md:max-w-7xl px-4 flex flex-col items-center justify-center text-center">
+
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-8 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-neon-purple/30 bg-neon-purple/10 backdrop-blur-md shadow-[0_0_15px_rgba(139,92,246,0.1)] mx-auto"
+        >
+          <div className="w-2 h-2 rounded-full bg-neon-red animate-pulse-fast shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
+          <span className="text-xs font-medium tracking-wide text-slate-200">
+            Enforcement: Dec 2027
+          </span>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+          className="w-full flex flex-col items-center"
+        >
+          <h1 className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white mb-6 leading-[1.1] md:leading-tight text-center mx-auto">
+            <span className="block text-gradient-silver">UNHACKABLE</span>
+            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-neon-purple via-white to-neon-purple bg-[length:200%_auto] animate-[gradient_3s_linear_infinite]">
+              RESILIENCE.
+            </span>
+          </h1>
+        </motion.div>
+
+        {/* Subheadline */}
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="text-lg md:text-2xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-12 tracking-tight text-center"
+        >
+          The complete platform for <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-red font-medium">EU CRA Compliance</span>.
+          Automated SBOMs, Article 14 reporting, and SL4 security for critical infrastructure.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
+        >
+          <button
+            onClick={smoothScrollToContact}
+            className="group relative w-full sm:w-auto px-8 py-4 bg-neon-purple/10 text-white font-semibold text-sm tracking-wide rounded-full overflow-hidden border border-neon-purple/50 shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_40px_rgba(139,92,246,0.5)] transition-all duration-300"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-neon-purple to-indigo-600 opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              Start Assessment <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </button>
+
+          <button
+            onClick={() => handleToast("Documentation hub is currently being updated.")}
+            className="w-full sm:w-auto px-8 py-4 text-slate-400 font-medium text-sm tracking-wide hover:text-white transition-colors duration-300 flex items-center justify-center gap-2 group rounded-full"
+          >
+            <ShieldCheck className="w-4 h-4 text-slate-600 group-hover:text-neon-red transition-colors" />
+            View Documentation
+          </button>
+        </motion.div>
+      </div>
+
+      {/* ---------------------------------------------------------------------------
+          LAYER 3: SOFT GRADIENT TRANSITION ONLY (No SVG Notch)
+         --------------------------------------------------------------------------- */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
+        <div className="w-full h-40 bg-gradient-to-t from-charcoal via-charcoal/80 to-transparent" />
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
+
+================================================================
+FILE: src/components/MuppEngine.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { CheckCircle2, RefreshCw, Shield, Zap } from 'lucide-react';
+
+const MuppEngine: React.FC = () => {
+  return (
+    <section id="mupp" className="py-24 bg-charcoal relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Header Label */}
+        <motion.div 
+           initial={{ opacity: 0, x: -20 }}
+           whileInView={{ opacity: 1, x: 0 }}
+           viewport={{ once: true }}
+           className="inline-block px-4 py-1.5 rounded-full bg-neon-purple/10 border border-neon-purple/30 text-neon-purple text-xs font-bold tracking-widest uppercase mb-8"
+        >
+          The Solution: CRA-3D
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Left Column: Text Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="font-display text-5xl md:text-6xl font-bold text-white mb-6 tracking-tighter leading-none">
+              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-indigo-400">MUPP</span> Engine
+            </h2>
+            
+            <p className="text-slate-400 text-lg leading-relaxed mb-8">
+              The <strong>Multi-Use Protection Platform (MUPP)</strong> is a revolutionary approach to endpoint security. It provides an unhackable layer that guarantees <span className="text-white font-medium">SL4 security levels</span> while automating 90% of CRA compliance tasks.
+            </p>
+
+            <div className="space-y-6">
+              {[
+                { 
+                  title: "Real-time Monitoring", 
+                  desc: "Deep packet inspection and behavioral analysis at the edge to mitigate vulnerability abuse instantly." 
+                },
+                { 
+                  title: "SBOM Generation", 
+                  desc: "Automated, accurate Software Bill of Materials for full visibility into every digital component." 
+                },
+                { 
+                  title: "ENISA Reporting", 
+                  desc: "One-click automated reporting for exploited vulnerabilities, meeting the 24h deadline." 
+                },
+                { 
+                  title: "Reset-to-Safe-State", 
+                  desc: "Instant recovery to last known compliant configuration upon threat detection." 
+                }
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="mt-1">
+                     <CheckCircle2 className="w-6 h-6 text-green-500" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-lg">{item.title}</h4>
+                    <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CRA-3D Highlight Box */}
+            <div id="cra3d" className="mt-12 p-6 bg-slate-900/50 border-l-4 border-neon-purple rounded-r-xl backdrop-blur-sm">
+                <div className="flex items-center gap-3 mb-2">
+                    <RefreshCw className="w-5 h-5 text-neon-purple animate-spin-slow" />
+                    <h3 className="text-white font-bold">CRA-3D Compliance</h3>
+                </div>
+                <p className="text-slate-400 text-sm">
+                    Updates must be delivered securely, free of charge, and available for at least <strong>5 years</strong>. 
+                    CRA-3D turns this requirement into a disciplined, predictable process.
+                </p>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Visual (The Clock/Scanner Concept) */}
+          <div className="relative h-[500px] w-full">
+            <motion.div 
+               initial={{ opacity: 0, scale: 0.9 }}
+               whileInView={{ opacity: 1, scale: 1 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.8 }}
+               className="relative h-full w-full bg-black rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden group"
+            >
+                {/* Background Image / Texture */}
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700 mix-blend-luminosity"></div>
+                
+                {/* Overlay Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+
+                {/* The "Clock" / Scanner Element */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative w-64 h-64">
+                         {/* Rings */}
+                         <div className="absolute inset-0 border-2 border-white/10 rounded-full"></div>
+                         <div className="absolute inset-4 border border-neon-purple/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                         <div className="absolute inset-8 border border-white/5 rounded-full border-dashed animate-[spin_15s_linear_infinite_reverse]"></div>
+                         
+                         {/* Center Core */}
+                         <div className="absolute inset-0 m-auto w-32 h-32 bg-neon-purple/10 rounded-full blur-xl animate-pulse"></div>
+                         <div className="absolute inset-0 m-auto flex flex-col items-center justify-center text-center z-10">
+                            <span className="text-4xl font-display font-bold text-white">SL4</span>
+                            <span className="text-[10px] tracking-widest text-neon-purple uppercase">Security</span>
+                         </div>
+                         
+                         {/* Scanning Line */}
+                         <div className="absolute inset-0 m-auto w-full h-[2px] bg-neon-purple/50 shadow-[0_0_15px_rgba(139,92,246,0.8)] animate-scan opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                </div>
+
+                {/* Floating Status Badge */}
+                <div className="absolute top-8 right-8 bg-slate-900/80 backdrop-blur-md border border-green-500/30 px-4 py-2 rounded-lg shadow-lg">
+                    <div className="text-green-400 font-bold text-sm tracking-wide">COMPLIANT</div>
+                    <div className="text-slate-500 text-[10px] uppercase">Security Level: SL4</div>
+                </div>
+
+                {/* Bottom Console Text */}
+                <div className="absolute bottom-8 left-8 bg-black/60 backdrop-blur border border-white/10 rounded-full px-4 py-2 flex items-center gap-3">
+                    <div className="w-2 h-2 bg-neon-purple rounded-full animate-pulse"></div>
+                    <span className="text-xs font-mono text-white tracking-wider">ANALYZING TRAFFIC...</span>
+                </div>
+            </motion.div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default MuppEngine;
+
+================================================================
+FILE: src/components/Navigation.tsx
+================================================================
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Lock } from 'lucide-react';
+
+import logo from '../assets/logo.png';
+
+const CustomLogo: React.FC = () => (
+  <img
+    src={logo}
+    alt="TripleDefence Logo"
+    className="w-10 h-10 object-contain filter drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+  />
+);
+
+const Navigation: React.FC = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: 'MUPP Engine', id: 'mupp' },
+    { name: 'CRA-3D', id: 'cra3d' },
+    { name: 'Sectors', id: 'sectors' },
+    { name: 'Fines & Risk', id: 'risk' },
+  ];
+
+  // Custom Smooth Scroll Function (Restored)
+  const smoothScrollTo = (e: React.MouseEvent, targetId: string, duration: number = 1500) => {
+    e.preventDefault();
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    // Close mobile menu if open
+    setMobileOpen(false);
+
+    const headerOffset = 100;
+    const startPosition = window.pageYOffset;
+    const targetPosition = target.getBoundingClientRect().top + startPosition - headerOffset;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    // Easing function: easeInOutCubic
+    const ease = (t: number, b: number, c: number, d: number) => {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t * t + b;
+      t -= 2;
+      return c / 2 * (t * t * t + 2) + b;
+    };
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      } else {
+        window.scrollTo(0, targetPosition);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  };
+
+  const handleToast = (message: string) => {
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message } }));
+    setMobileOpen(false);
+  };
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${isScrolled
+          ? 'bg-charcoal/95 backdrop-blur-xl border-white/5 py-4'
+          : 'bg-transparent border-transparent py-6'
+        }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        {/* Logo */}
+        <div
+          className="flex items-center gap-3 cursor-pointer group"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <CustomLogo />
+          <span className="font-display font-bold text-lg tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-400 transition-all">
+            Triple<span className="text-slate-500 group-hover:text-slate-300">Defence</span>
+          </span>
+        </div>
+
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-10">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={`#${link.id}`}
+              onClick={(e) => smoothScrollTo(e, link.id, 1200)}
+              className="relative text-sm font-medium text-slate-400 hover:text-white transition-colors duration-300 py-1 group tracking-wide cursor-pointer"
+            >
+              {link.name}
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-neon-purple transition-all duration-300 group-hover:w-full box-shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
+            </a>
+          ))}
+
+          {/* Portal Button (Trigger Toast) */}
+          <button
+            onClick={() => handleToast("Portal access restricted. Please contact sales.")}
+            className="flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors group"
+          >
+            <Lock size={14} className="group-hover:text-neon-purple transition-colors" />
+            Portal
+          </button>
+        </div>
+
+        {/* CTA */}
+        <div className="hidden md:block">
+          <button
+            onClick={(e) => smoothScrollTo(e, 'contact', 1500)}
+            className="px-5 py-2 text-xs font-bold tracking-widest text-charcoal bg-white hover:bg-slate-200 transition-all duration-300 rounded-sm shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+          >
+            BOOK AUDIT
+          </button>
+        </div>
+
+        {/* Mobile Toggle */}
+        <div className="md:hidden">
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white">
+            {mobileOpen ? <X /> : <Menu />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-charcoal border-b border-white/5 overflow-hidden"
+          >
+            <div className="flex flex-col p-6 gap-6">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={`#${link.id}`}
+                  className="text-slate-300 text-xl font-medium"
+                  onClick={(e) => smoothScrollTo(e, link.id, 1200)}
+                >
+                  {link.name}
+                </a>
+              ))}
+              <button
+                onClick={() => handleToast("Portal access restricted.")}
+                className="text-slate-300 text-xl font-medium text-left flex items-center gap-3"
+              >
+                <Lock size={20} />
+                Portal
+              </button>
+              <button
+                onClick={(e) => smoothScrollTo(e, 'contact', 1500)}
+                className="mt-4 w-full py-4 text-sm font-bold text-charcoal bg-white rounded-sm"
+              >
+                BOOK AUDIT
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+};
+
+export default Navigation;
+
+================================================================
+FILE: src/components/RiskBento.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { AlertTriangle, Ban, AlertOctagon, Zap } from 'lucide-react';
+
+const Card: React.FC<{ children: React.ReactNode; className?: string; delay?: number; variant?: 'red' | 'default' }> = ({ children, className, delay = 0, variant = 'default' }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      className={`relative group p-8 overflow-hidden rounded-xl backdrop-blur-sm border transition-all duration-500
+        ${variant === 'red' 
+          ? 'bg-gradient-to-br from-neon-red/10 to-transparent border-neon-red/30 shadow-[inset_0_0_30px_rgba(239,68,68,0.1)] hover:border-neon-red/60 hover:shadow-[0_0_30px_rgba(239,68,68,0.2)]' 
+          : 'bg-slate-900/30 border-white/5 hover:border-white/20 hover:bg-slate-900/50'
+        } ${className}`}
+    >
+      {/* Hover Light Sweep Effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]" />
+      
+      <div className="relative z-10 h-full flex flex-col justify-between">
+        {children}
+      </div>
+    </motion.div>
+  );
+};
+
+const RiskBento: React.FC = () => {
+  return (
+    <section id="risk" className="py-32 px-6 max-w-7xl mx-auto">
+      <div className="mb-20">
+        <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+          <span className="text-neon-red">Non-Compliance</span> is Not an Option.
+        </h2>
+        <p className="text-slate-400 text-lg max-w-xl leading-relaxed">
+          The Cyber Resilience Act introduces penalties capable of bankrupting non-compliant manufacturers.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[650px]">
+        
+        {/* Card 1: Essential Components (High Risk) */}
+        <Card className="md:col-span-2 md:row-span-2" delay={0.1} variant="red">
+          <div className="flex justify-between items-start">
+            <div className="p-3 bg-neon-red/20 rounded-lg border border-neon-red/20">
+              <AlertTriangle className="w-6 h-6 text-neon-red" />
+            </div>
+            <span className="font-mono text-[10px] font-bold text-neon-red border border-neon-red/30 bg-neon-red/5 px-2 py-1 rounded">
+              ESSENTIAL REQUIREMENTS
+            </span>
+          </div>
+          <div className="mt-12">
+            <h3 className="text-7xl md:text-8xl font-display font-bold text-white mb-4 tracking-tighter">
+              €15M
+            </h3>
+            <p className="text-2xl text-slate-200 mb-6 font-light">
+              or <span className="text-neon-red font-semibold">2.5%</span> of Global Turnover
+            </p>
+            <p className="text-sm text-slate-400 leading-relaxed max-w-md border-l-2 border-neon-red/50 pl-4">
+              Applied for failure to meet core cybersecurity requirements or conformity assessments. Targets manufacturers of products with digital elements.
+            </p>
+          </div>
+          <div className="mt-auto w-full bg-slate-800/50 h-1.5 rounded-full overflow-hidden">
+            <motion.div 
+              initial={{ width: 0 }}
+              whileInView={{ width: "100%" }}
+              transition={{ duration: 1.5, ease: "circOut", delay: 0.5 }}
+              className="h-full bg-gradient-to-r from-neon-red to-orange-600 shadow-[0_0_10px_rgba(239,68,68,0.8)]"
+            />
+          </div>
+        </Card>
+
+        {/* Card 2: Reporting Obligations */}
+        <Card className="md:col-span-1 md:row-span-1" delay={0.2}>
+           <div className="flex justify-between items-start">
+            <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+              <AlertOctagon className="w-6 h-6 text-white" />
+            </div>
+            <span className="font-mono text-[10px] text-slate-500">VIOLATION OF OBLIGATIONS</span>
+          </div>
+          <div className="mt-auto">
+             <h3 className="text-5xl font-display font-bold text-white mb-2 tracking-tighter">€10M</h3>
+             <p className="text-sm text-slate-400 font-medium">or 2% of Turnover</p>
+             <p className="mt-3 text-xs text-slate-500 leading-relaxed">
+               For breaches of other obligations, such as failure to report vulnerabilities or incidents to ENISA.
+             </p>
+          </div>
+        </Card>
+
+        {/* Card 3: Incorrect Information */}
+        <Card className="md:col-span-1 md:row-span-1" delay={0.3}>
+           <div className="flex justify-between items-start">
+            <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+              <Ban className="w-6 h-6 text-slate-300" />
+            </div>
+            <span className="font-mono text-[10px] text-slate-500">MISREPRESENTATION</span>
+          </div>
+          <div className="mt-auto">
+             <h3 className="text-5xl font-display font-bold text-white mb-2 tracking-tighter">€5M</h3>
+             <p className="text-sm text-slate-400 font-medium">or 1% of Turnover</p>
+             <p className="mt-3 text-xs text-slate-500 leading-relaxed">
+               Providing incorrect, incomplete, or misleading information to market surveillance authorities.
+             </p>
+          </div>
+        </Card>
+      </div>
+      
+      {/* Bottom status bar */}
+      <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-6 text-[10px] font-mono text-slate-600 tracking-wider">
+        <span>SOURCE: REGULATION (EU) 2024/1183</span>
+        <span className="flex items-center gap-2 text-neon-red">
+            <Zap className="w-3 h-3 fill-current" />
+            RISK ASSESSMENT: CRITICAL
+        </span>
+      </div>
+    </section>
+  );
+};
+
+export default RiskBento;
+
+================================================================
+FILE: src/components/SolutionModule.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { FileCode, Shield, Globe, Cpu, ScanLine } from 'lucide-react';
+
+const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; desc: string }> = ({ icon, title, desc }) => (
+  <motion.div 
+    whileHover={{ y: -5 }}
+    className="relative bg-slate-900/40 backdrop-blur-md border border-white/5 p-8 rounded-xl overflow-hidden group hover:border-white/20 transition-all duration-300"
+  >
+    <div className="w-12 h-12 flex items-center justify-center bg-white/5 rounded-lg mb-6 text-white border border-white/5 group-hover:bg-neon-purple/10 group-hover:text-neon-purple group-hover:border-neon-purple/20 transition-all">
+      {icon}
+    </div>
+    <h3 className="text-xl font-bold text-white mb-3 tracking-tight">{title}</h3>
+    <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
+    
+    {/* Hover Glow Corner */}
+    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+  </motion.div>
+);
+
+const SolutionModule: React.FC = () => {
+  return (
+    <section id="platform" className="py-32 bg-charcoal relative overflow-hidden">
+      
+      {/* Background Laser Grid Effect */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20">
+          <div className="max-w-3xl">
+            <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 text-white tracking-tighter">
+              Article 14 <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-blue-500">Automated Reporting.</span>
+            </h2>
+            <p className="text-slate-400 text-lg max-w-2xl">
+              TripleDefence serves as your bridge to ENISA. We integrate directly into your CI/CD pipeline, monitoring IoT devices and critical infrastructure for SL4 security anomalies.
+            </p>
+          </div>
+          <button className="hidden md:block px-6 py-3 border border-white/20 text-white text-xs font-mono tracking-widest uppercase hover:bg-white/5 hover:border-white/40 transition-all">
+            Explore Documentation
+          </button>
+        </div>
+
+        {/* Scanning Module Container */}
+        <div className="relative p-1 rounded-2xl bg-gradient-to-b from-white/10 to-transparent">
+          
+          {/* Scanning Laser Line */}
+          <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden rounded-2xl">
+             <div className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-neon-cyan to-transparent shadow-[0_0_20px_rgba(6,182,212,0.8)] animate-scan opacity-50"></div>
+             <div className="absolute left-0 right-0 h-24 bg-gradient-to-b from-neon-cyan/10 to-transparent -translate-y-full animate-scan"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 bg-charcoal/90 rounded-xl p-6">
+            <FeatureCard 
+              icon={<FileCode size={24} />}
+              title="Dynamic SBOMs"
+              desc="Automated generation and maintenance of Software Bill of Materials for every release cycle, compliant with CRA Annex II."
+            />
+            <FeatureCard 
+              icon={<Shield size={24} />}
+              title="SL4 Security"
+              desc="Continuous penetration testing simulations for Critical Class I & II products to ensure high-assurance resilience."
+            />
+            <FeatureCard 
+              icon={<Globe size={24} />}
+              title="ENISA Bridge"
+              desc="One-click incident reporting to CSIRTs within the 24h deadline using pre-filled templates."
+            />
+            <FeatureCard 
+              icon={<Cpu size={24} />}
+              title="IoT Fleet Mgmt"
+              desc="Infrastructure to push security updates for the expected product lifetime (up to 5 years) across distributed IoT fleets."
+            />
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default SolutionModule;
+
+================================================================
+FILE: src/index.css
+================================================================
+@import "tailwindcss";
+
+@theme {
+    --color-charcoal: #030303;
+    --color-slate-850: #151b28;
+    --color-slate-900: #0f172a;
+
+    --color-neon-purple: #8b5cf6;
+    --color-neon-red: #ef4444;
+    --color-neon-cyan: #06b6d4;
+
+    --font-sans: Inter, sans-serif;
+    --font-display: Sora, sans-serif;
+
+    --tracking-tighter: -0.03em;
+    --tracking-tight: -0.01em;
+
+    --animate-blob: blob 7s infinite;
+    --animate-scan: scan 4s linear infinite;
+    --animate-pulse-fast: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    @keyframes blob {
+        0% {
+            transform: translate(0px, 0px) scale(1);
+        }
+
+        33% {
+            transform: translate(30px, -50px) scale(1.1);
+        }
+
+        66% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0px, 0px) scale(1);
+        }
+    }
+
+    @keyframes scan {
+        0% {
+            top: -100%;
+        }
+
+        100% {
+            top: 200%;
+        }
+    }
+}
+
+/* Global Styles equivalent to index.html style block */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+    font-size: 90%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--color-charcoal);
+    color: #e2e8f0;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-charcoal);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+.text-gradient-silver {
+    background: linear-gradient(180deg, #FFFFFF 0%, #94A3B8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+================================================================
+FILE: src/index.tsx
+================================================================
+import React from 'react';
+import './index.css';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error("Could not find root element to mount to");
+}
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+================================================================
+FILE: src/vite-env.d.ts
+================================================================
+/// <reference types="vite/client" />
+
+

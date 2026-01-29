@@ -34,7 +34,7 @@ const SolutionModule: React.FC = () => {
               Article 14 <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-blue-500">Automated Reporting.</span>
             </h2>
             <p className="text-slate-400 text-lg max-w-2xl">
-              TripleDefence serves as your bridge to ENISA. We integrate directly into your CI/CD pipeline, monitoring IoT devices and critical infrastructure for SL4 security anomalies.
+              TripleDefence serves as your bridge to ENISA. We integrate directly into your CI/CD pipeline, monitoring IoT devices and critical infrastructure for SL4 protection anomalies.
             </p>
           </div>
           <button className="hidden md:block px-6 py-3 border border-white/20 text-white text-xs font-mono tracking-widest uppercase hover:bg-white/5 hover:border-white/40 transition-all">
@@ -59,7 +59,7 @@ const SolutionModule: React.FC = () => {
             />
             <FeatureCard 
               icon={<Shield size={24} />}
-              title="SL4 Security"
+              title="SL4 Protection"
               desc="Continuous penetration testing simulations for Critical Class I & II products to ensure high-assurance resilience."
             />
             <FeatureCard 

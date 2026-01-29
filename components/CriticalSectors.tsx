@@ -97,7 +97,7 @@ const CriticalSectors: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="font-display text-4xl font-bold text-white mb-4">Critical Scope</h2>
           <p className="text-slate-400 max-w-2xl mx-auto">
-             Components vital for maintaining societal functions and economic stability are subject to rigorous CRA cybersecurity requirements.
+             Components vital for maintaining societal functions and economic stability are subject to rigorous CRA cyberprotection requirements.
           </p>
         </div>
 

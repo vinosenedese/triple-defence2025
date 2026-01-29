@@ -57,7 +57,7 @@ const RiskBento: React.FC = () => {
               or <span className="text-neon-red font-semibold">2.5%</span> of Global Turnover
             </p>
             <p className="text-sm text-slate-400 leading-relaxed max-w-md border-l-2 border-neon-red/50 pl-4">
-              Applied for failure to meet core cybersecurity requirements or conformity assessments. Targets manufacturers of products with digital elements.
+              Applied for failure to meet core cyberprotection requirements or conformity assessments. Targets manufacturers of products with digital elements.
             </p>
           </div>
           <div className="mt-auto w-full bg-slate-800/50 h-1.5 rounded-full overflow-hidden">

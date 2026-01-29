@@ -31,7 +31,7 @@ const MuppEngine: React.FC = () => {
             </h2>
             
             <p className="text-slate-400 text-lg leading-relaxed mb-8">
-              The <strong>Multi-Use Protection Platform (MUPP)</strong> is a revolutionary approach to endpoint security. It provides an unhackable layer that guarantees <span className="text-white font-medium">SL4 security levels</span> while automating 90% of CRA compliance tasks.
+              The <strong>Multi-Use Protection Platform (MUPP)</strong> is a revolutionary approach to endpoint protection. It provides an unhackable layer that guarantees <span className="text-white font-medium">SL4 protection levels</span> while automating 90% of CRA compliance tasks.
             </p>
 
             <div className="space-y-6">
@@ -105,7 +105,7 @@ const MuppEngine: React.FC = () => {
                          <div className="absolute inset-0 m-auto w-32 h-32 bg-neon-purple/10 rounded-full blur-xl animate-pulse"></div>
                          <div className="absolute inset-0 m-auto flex flex-col items-center justify-center text-center z-10">
                             <span className="text-4xl font-display font-bold text-white">SL4</span>
-                            <span className="text-[10px] tracking-widest text-neon-purple uppercase">Security</span>
+                            <span className="text-[10px] tracking-widest text-neon-purple uppercase">Protection</span>
                          </div>
                          
                          {/* Scanning Line */}
@@ -116,7 +116,7 @@ const MuppEngine: React.FC = () => {
                 {/* Floating Status Badge */}
                 <div className="absolute top-8 right-8 bg-slate-900/80 backdrop-blur-md border border-green-500/30 px-4 py-2 rounded-lg shadow-lg">
                     <div className="text-green-400 font-bold text-sm tracking-wide">COMPLIANT</div>
-                    <div className="text-slate-500 text-[10px] uppercase">Security Level: SL4</div>
+                    <div className="text-slate-500 text-[10px] uppercase">Protection Level: SL4</div>
                 </div>
 
                 {/* Bottom Console Text */}

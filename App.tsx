@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
+import Philosophy from './components/Philosophy';
 import CountdownBar from './components/CountdownBar';
 import RiskBento from './components/RiskBento';
-import MuppEngine from './components/MuppEngine';
+import Solutions from './components/Solutions';
+import Methodology from './components/Methodology';
 import CriticalSectors from './components/CriticalSectors';
 import ComplianceTimeline from './components/ComplianceTimeline';
+import Legacy from './components/Legacy';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import ConstructionToast from './components/ConstructionToast';
@@ -24,7 +27,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-charcoal selection:bg-neon-purple/30 text-slate-200">
+    <div className="relative min-h-screen bg-charcoal selection:bg-neon-purple/30 text-slate-200 overflow-x-hidden">
       <ConstructionToast />
       <Navigation />
       
@@ -37,19 +40,22 @@ const App: React.FC = () => {
       />
 
       {/* Main Content Wrapper - z-10 and bg-charcoal to cover the fixed footer */}
-      <main ref={mainRef} className="relative z-10 bg-charcoal shadow-2xl shadow-black mb-[500px] lg:mb-[400px]">
+      <main ref={mainRef} className="relative z-10 bg-charcoal shadow-2xl shadow-black mb-0 lg:mb-[400px]">
         <Hero mousePosition={mousePosition} />
+        <Philosophy />
         <CountdownBar />
         <RiskBento />
-        <MuppEngine />
+        <Solutions />
         <CriticalSectors />
+        <Methodology />
         <ComplianceTimeline />
+        <Legacy />
         <ContactForm />
         {/* Spacer to push content up so the footer reveal feels natural */}
         <div className="h-12 bg-charcoal" />
       </main>
 
-      {/* Footer - Fixed at bottom, z-0 */}
+      {/* Footer - Fixed at bottom on Desktop, Relative on Mobile */}
       <Footer />
     </div>
   );

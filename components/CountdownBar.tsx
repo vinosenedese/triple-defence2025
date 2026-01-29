@@ -69,7 +69,7 @@ const CountdownBar: React.FC = () => {
           </div>
 
           {/* Section 2: The Digits */}
-          <div className="flex items-start gap-6 md:gap-10">
+          <div className="flex items-start gap-4 md:gap-10">
             <TimeUnit value={timeLeft.days} label="DAYS" />
             <TimeUnit value={timeLeft.hours} label="HOURS" />
             <TimeUnit value={timeLeft.minutes} label="MIN" />
@@ -101,7 +101,7 @@ const CountdownBar: React.FC = () => {
 
 const TimeUnit: React.FC<{ value: number; label: string }> = ({ value, label }) => (
   <div className="flex flex-col items-center">
-    <div className="font-display text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter tabular-nums leading-none mb-2">
+    <div className="font-display text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter tabular-nums leading-none mb-2">
       {value.toString().padStart(2, '0')}
     </div>
     <span className="text-[10px] font-bold text-slate-600 tracking-widest uppercase">

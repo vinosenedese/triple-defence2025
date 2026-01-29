@@ -55,7 +55,7 @@ const ComplianceTimeline: React.FC = () => {
   ];
 
   return (
-    <section ref={containerRef} className="py-32 relative overflow-hidden bg-charcoal">
+    <section id="roadmap" ref={containerRef} className="py-32 relative overflow-hidden bg-charcoal">
       <div className="max-w-5xl mx-auto px-6 relative">
         <div className="text-center mb-32">
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 text-white">Roadmap to Resilience</h2>
@@ -64,7 +64,7 @@ const ComplianceTimeline: React.FC = () => {
           </p>
         </div>
 
-        {/* The Line Container - Removed 'hidden md:block' so it shows on mobile */}
+        {/* The Line Container */}
         <div className="absolute left-1/2 top-48 bottom-0 w-0.5 bg-slate-900 -translate-x-1/2 block">
             {/* The Active Neon Line */}
             <motion.div 
