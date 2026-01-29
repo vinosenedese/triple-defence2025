@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import Philosophy from './components/Philosophy';
-import CountdownBar from './components/CountdownBar';
-import RiskBento from './components/RiskBento';
+import AttentionBlocks from './components/AttentionBlocks';
+import ComparisonTable from './components/ComparisonTable';
+import MIPJourney from './components/MIPJourney';
 import Solutions from './components/Solutions';
-import Methodology from './components/Methodology';
 import CriticalSectors from './components/CriticalSectors';
+import RiskBento from './components/RiskBento';
+import CountdownBar from './components/CountdownBar';
 import ComplianceTimeline from './components/ComplianceTimeline';
 import Legacy from './components/Legacy';
 import ContactForm from './components/ContactForm';
@@ -41,16 +43,43 @@ const App: React.FC = () => {
 
       {/* Main Content Wrapper - z-10 and bg-charcoal to cover the fixed footer */}
       <main ref={mainRef} className="relative z-10 bg-charcoal shadow-2xl shadow-black mb-0 lg:mb-[400px]">
+        
+        {/* 1. Hero */}
         <Hero mousePosition={mousePosition} />
+        
+        {/* 2. Philosophy (Doctrine) */}
         <Philosophy />
-        <CountdownBar />
-        <RiskBento />
+        
+        {/* 3. AttentionBlocks (Capabilities) */}
+        <AttentionBlocks />
+        
+        {/* 4. ComparisonTable (Competição) */}
+        <ComparisonTable />
+        
+        {/* 5. MIPJourney (O Método de 7 passos) */}
+        <MIPJourney />
+        
+        {/* 6. Solutions (Os 3 Produtos: MUPP, CRA-3D, vPAC) */}
         <Solutions />
+        
+        {/* 7. CriticalSectors (Onde atuamos) */}
         <CriticalSectors />
-        <Methodology />
-        <ComplianceTimeline />
+        
+        {/* 8. RiskBento (O perigo das multas) */}
+        <RiskBento />
+        
+        {/* 9. CountdownBar + ComplianceTimeline (Urgência e Prazos) */}
+        <div className="relative pt-24 pb-0 bg-charcoal">
+          <CountdownBar />
+          <ComplianceTimeline />
+        </div>
+
+        {/* 10. Legacy (Autoridade 2012) */}
         <Legacy />
+        
+        {/* 11. ContactForm (Fechamento) */}
         <ContactForm />
+
         {/* Spacer to push content up so the footer reveal feels natural */}
         <div className="h-12 bg-charcoal" />
       </main>

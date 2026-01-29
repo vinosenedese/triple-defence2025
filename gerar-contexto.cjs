@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configurações
-const DIR = './src'; // Pasta alvo
+const DIR = path.join(__dirname, 'components'); // Pasta alvo
 const OUTPUT_FILE = 'projeto-completo.txt'; // Arquivo de saída
 
 // Extensões que queremos ler (para ignorar imagens, fontes, etc.)

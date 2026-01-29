@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Database, Users, ArrowRight, Hexagon, Command } from 'lucide-react';
+import { Layers, Database, Users, Hexagon, Command, CheckCircle2 } from 'lucide-react';
 
 const SolutionCard: React.FC<{ 
   title: string; 
@@ -9,27 +9,48 @@ const SolutionCard: React.FC<{
   icon: React.ReactNode; 
   delay: number;
   action?: React.ReactNode;
-}> = ({ title, subtitle, desc, icon, delay, action }) => (
+  featured?: boolean;
+}> = ({ title, subtitle, desc, icon, delay, action, featured }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    className="group relative flex flex-col h-full bg-[#050505] border border-white/10 hover:border-white/20 transition-colors duration-500 overflow-hidden"
+    className={`group relative flex flex-col h-full transition-all duration-500 overflow-hidden rounded-xl
+      ${featured 
+        ? 'bg-[#080510] border border-neon-purple shadow-[0_0_30px_rgba(139,92,246,0.15)] z-10 scale-[1.03]' 
+        : 'bg-[#050505] border border-white/10 hover:border-white/20'
+      }`}
   >
+    {/* Featured Badge */}
+    {featured && (
+      <div className="absolute top-0 inset-x-0 flex justify-center -mt-3 z-20">
+         <div className="bg-neon-purple text-white text-[10px] font-bold tracking-widest px-3 py-1 rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)] flex items-center gap-1 uppercase ring-4 ring-[#080510]">
+            <CheckCircle2 size={12} />
+            Article 14 Ready
+         </div>
+      </div>
+    )}
+
     {/* Subtle Grid Background */}
     <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 group-hover:opacity-40 transition-opacity" />
     
     {/* Top Accent Line */}
-    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-neon-purple/50 transition-all duration-500" />
+    <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-transparent to-transparent transition-all duration-500 
+      ${featured ? 'via-neon-purple opacity-100' : 'group-hover:via-white/20'}`} 
+    />
 
     <div className="relative z-10 p-8 flex flex-col h-full">
       {/* Icon Header */}
-      <div className="flex justify-between items-start mb-6">
-        <div className="p-3 bg-white/5 border border-white/5 text-slate-300 group-hover:text-white group-hover:border-white/20 transition-all rounded-none">
+      <div className="flex justify-between items-start mb-6 pt-2">
+        <div className={`p-3 border transition-all rounded-lg
+            ${featured 
+              ? 'bg-neon-purple/10 border-neon-purple/30 text-neon-purple shadow-[0_0_15px_rgba(139,92,246,0.2)]' 
+              : 'bg-white/5 border-white/5 text-slate-300 group-hover:text-white group-hover:border-white/20'
+            }`}>
           {icon}
         </div>
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-neon-purple">
+        <div className={`transition-opacity duration-500 ${featured ? 'opacity-100 text-neon-purple' : 'opacity-0 group-hover:opacity-100 text-slate-500'}`}>
             <Hexagon size={16} className="animate-spin-slow" />
         </div>
       </div>
@@ -38,7 +59,7 @@ const SolutionCard: React.FC<{
       <h3 className="font-display text-2xl font-bold text-white mb-1 tracking-tight">
         {title}
       </h3>
-      <span className="text-xs font-mono text-neon-purple uppercase tracking-widest mb-6 block opacity-80">
+      <span className={`text-xs font-mono uppercase tracking-widest mb-6 block opacity-80 ${featured ? 'text-neon-purple font-bold' : 'text-slate-500'}`}>
         {subtitle}
       </span>
 
@@ -101,31 +122,32 @@ const Solutions: React.FC = () => {
         </div>
 
         {/* The Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           
           {/* CARD 1: MUPP */}
           <SolutionCard 
             title="MUPP"
             subtitle="(The Architecture)"
             icon={<Layers size={24} />}
-            desc="The intelligent abstraction layer. Unifying your entire security ecosystem into a single, cohesive operational language. Transcendence, not just integration."
+            desc="The intelligent abstraction layer. Unifying your entire protection ecosystem into a single, cohesive operational language. Transcendence, not just integration."
             delay={0.1}
           />
 
-          {/* CARD 2: CRA-3D */}
+          {/* CARD 2: CRA-3D (FEATURED) */}
           <SolutionCard 
             title="CRA-3D"
             subtitle="(The Wizard)"
             icon={<Database size={24} />}
             desc="The ultimate reporting and incident management assistant. A structured, audit-proof vault for inventories, risk assessments, and compliance evidence. Ready for Article 14."
             delay={0.2}
+            featured={true}
             action={
               <button 
                 onClick={handleDemoRequest}
-                className="group/btn w-full flex items-center justify-between px-4 py-3 bg-neon-purple/10 border border-neon-purple/30 hover:bg-neon-purple/20 hover:border-neon-purple/50 transition-all"
+                className="group/btn w-full flex items-center justify-between px-4 py-3 bg-neon-purple text-white shadow-[0_0_15px_rgba(139,92,246,0.4)] hover:bg-neon-purple/90 transition-all rounded-md"
               >
-                <span className="text-xs font-bold text-white tracking-widest uppercase">Request Wizard Demo</span>
-                <Command size={14} className="text-neon-purple group-hover/btn:text-white transition-colors" />
+                <span className="text-xs font-bold tracking-widest uppercase">Launch Wizard Demo</span>
+                <Command size={14} className="group-hover/btn:translate-x-1 transition-transform" />
               </button>
             }
           />

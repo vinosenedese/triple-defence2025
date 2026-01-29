@@ -1,70 +1,242 @@
-DATA DE GERAÇÃO: 2026-01-29T00:43:54.990Z
-TOTAL DE ARQUIVOS: 15
+DATA DE GERAÇÃO: 2026-01-29T13:58:28.693Z
+TOTAL DE ARQUIVOS: 18
 
 ================================================================
-FILE: src/App.tsx
+FILE: /home/vino/dev/triple-defence2025/components/AttentionBlocks.tsx
 ================================================================
-import React, { useState, useEffect, useRef } from 'react';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import CountdownBar from './components/CountdownBar';
-import RiskBento from './components/RiskBento';
-import MuppEngine from './components/MuppEngine';
-import CriticalSectors from './components/CriticalSectors';
-import ComplianceTimeline from './components/ComplianceTimeline';
-import ContactForm from './components/ContactForm';
-import Footer from './components/Footer';
-import ConstructionToast from './components/ConstructionToast';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Shield, FileText, Activity, ShieldCheck } from 'lucide-react';
 
-const App: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const mainRef = useRef<HTMLDivElement>(null);
+interface BlockProps {
+  id: string;
+  title: string;
+  desc: string;
+  icon: React.ReactNode;
+  delay: number;
+}
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+const Block: React.FC<BlockProps> = ({ id, title, desc, icon, delay }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay, ease: "easeOut" }}
+    className="relative bg-[#050505] p-8 md:p-10 group h-full flex flex-col"
+  >
+    {/* Large Discrete Number */}
+    <span className="absolute top-2 right-6 text-6xl font-display font-bold text-white/[0.03] group-hover:text-white/[0.06] transition-colors pointer-events-none select-none">
+      {id}
+    </span>
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    {/* Icon */}
+    <div className="mb-8 text-slate-300 group-hover:text-neon-purple transition-colors duration-300">
+      {icon}
+    </div>
+
+    {/* Content */}
+    <div className="relative z-10 mt-auto">
+      <h3 className="text-white font-bold text-lg mb-4 tracking-tight group-hover:text-white transition-colors">
+        {title}
+      </h3>
+      <p className="text-slate-400 text-sm leading-7 font-light">
+        {desc}
+      </p>
+    </div>
+
+    {/* Hover Bottom Line */}
+    <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-neon-purple transition-all duration-300 group-hover:w-full" />
+  </motion.div>
+);
+
+const AttentionBlocks: React.FC = () => {
+  const blocks = [
+    {
+      id: "01",
+      title: "DASI - Digital Architecture Integration",
+      desc: "Eliminate architectural chasms. We fuse policy, visibility, and enforcement into a single operational heartbeat, ensuring no silent spaces for adversaries to exploit.",
+      icon: <Shield size={32} strokeWidth={1.5} />,
+    },
+    {
+      id: "02",
+      title: "Incident & Reporting Tool",
+      desc: "Automated Article 14 compliance. A direct bridge to ENISA for exploited vulnerabilities, ensuring you meet the 24h/72h reporting deadlines effortlessly.",
+      icon: <FileText size={32} strokeWidth={1.5} />,
+    },
+    {
+      id: "03",
+      title: "Operational Efficiency & Peace",
+      desc: "Win without fighting. Reduction of alert fatigue and 30-50% operational cost reduction by replacing reactive firefighting with proactive design.",
+      icon: <Activity size={32} strokeWidth={1.5} />,
+    },
+    {
+      id: "04",
+      title: "Compliance & Visibility Readiness",
+      desc: "Audit-proof evidence vault. Real-time tracking of tasks and automated SBOM generation. Gain absolute control over your digital estate and regulatory obligations.",
+      icon: <ShieldCheck size={32} strokeWidth={1.5} />,
+    },
+  ];
 
   return (
-    <div className="relative min-h-screen bg-charcoal selection:bg-neon-purple/30 text-slate-200">
-      <ConstructionToast />
-      <Navigation />
-      
-      {/* Global Mouse Spotlight */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(139, 92, 246, 0.07), transparent 40%)`
-        }}
-      />
-
-      {/* Main Content Wrapper - z-10 and bg-charcoal to cover the fixed footer */}
-      <main ref={mainRef} className="relative z-10 bg-charcoal shadow-2xl shadow-black mb-[500px] lg:mb-[400px]">
-        <Hero mousePosition={mousePosition} />
-        <CountdownBar />
-        <RiskBento />
-        <MuppEngine />
-        <CriticalSectors />
-        <ComplianceTimeline />
-        <ContactForm />
-        {/* Spacer to push content up so the footer reveal feels natural */}
-        <div className="h-12 bg-charcoal" />
-      </main>
-
-      {/* Footer - Fixed at bottom, z-0 */}
-      <Footer />
-    </div>
+    <section className="bg-charcoal pt-24 pb-32 relative z-20">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* 
+            Grid Container
+            Using gap-px with a white/10 background creates perfect 1px borders between the black cards.
+            This is cleaner than using border-r/border-b on individual items.
+        */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10 overflow-hidden">
+          {blocks.map((block, index) => (
+            <Block 
+              key={block.id}
+              {...block}
+              delay={index * 0.1}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default App;
+export default AttentionBlocks;
 
 ================================================================
-FILE: src/components/ComplianceTimeline.tsx
+FILE: /home/vino/dev/triple-defence2025/components/ComparisonTable.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Check, X, Shield, AlertCircle } from 'lucide-react';
+
+const ComparisonTable: React.FC = () => {
+  const data = [
+    {
+      feature: "Strategic Focus",
+      trad: "Post-infiltration detection",
+      td: "Upfront resilience engineering",
+    },
+    {
+      feature: "Response Time",
+      trad: "Reacts after alert/breach",
+      td: "Neutralizes before manifestation",
+    },
+    {
+      feature: "Visibility",
+      trad: "Blind spots in complex layers",
+      td: "Chasm-free (No architectural gaps)",
+    },
+    {
+      feature: "Philosophy",
+      trad: "Security by Reaction",
+      td: "Protection by Design",
+    },
+    {
+      feature: "Compliance (CRA)",
+      trad: "Manual/Reactive documentation",
+      td: "Native & Automated Governance",
+    },
+    {
+      feature: "Result",
+      trad: "Damage Mitigation",
+      td: "Preemption & Strategic Peace",
+    },
+  ];
+
+  return (
+    <section className="bg-charcoal pb-32 pt-10 relative z-20">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Header Content */}
+        <div className="mb-16 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+                The Paradigm <span className="text-neon-purple">Shift</span>.
+            </h2>
+            <p className="text-slate-400 font-light">
+                Moving from endless alerts to absolute architectural control.
+            </p>
+        </div>
+
+        {/* Table Container */}
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="overflow-hidden rounded-2xl border border-white/10 bg-[#050505] shadow-2xl"
+        >
+          {/* Table Header */}
+          <div className="grid grid-cols-12 bg-white/5 border-b border-white/10 text-sm font-bold tracking-widest uppercase">
+            <div className="col-span-4 md:col-span-4 p-6 text-slate-400 flex items-center gap-2">
+                Resource / Approach
+            </div>
+            <div className="col-span-4 md:col-span-4 p-6 text-slate-500 border-l border-white/5 flex items-center gap-2">
+                <AlertCircle size={14} /> Traditional NDR
+            </div>
+            <div className="col-span-4 md:col-span-4 p-6 text-white bg-neon-purple/10 border-l border-neon-purple/20 flex items-center gap-2 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-neon-purple shadow-[0_0_10px_#8b5cf6]" />
+                <Shield size={14} className="text-neon-purple" /> TripleDefence
+            </div>
+          </div>
+
+          {/* Table Body */}
+          <div className="divide-y divide-white/5">
+            {data.map((row, index) => (
+              <div 
+                key={index} 
+                className="grid grid-cols-12 group hover:bg-white/[0.01] transition-colors"
+              >
+                {/* Feature Name */}
+                <div className="col-span-4 md:col-span-4 p-6 text-slate-200 font-medium text-sm md:text-base flex items-center">
+                  {row.feature}
+                </div>
+
+                {/* Traditional Side */}
+                <div className="col-span-4 md:col-span-4 p-6 text-slate-500 border-l border-white/5 text-sm md:text-base flex flex-col justify-center relative">
+                    <div className="flex items-start gap-3">
+                         <X size={16} className="text-slate-700 mt-1 shrink-0" />
+                         <span>{row.trad}</span>
+                    </div>
+                </div>
+
+                {/* TripleDefence Side */}
+                <div className="col-span-4 md:col-span-4 p-6 text-white border-l border-neon-purple/20 bg-neon-purple/[0.03] text-sm md:text-base flex flex-col justify-center relative">
+                    <div className="flex items-start gap-3">
+                        <div className="bg-green-500/10 p-1 rounded-full shrink-0 mt-0.5">
+                            <Check size={12} className="text-green-500" />
+                        </div>
+                        <span className="font-semibold text-slate-100">{row.td}</span>
+                    </div>
+                    
+                    {/* Subtle Glow inside cell on hover */}
+                    <div className="absolute inset-0 bg-neon-purple/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Impact Quote */}
+        <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="mt-16 text-center"
+        >
+            <p className="text-xl md:text-2xl font-display font-light text-slate-300">
+                "Security promises safety. <span className="text-white font-medium">Protection proves it.</span> Don't wait for the damage to be done."
+            </p>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+};
+
+export default ComparisonTable;
+
+================================================================
+FILE: /home/vino/dev/triple-defence2025/components/ComplianceTimeline.tsx
 ================================================================
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -123,7 +295,7 @@ const ComplianceTimeline: React.FC = () => {
   ];
 
   return (
-    <section ref={containerRef} className="py-32 relative overflow-hidden bg-charcoal">
+    <section id="roadmap" ref={containerRef} className="py-32 relative overflow-hidden bg-charcoal">
       <div className="max-w-5xl mx-auto px-6 relative">
         <div className="text-center mb-32">
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 text-white">Roadmap to Resilience</h2>
@@ -132,7 +304,7 @@ const ComplianceTimeline: React.FC = () => {
           </p>
         </div>
 
-        {/* The Line Container - Removed 'hidden md:block' so it shows on mobile */}
+        {/* The Line Container */}
         <div className="absolute left-1/2 top-48 bottom-0 w-0.5 bg-slate-900 -translate-x-1/2 block">
             {/* The Active Neon Line */}
             <motion.div 
@@ -154,7 +326,7 @@ const ComplianceTimeline: React.FC = () => {
 export default ComplianceTimeline;
 
 ================================================================
-FILE: src/components/ConstructionToast.tsx
+FILE: /home/vino/dev/triple-defence2025/components/ConstructionToast.tsx
 ================================================================
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -220,120 +392,120 @@ const ConstructionToast: React.FC = () => {
 export default ConstructionToast;
 
 ================================================================
-FILE: src/components/ContactForm.tsx
+FILE: /home/vino/dev/triple-defence2025/components/ContactForm.tsx
 ================================================================
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Send, ShieldAlert, ChevronDown } from 'lucide-react';
 
 const ContactForm: React.FC = () => {
-    const handleToast = (e: React.MouseEvent, msg: string) => {
-        e.preventDefault();
-        window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: msg } }));
-    };
+  const handleToast = (e: React.MouseEvent, msg: string) => {
+    e.preventDefault();
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: msg } }));
+  };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Consultation request initiated (Demo Mode)." } }));
-    };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Consultation request initiated (Demo Mode)." } }));
+  };
 
-    return (
-        <section id="contact" className="py-32 relative flex items-center justify-center bg-charcoal overflow-hidden">
-            {/* Background gradients */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-neon-purple/10 blur-[120px] rounded-full mix-blend-screen" />
+  return (
+    <section id="contact" className="py-32 relative flex items-center justify-center bg-charcoal overflow-hidden">
+      {/* Background gradients */}
+      <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-neon-purple/10 blur-[120px] rounded-full mix-blend-screen" />
+      </div>
+
+      <div className="max-w-2xl w-full mx-6 relative z-10">
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="bg-[#050505] border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
+        >
+             {/* Icon */}
+            <div className="flex justify-center mb-10">
+                <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 shadow-[inset_0_0_20px_rgba(255,255,255,0.05)]">
+                    <ShieldAlert className="w-7 h-7 text-slate-200" />
+                </div>
             </div>
 
-            <div className="max-w-2xl w-full mx-6 relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="bg-[#050505] border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
-                >
-                    {/* Icon */}
-                    <div className="flex justify-center mb-10">
-                        <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 shadow-[inset_0_0_20px_rgba(255,255,255,0.05)]">
-                            <ShieldAlert className="w-7 h-7 text-slate-200" />
-                        </div>
-                    </div>
-
-                    {/* Header */}
-                    <div className="text-center mb-12">
-                        <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 tracking-tighter">
-                            Secure Your <span className="text-neon-purple">Infrastructure</span>
-                        </h2>
-                        <p className="text-slate-400 text-lg font-light tracking-tight">
-                            Request a classified deep-dive demo of the TripleDefence platform.
-                        </p>
-                    </div>
-
-                    {/* Form */}
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Full Name</label>
-                                <input
-                                    type="text"
-                                    placeholder="E.g. Alexander Pierce"
-                                    className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Company</label>
-                                <input
-                                    type="text"
-                                    placeholder="E.g. Cyberdyne Systems"
-                                    className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Work Email</label>
-                            <input
-                                type="email"
-                                placeholder="name@company.com"
-                                className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Sector</label>
-                            <div className="relative">
-                                <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
-                                    <option>Critical Infrastructure</option>
-                                    <option>Medical Devices</option>
-                                    <option>Automotive</option>
-                                    <option>Aerospace</option>
-                                    <option>IoT Manufacturing</option>
-                                </select>
-                                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
-                                    <ChevronDown size={16} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" className="w-full bg-white text-charcoal font-bold text-sm tracking-wide py-4 rounded-xl hover:bg-slate-200 transition-colors flex items-center justify-center gap-2 mt-8 group shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                            Initiate Consultation
-                            <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </button>
-
-                        <p className="text-center text-[10px] text-slate-600 mt-6 tracking-wide">
-                            By submitting, you agree to our <a href="#" onClick={(e) => handleToast(e, "Privacy Protocol v1.2")} className="underline decoration-slate-600 hover:text-slate-400">Privacy Protocol</a>.
-                        </p>
-                    </form>
-                </motion.div>
+            {/* Header */}
+            <div className="text-center mb-12">
+                <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 tracking-tighter">
+                    Protect Your <span className="text-neon-purple">Infrastructure</span>
+                </h2>
+                <p className="text-slate-400 text-lg font-light tracking-tight">
+                    Request a classified deep-dive demo of the TripleDefence platform.
+                </p>
             </div>
-        </section>
-    );
+
+            {/* Form */}
+            <form className="space-y-6" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Full Name</label>
+                        <input
+                            type="text"
+                            placeholder="E.g. Alexander Pierce"
+                            className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Company</label>
+                        <input
+                            type="text"
+                            placeholder="E.g. Cyberdyne Systems"
+                            className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Work Email</label>
+                    <input
+                        type="email"
+                        placeholder="name@company.com"
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all placeholder:text-slate-600 text-sm"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Sector</label>
+                    <div className="relative">
+                        <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
+                            <option>Critical Infrastructure</option>
+                            <option>Medical Devices</option>
+                            <option>Automotive</option>
+                            <option>Aerospace</option>
+                            <option>IoT Manufacturing</option>
+                        </select>
+                         <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                             <ChevronDown size={16} />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" className="w-full bg-white text-charcoal font-bold text-sm tracking-wide py-4 rounded-xl hover:bg-slate-200 transition-colors flex items-center justify-center gap-2 mt-8 group shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                    Initiate Consultation
+                    <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                <p className="text-center text-[10px] text-slate-600 mt-6 tracking-wide">
+                    By submitting, you agree to our <a href="#" onClick={(e) => handleToast(e, "Privacy Protocol v1.2")} className="underline decoration-slate-600 hover:text-slate-400">Privacy Protocol</a>.
+                </p>
+            </form>
+        </motion.div>
+      </div>
+    </section>
+  );
 };
 
 export default ContactForm;
 
 ================================================================
-FILE: src/components/CountdownBar.tsx
+FILE: /home/vino/dev/triple-defence2025/components/CountdownBar.tsx
 ================================================================
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -406,7 +578,7 @@ const CountdownBar: React.FC = () => {
           </div>
 
           {/* Section 2: The Digits */}
-          <div className="flex items-start gap-6 md:gap-10">
+          <div className="flex items-start gap-4 md:gap-10">
             <TimeUnit value={timeLeft.days} label="DAYS" />
             <TimeUnit value={timeLeft.hours} label="HOURS" />
             <TimeUnit value={timeLeft.minutes} label="MIN" />
@@ -438,7 +610,7 @@ const CountdownBar: React.FC = () => {
 
 const TimeUnit: React.FC<{ value: number; label: string }> = ({ value, label }) => (
   <div className="flex flex-col items-center">
-    <div className="font-display text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter tabular-nums leading-none mb-2">
+    <div className="font-display text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter tabular-nums leading-none mb-2">
       {value.toString().padStart(2, '0')}
     </div>
     <span className="text-[10px] font-bold text-slate-600 tracking-widest uppercase">
@@ -450,115 +622,145 @@ const TimeUnit: React.FC<{ value: number; label: string }> = ({ value, label }) 
 export default CountdownBar;
 
 ================================================================
-FILE: src/components/CriticalSectors.tsx
+FILE: /home/vino/dev/triple-defence2025/components/CriticalSectors.tsx
 ================================================================
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Server, Wifi, Database, Key, Settings, Cpu, HardDrive, Smartphone } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck } from 'lucide-react';
 
-const SectorCard: React.FC<{ title: string; items: string[]; icon: React.ReactNode; index: number }> = ({ title, items, icon, index }) => (
+interface SectorProps {
+  title: string;
+  image: string;
+  desc: string;
+  index: number;
+}
+
+const SectorCard: React.FC<SectorProps> = ({ title, image, desc, index }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ delay: index * 0.1, duration: 0.5 }}
-    className="bg-slate-900/40 border border-white/5 rounded-xl p-6 hover:bg-slate-900/60 hover:border-neon-purple/20 transition-all duration-300 group"
+    transition={{ delay: index * 0.1, duration: 0.6 }}
+    className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-charcoal"
   >
-    <div className="flex items-center gap-4 mb-4">
-      <div className="p-2 bg-white/5 rounded-lg text-slate-300 group-hover:text-neon-purple group-hover:bg-neon-purple/10 transition-colors">
-        {icon}
-      </div>
-      <h3 className="text-white font-bold text-lg tracking-tight">{title}</h3>
+    {/* Background Image */}
+    <div className="absolute inset-0 z-0">
+      <img 
+        src={image} 
+        alt={title} 
+        className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+      />
+      {/* Heavy Overlay for Readability */}
+      <div className="absolute inset-0 bg-black/80 group-hover:bg-black/60 transition-colors duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
     </div>
-    <ul className="space-y-2">
-      {items.map((item, i) => (
-        <li key={i} className="text-sm text-slate-400 flex items-start gap-2">
-          <span className="w-1 h-1 bg-slate-600 rounded-full mt-2 group-hover:bg-neon-purple transition-colors" />
-          {item}
-        </li>
-      ))}
-    </ul>
+
+    {/* Content Container */}
+    <div className="relative z-10 h-full flex flex-col justify-between p-8">
+      
+      {/* Top Badge */}
+      <div className="flex justify-between items-start">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 backdrop-blur-md border border-white/10 rounded-full">
+            <ShieldCheck size={12} className="text-neon-purple" />
+            <span className="text-[10px] font-mono font-bold text-slate-300 tracking-widest uppercase">
+                Critical Class I & II Compliant
+            </span>
+        </div>
+        <div className="p-2 rounded-full border border-white/20 text-white opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+            <ArrowUpRight size={18} />
+        </div>
+      </div>
+
+      {/* Bottom Text */}
+      <div>
+        <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-400 transition-all">
+          {title}
+        </h3>
+        <div className="h-[1px] w-12 bg-neon-purple mb-4 group-hover:w-full transition-all duration-500 ease-out" />
+        <p className="text-slate-400 text-sm leading-relaxed max-w-sm group-hover:text-slate-200 transition-colors">
+          {desc}
+        </p>
+      </div>
+    </div>
   </motion.div>
 );
 
 const CriticalSectors: React.FC = () => {
   const sectors = [
     {
-      title: "Digital Products & Systems",
-      icon: <Cpu size={24} />,
-      items: [
-        "IoT Devices & Embedded Systems",
-        "Industrial Control Systems (ICS)",
-        "Smart Home Technologies",
-        "Connected Hardware Components"
-      ]
+      title: "Finance & Data",
+      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
+      desc: "Secure trading infrastructure and banking data centers. Resilience against high-frequency attacks and systemic risks.",
     },
     {
-      title: "Network Infrastructure",
-      icon: <Wifi size={24} />,
-      items: [
-        "Routers, Switches & Gateways",
-        "Telecommunication Networks",
-        "5G Infrastructure",
-        "Network Management Systems"
-      ]
+      title: "Manufacturing & OT",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
+      desc: "Robotics, SCADA, and Industrial IoT. Preventing production halts and ensuring safety in automated environments.",
     },
     {
-      title: "Operational Tech (OT)",
-      icon: <Settings size={24} />,
-      items: [
-        "SCADA Systems",
-        "Energy & Water Control Systems",
-        "Transportation Signaling",
-        "Manufacturing Robotics"
-      ]
+      title: "Logistics & Transport",
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop",
+      desc: "Port operations, rail grids, and autonomous fleets. Protecting the supply chain from disruption.",
     },
     {
-      title: "Digital Infrastructure",
-      icon: <Server size={24} />,
-      items: [
-        "Cloud Providers (IaaS, PaaS, SaaS)",
-        "Data Centers & CDNs",
-        "DNS Providers & IXPs",
-        "Satellite Communication"
-      ]
+      title: "Public Infrastructure",
+      image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=2144&auto=format&fit=crop",
+      desc: "Smart cities, power grids, and government services. Ensuring continuity for essential societal functions.",
     },
     {
-      title: "Data & Storage",
-      icon: <Database size={24} />,
-      items: [
-        "Critical Databases",
-        "Data Processing Systems",
-        "Encrypted Storage Solutions",
-        "Backup Infrastructure"
-      ]
-    },
-    {
-      title: "Identity & Access",
-      icon: <Key size={24} />,
-      items: [
-        "Identity Management Systems",
-        "Multi-Factor Authentication (MFA)",
-        "Single Sign-On (SSO)",
-        "Biometric Access Control"
-      ]
+      title: "Advanced Healthcare",
+      image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=2070&auto=format&fit=crop",
+      desc: "Connected medical devices and hospital networks. Protecting patient data and life-critical systems.",
     }
   ];
 
   return (
-    <section id="sectors" className="py-24 bg-charcoal border-t border-white/5">
+    <section id="sectors" className="py-32 bg-charcoal border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="font-display text-4xl font-bold text-white mb-4">Critical Scope</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
-             Components vital for maintaining societal functions and economic stability are subject to rigorous CRA cybersecurity requirements.
-          </p>
+        
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20">
+          <div className="max-w-2xl">
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tighter">
+              Critical <span className="text-slate-500">Scope.</span>
+            </h2>
+            <p className="text-slate-400 text-lg font-light">
+              Industries where failure is not an option. We provide the architectural backbone for Class I & II products under the EU Cyber Resilience Act.
+            </p>
+          </div>
+          
+          <div className="hidden md:block pb-2">
+             <div className="text-right text-xs font-mono text-slate-600 tracking-widest uppercase">
+                Sector Coverage
+             </div>
+             <div className="h-[1px] w-32 bg-white/20 mt-2" />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sectors.map((sector, idx) => (
             <SectorCard key={idx} {...sector} index={idx} />
           ))}
+          
+          {/* Last Card: Call to Action style */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A] flex flex-col justify-center items-center text-center p-8 hover:border-neon-purple/30 transition-colors"
+          >
+             <div className="mb-6 p-4 rounded-full bg-white/5 border border-white/10 group-hover:bg-neon-purple/10 group-hover:border-neon-purple/30 transition-all">
+                <ArrowUpRight size={32} className="text-slate-400 group-hover:text-neon-purple transition-colors" />
+             </div>
+             <h3 className="font-display text-2xl font-bold text-white mb-2">Your Sector?</h3>
+             <p className="text-slate-500 text-sm max-w-xs mx-auto mb-8">
+                TripleDefence adapts to any high-compliance environment.
+             </p>
+             <button className="px-6 py-3 border border-white/20 text-white text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all">
+                Consult Experts
+             </button>
+          </motion.div>
+
         </div>
       </div>
     </section>
@@ -568,20 +770,19 @@ const CriticalSectors: React.FC = () => {
 export default CriticalSectors;
 
 ================================================================
-FILE: src/components/Footer.tsx
+FILE: /home/vino/dev/triple-defence2025/components/Footer.tsx
 ================================================================
 import React from 'react';
-import { Twitter, Linkedin, Github } from 'lucide-react';
+import { Twitter, Linkedin, Github, Shield, Command } from 'lucide-react';
 
-import logo from '../assets/logo.png';
-
-const CustomLogo: React.FC = () => (
-  <img
-    src={logo}
-    alt="TripleDefence Logo"
-    className="w-8 h-8 object-contain filter drop-shadow-[0_0_5px_rgba(139,92,246,0.5)]"
-  />
-);
+const CustomLogo: React.FC = () => {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="filter drop-shadow-[0_0_5px_rgba(255,255,255,0.2)]">
+      <path d="M12 2L3 7V12C3 17.52 6.84 22.74 12 24C17.16 22.74 21 17.52 21 12V7L12 2Z" fill="#000000" stroke="#ffffff" strokeWidth="1.5" strokeLinejoin="round"/>
+      <path d="M12 6L7.5 10V13.5C7.5 16.5 9.5 19.5 12 20.5C14.5 19.5 16.5 16.5 16.5 13.5V10L12 6Z" fill="#000000" stroke="#525252" strokeWidth="1"/>
+    </svg>
+  );
+};
 
 const Footer: React.FC = () => {
   const handleToast = (msg: string) => {
@@ -598,11 +799,11 @@ const Footer: React.FC = () => {
     const target = document.getElementById(targetId);
     if (!target) return;
 
-    const headerOffset = 100;
-    const startPosition = window.pageYOffset;
+    const headerOffset = 100; 
+    const startPosition = window.scrollY || window.pageYOffset;
     const targetPosition = target.getBoundingClientRect().top + startPosition - headerOffset;
     const distance = targetPosition - startPosition;
-    const duration = 1200; // Consistent with Navigation
+    const duration = 1200; 
     let startTime: number | null = null;
 
     const ease = (t: number, b: number, c: number, d: number) => {
@@ -628,81 +829,82 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 w-full h-[500px] lg:h-[400px] bg-slate-950 flex flex-col justify-between py-12 z-0 border-t border-slate-900">
+    <footer className="relative lg:fixed bottom-0 left-0 w-full h-auto lg:h-[400px] bg-black flex flex-col justify-between py-12 lg:py-12 z-0 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col justify-between">
-
+        
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          {/* Brand */}
-          <div className="md:col-span-5">
+          {/* Brand & Badge */}
+          <div className="md:col-span-4">
             <div className="flex items-center gap-2 mb-6">
               <CustomLogo />
-              <span className="font-display font-bold text-xl text-white">
-                Triple<span className="text-slate-500">Defence</span>
+              <span className="font-display font-bold text-xl text-white tracking-tight">
+                Triple<span className="text-slate-600">Defence</span>
               </span>
             </div>
-            <p className="text-slate-400 max-w-sm mb-8 leading-relaxed">
-              Securing the European digital ecosystem. We provide the infrastructure for manufacturers to meet the Cyber Resilience Act standards effortlessly.
-            </p>
+            
+            {/* Sovereign Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/10 bg-white/5 rounded-md mb-8">
+                <Shield size={12} className="text-slate-400" />
+                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">
+                    Sovereign-Grade Protection
+                </span>
+            </div>
+
             <div className="flex gap-4">
-              <a href="#" onClick={(e) => preventDefaultAndToast(e, "LinkedIn integration coming soon.")} className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white transition-all text-slate-400">
-                <Linkedin size={18} />
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "LinkedIn integration coming soon.")} className="text-slate-600 hover:text-white transition-colors">
+                <Linkedin size={20} strokeWidth={1.5} />
               </a>
-              <a href="#" onClick={(e) => preventDefaultAndToast(e, "Twitter feed unavailable.")} className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white transition-all text-slate-400">
-                <Twitter size={18} />
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "Twitter feed unavailable.")} className="text-slate-600 hover:text-white transition-colors">
+                <Twitter size={20} strokeWidth={1.5} />
               </a>
-              <a href="#" onClick={(e) => preventDefaultAndToast(e, "GitHub repository is private.")} className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white transition-all text-slate-400">
-                <Github size={18} />
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "GitHub repository is private.")} className="text-slate-600 hover:text-white transition-colors">
+                <Github size={20} strokeWidth={1.5} />
               </a>
             </div>
           </div>
 
-          {/* Links */}
+          {/* Links 1 */}
           <div className="md:col-span-2">
-            <h4 className="text-white font-bold mb-6">Product</h4>
-            <ul className="space-y-4 text-slate-400 text-sm">
-              <li><a href="#risk" onClick={(e) => smoothScrollTo(e, 'risk')} className="hover:text-neon-purple transition-colors">Risk Assessment</a></li>
-              <li><a href="#mupp" onClick={(e) => smoothScrollTo(e, 'mupp')} className="hover:text-neon-purple transition-colors">MUPP Engine</a></li>
-              <li><a href="#cra3d" onClick={(e) => smoothScrollTo(e, 'cra3d')} className="hover:text-neon-purple transition-colors">CRA-3D</a></li>
+            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 text-opacity-80">Product</h4>
+            <ul className="space-y-3 text-slate-500 text-sm font-medium">
+              <li><a href="#risk" onClick={(e) => smoothScrollTo(e, 'risk')} className="hover:text-white transition-colors">Risk Assessment</a></li>
+              <li><a href="#solutions" onClick={(e) => smoothScrollTo(e, 'solutions')} className="hover:text-white transition-colors">MUPP Platform</a></li>
+              <li><a href="#roadmap" onClick={(e) => smoothScrollTo(e, 'roadmap')} className="hover:text-white transition-colors">Compliance Roadmap</a></li>
             </ul>
           </div>
 
+          {/* Links 2 */}
           <div className="md:col-span-2">
-            <h4 className="text-white font-bold mb-6">Company</h4>
-            <ul className="space-y-4 text-slate-400 text-sm">
-              <li><a href="#sectors" onClick={(e) => smoothScrollTo(e, 'sectors')} className="hover:text-neon-purple transition-colors">Sectors</a></li>
-              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Legal docs are being updated.")} className="hover:text-neon-purple transition-colors">Legal</a></li>
-              <li><a href="#contact" onClick={(e) => smoothScrollTo(e, 'contact')} className="hover:text-neon-purple transition-colors">Contact</a></li>
+            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 text-opacity-80">Legal</h4>
+            <ul className="space-y-3 text-slate-500 text-sm font-medium">
+              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Privacy Policy")} className="hover:text-white transition-colors">Privacy Protocol</a></li>
+              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Terms")} className="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "SLA")} className="hover:text-white transition-colors">SLA Assurance</a></li>
             </ul>
           </div>
 
-          {/* Newsletter / Contact */}
-          <div className="md:col-span-3">
-            <h4 className="text-white font-bold mb-6">Stay compliant</h4>
-            <p className="text-slate-500 text-xs mb-4">Receive critical CRA regulatory updates.</p>
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="work@email.com"
-                className="bg-white/5 border border-white/10 text-white px-4 py-2 text-sm w-full focus:outline-none focus:border-neon-purple/50"
-              />
-              <button
-                onClick={() => handleToast("Subscription successful (Demo Mode).")}
-                className="bg-neon-purple hover:bg-neon-purple/80 text-white px-4 py-2 text-sm font-medium transition-colors"
-              >
-                Join
-              </button>
-            </div>
+          {/* CTA Box */}
+          <div className="md:col-span-4">
+             <div className="bg-[#0A0A0A] border border-white/10 p-6 rounded-xl">
+                <h4 className="text-white font-bold mb-2">Automated Compliance</h4>
+                <p className="text-slate-500 text-xs mb-4 leading-relaxed">
+                   Article 14 reporting readiness requires architectural integration.
+                </p>
+                <button 
+                  onClick={() => handleToast("Wizard Demo Requested")}
+                  className="w-full group flex items-center justify-between bg-white text-black px-4 py-3 text-xs font-bold tracking-widest uppercase hover:bg-slate-200 transition-colors"
+                >
+                  <span>CRA-3D Wizard Demo Available</span>
+                  <Command size={14} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600 font-mono">
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-slate-700 font-mono uppercase tracking-wider">
           <p>&copy; 2024 TripleDefence Inc. All rights reserved.</p>
-          <div className="flex gap-6 mt-4 md:mt-0 cursor-pointer">
-            <span onClick={() => handleToast("Privacy Protocol v1.2")}>PRIVACY POLICY</span>
-            <span onClick={() => handleToast("Terms of Service v2.0")}>TERMS OF SERVICE</span>
-            <span onClick={() => handleToast("SLA Dashboard unavailable")}>SLA</span>
-          </div>
+          <p className="mt-2 md:mt-0">Systems Operational // EU-West-1</p>
         </div>
 
       </div>
@@ -713,158 +915,289 @@ const Footer: React.FC = () => {
 export default Footer;
 
 ================================================================
-FILE: src/components/Hero.tsx
+FILE: /home/vino/dev/triple-defence2025/components/Hero.tsx
 ================================================================
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ShieldCheck } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, FileText, Activity } from 'lucide-react';
 
 interface HeroProps {
   mousePosition: { x: number; y: number };
 }
 
-const Hero: React.FC<HeroProps> = ({ mousePosition }) => {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  color: string;
+  isThreat: boolean;
+  alpha: number;
+}
+
+const Hero: React.FC<HeroProps> = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleToast = (msg: string) => {
     window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: msg } }));
   };
 
   const smoothScrollToContact = () => {
-    const targetId = 'contact';
-    const duration = 1500;
-
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    const headerOffset = 100;
-    const startPosition = window.pageYOffset;
-    const targetPosition = target.getBoundingClientRect().top + startPosition - headerOffset;
-    const distance = targetPosition - startPosition;
-    let startTime: number | null = null;
-
-    const ease = (t: number, b: number, c: number, d: number) => {
-      t /= d / 2;
-      if (t < 1) return c / 2 * t * t * t + b;
-      t -= 2;
-      return c / 2 * (t * t * t + 2) + b;
-    };
-
-    const animation = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
-      } else {
-        window.scrollTo(0, targetPosition);
-      }
-    };
-    requestAnimationFrame(animation);
+    const target = document.getElementById('contact');
+    if (target) {
+      const headerOffset = 100;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
   };
 
+  // ---------------------------------------------------------------------------
+  // CANVAS ANIMATION LOGIC
+  // ---------------------------------------------------------------------------
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    
+    const particles: Particle[] = [];
+    const PROTECTION_RADIUS = 300; // The invisible barrier size
+    const THREAT_COLOR = '239, 68, 68'; // Tailwind Red-500
+    const SAFE_COLOR = '139, 92, 246'; // Tailwind Violet-500
+    const BASE_SPEED = 0.8;
+
+    const createParticle = (): Particle => {
+      // Spawn from edges
+      const edge = Math.floor(Math.random() * 4);
+      let x = 0, y = 0;
+      
+      switch(edge) {
+        case 0: x = Math.random() * width; y = -10; break; // Top
+        case 1: x = width + 10; y = Math.random() * height; break; // Right
+        case 2: x = Math.random() * width; y = height + 10; break; // Bottom
+        case 3: x = -10; y = Math.random() * height; break; // Left
+      }
+
+      // Calculate velocity towards roughly the center
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const angle = Math.atan2(centerY - y, centerX - x);
+      const speed = Math.random() * BASE_SPEED + 0.2;
+
+      return {
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: Math.random() * 1.5 + 0.5,
+        color: THREAT_COLOR, // Start as threat
+        isThreat: true,
+        alpha: Math.random() * 0.5 + 0.2
+      };
+    };
+
+    // Initialize logic
+    for (let i = 0; i < 80; i++) {
+      particles.push(createParticle());
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, width, height);
+      
+      // Draw Static Engineering Grid (Subtle)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.lineWidth = 1;
+      const gridSize = 100;
+      
+      // Horizontal Lines
+      for (let i = 0; i < height; i += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(width, i);
+        ctx.stroke();
+      }
+      
+      // Vertical Lines
+      for (let i = 0; i < width; i += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, height);
+        ctx.stroke();
+      }
+
+      const centerX = width / 2;
+      const centerY = height / 2;
+
+      // Update and Draw Particles
+      particles.forEach((p, index) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Check distance to center
+        const dx = p.x - centerX;
+        const dy = p.y - centerY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        // THE NEUTRALIZATION LOGIC
+        // If particle crosses the barrier, it becomes safe
+        if (p.isThreat && dist < PROTECTION_RADIUS) {
+          p.isThreat = false;
+          p.color = SAFE_COLOR;
+          p.vx *= 0.5; // Slow down when neutralized
+          p.vy *= 0.5;
+        }
+
+        // Fade out logic for neutralized particles or particles leaving screen
+        if (!p.isThreat) {
+           p.alpha -= 0.005;
+        }
+
+        // Reset if transparent or out of bounds (too far)
+        if (p.alpha <= 0 || p.x < -50 || p.x > width + 50 || p.y < -50 || p.y > height + 50) {
+          particles[index] = createParticle();
+        }
+
+        // Draw
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+        ctx.fill();
+        
+        // Draw subtle trail if moving fast enough
+        if (p.isThreat) {
+           ctx.shadowBlur = 4;
+           ctx.shadowColor = `rgba(${p.color}, 0.5)`;
+        } else {
+           ctx.shadowBlur = 0;
+        }
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+    const animationId = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
   return (
-    <section className="relative h-screen min-h-[800px] w-full flex flex-col justify-center items-center overflow-hidden">
+    <section className="relative h-screen min-h-[800px] w-full flex flex-col justify-center items-center overflow-hidden bg-[#030303]">
+      
+      {/* ---------------------------------------------------------------------------
+          LAYER 1: CANVAS BACKGROUND (Data Scatter Plot)
+         --------------------------------------------------------------------------- */}
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 z-0 pointer-events-none"
+      />
+      
+      {/* Vignette Overlay for Focus */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030303_90%)] z-0 pointer-events-none" />
 
       {/* ---------------------------------------------------------------------------
-          LAYER 1: BACKGROUND (Fixed, Absolute, No Layout Interference)
+          LAYER 2: MAIN CONTENT (Operational Command Surface)
          --------------------------------------------------------------------------- */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {/* Blobs */}
+      <div className="relative z-10 w-full max-w-7xl px-6 flex flex-col items-center justify-center text-center -mt-10">
+        
+        {/* Minimalist Status Badge */}
         <motion.div
-          style={{ y: y1, x: -50 }}
-          className="absolute top-[-10%] left-[10%] w-[600px] h-[600px] bg-neon-purple/15 rounded-full blur-[120px] mix-blend-screen animate-blob"
-        />
-        <motion.div
-          style={{ y: y2, x: 50 }}
-          className="absolute top-[20%] right-[10%] w-[500px] h-[500px] bg-neon-red/10 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"
-        />
-        <div className="absolute bottom-[-20%] left-[30%] w-[600px] h-[600px] bg-indigo-900/20 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000" />
-
-        {/* Noise */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-15 mix-blend-overlay"></div>
-      </div>
-
-      {/* ---------------------------------------------------------------------------
-          LAYER 2: MAIN CONTENT (Centered Flex Column)
-         --------------------------------------------------------------------------- */}
-      <div className="relative z-10 w-full max-w-[90%] md:max-w-7xl px-4 flex flex-col items-center justify-center text-center">
-
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-8 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-neon-purple/30 bg-neon-purple/10 backdrop-blur-md shadow-[0_0_15px_rgba(139,92,246,0.1)] mx-auto"
+          className="mb-10 flex items-center gap-3 px-3 py-1 border border-white/10 bg-white/[0.02] rounded-full backdrop-blur-sm"
         >
-          <div className="w-2 h-2 rounded-full bg-neon-red animate-pulse-fast shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
-          <span className="text-xs font-medium tracking-wide text-slate-200">
-            Enforcement: Dec 2027
+          <div className="w-1.5 h-1.5 rounded-full bg-neon-purple animate-pulse" />
+          <span className="text-[10px] font-mono font-medium tracking-[0.2em] text-slate-400 uppercase">
+            Active Countermeasures
           </span>
         </motion.div>
 
         {/* Headline */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className="w-full flex flex-col items-center"
+          className="relative"
         >
-          <h1 className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white mb-6 leading-[1.1] md:leading-tight text-center mx-auto">
-            <span className="block text-gradient-silver">UNHACKABLE</span>
-            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-neon-purple via-white to-neon-purple bg-[length:200%_auto] animate-[gradient_3s_linear_infinite]">
-              RESILIENCE.
+          <h1 className="font-display text-5xl sm:text-7xl md:text-9xl font-bold tracking-tighter text-white mb-8 leading-[0.9]">
+            WIN WITHOUT
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-500">
+              FIGHTING.
             </span>
           </h1>
         </motion.div>
 
         {/* Subheadline */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-lg md:text-2xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-12 tracking-tight text-center"
+          className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-16 tracking-tight"
         >
-          The complete platform for <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-red font-medium">EU CRA Compliance</span>.
-          Automated SBOMs, Article 14 reporting, and SL4 security for critical infrastructure.
+          Threats don't wait for alerts. TripleDefence blocks vulnerability abuse before it strikes. We engineer <span className="text-white font-normal">proactive protection</span> into the core fabric of your organization.
         </motion.p>
 
-        {/* CTAs */}
+        {/* Precision Interfaces (Buttons) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
         >
-          <button
+          {/* Primary Action */}
+          <button 
             onClick={smoothScrollToContact}
-            className="group relative w-full sm:w-auto px-8 py-4 bg-neon-purple/10 text-white font-semibold text-sm tracking-wide rounded-full overflow-hidden border border-neon-purple/50 shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_40px_rgba(139,92,246,0.5)] transition-all duration-300"
+            className="group relative px-8 py-4 bg-transparent overflow-hidden rounded-sm transition-all duration-300"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-neon-purple to-indigo-600 opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              Start Assessment <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <div className="absolute inset-0 border border-white/20 group-hover:border-white/40 transition-colors" />
+            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="relative z-10 flex items-center gap-3 text-sm font-bold tracking-widest text-white uppercase">
+              Start Assessment
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </span>
           </button>
-
-          <button
-            onClick={() => handleToast("Documentation hub is currently being updated.")}
-            className="w-full sm:w-auto px-8 py-4 text-slate-400 font-medium text-sm tracking-wide hover:text-white transition-colors duration-300 flex items-center justify-center gap-2 group rounded-full"
+          
+          {/* Secondary Action */}
+          <button 
+            onClick={() => handleToast("Documentation hub access requires clearance.")}
+            className="group px-8 py-4 text-slate-500 hover:text-white transition-colors duration-300 flex items-center gap-2 text-sm font-medium tracking-wide"
           >
-            <ShieldCheck className="w-4 h-4 text-slate-600 group-hover:text-neon-red transition-colors" />
-            View Documentation
+             <FileText className="w-4 h-4" />
+             <span className="border-b border-transparent group-hover:border-white transition-all">View Documentation</span>
           </button>
         </motion.div>
-      </div>
 
-      {/* ---------------------------------------------------------------------------
-          LAYER 3: SOFT GRADIENT TRANSITION ONLY (No SVG Notch)
-         --------------------------------------------------------------------------- */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
-        <div className="w-full h-40 bg-gradient-to-t from-charcoal via-charcoal/80 to-transparent" />
+        {/* Bottom Metrics (Decorative) */}
+        <motion.div
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           transition={{ delay: 1, duration: 1 }}
+           className="absolute bottom-[-150px] md:bottom-[-200px] left-0 right-0 flex justify-between px-10 text-[10px] font-mono text-slate-700 pointer-events-none"
+        >
+           <div className="flex items-center gap-2">
+             <Activity size={12} /> SYSTEM INTEGRITY: 100%
+           </div>
+           <div>
+             SECURE_SESSION_ID: 0x84F2
+           </div>
+        </motion.div>
+
       </div>
     </section>
   );
@@ -873,7 +1206,385 @@ const Hero: React.FC<HeroProps> = ({ mousePosition }) => {
 export default Hero;
 
 ================================================================
-FILE: src/components/MuppEngine.tsx
+FILE: /home/vino/dev/triple-defence2025/components/Legacy.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Award, ShieldCheck } from 'lucide-react';
+
+const Legacy: React.FC = () => {
+  return (
+    <section id="legacy" className="py-32 bg-black relative overflow-hidden border-t border-white/10">
+       
+       {/* Background Ambience */}
+       <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-40 bg-gradient-to-b from-white/10 to-transparent" />
+          {/* Subtle Radial Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-white/[0.03] rounded-full blur-[100px]" />
+       </div>
+
+       <div className="max-w-4xl mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+          
+          {/* Badge */}
+          <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] mb-12"
+          >
+              <ShieldCheck size={14} className="text-slate-400" />
+              <span className="text-[10px] font-mono font-bold text-slate-400 tracking-widest uppercase">Est. 2012</span>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.8, ease: "easeOut" }}
+            className="font-display text-4xl md:text-6xl font-bold text-white mb-12 tracking-tighter leading-tight"
+          >
+            OPERATIONAL ZERO TRUST <br/> PIONEERS SINCE 2012.
+          </motion.h2>
+
+          {/* Divider */}
+          <motion.div 
+            initial={{ width: 0 }}
+            whileInView={{ width: "60px" }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="h-[2px] bg-neon-purple rounded-full mb-12"
+          />
+
+          {/* Body Text */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto"
+          >
+             Long before the industry talked about Zero Trust, we were building it. <strong className="text-white font-medium">TripleDefence</strong> is the evolution of a decade-long doctrine: <span className="italic text-slate-300">protect the system, not the symptoms.</span>
+          </motion.p>
+       </div>
+    </section>
+  );
+};
+
+export default Legacy;
+
+================================================================
+FILE: /home/vino/dev/triple-defence2025/components/MIPJourney.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, ChevronRight } from 'lucide-react';
+
+interface StepProps {
+  id: string;
+  title: string;
+  desc: string;
+  index: number;
+}
+
+const StepCard: React.FC<StepProps> = ({ id, title, desc, index }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="relative flex flex-col group"
+    >
+      {/* Connector Line (Horizontal for desktop) */}
+      <div className="hidden lg:block absolute top-6 left-8 right-[-2rem] h-[1px] bg-white/5 z-0" />
+      
+      {/* Card Content */}
+      <div className="relative z-10 flex flex-col h-full p-6 md:p-8 rounded-xl border border-white/5 bg-[#050505] hover:border-neon-purple/30 hover:bg-white/[0.02] transition-all duration-500">
+        
+        {/* Number */}
+        <div className="flex justify-between items-start mb-6">
+          <span className="font-display text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white/20 to-transparent group-hover:from-neon-purple group-hover:to-purple-900 transition-all duration-500">
+            {id}
+          </span>
+          <div className="p-1 rounded-full bg-white/5 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity">
+             <ChevronRight size={14} />
+          </div>
+        </div>
+
+        {/* Text */}
+        <h3 className="font-display text-lg font-bold text-white mb-3 uppercase tracking-tight">
+          {title}
+        </h3>
+        <p className="text-slate-400 text-sm leading-relaxed font-light">
+          {desc}
+        </p>
+
+        {/* Hover Glow */}
+        <div className="absolute inset-0 bg-neon-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl pointer-events-none" />
+      </div>
+
+      {/* Mobile Connector (Vertical) */}
+      <div className="lg:hidden absolute left-1/2 bottom-[-1.5rem] h-6 w-[1px] bg-white/10 last:hidden" />
+    </motion.div>
+  );
+};
+
+const MIPJourney: React.FC = () => {
+  const steps = [
+    {
+      id: "01",
+      title: "Strategic Intake",
+      desc: "Understanding your mission goals, digital estate, and specific CRA/NIS2 obligations."
+    },
+    {
+      id: "02",
+      title: "Footprint Mapping",
+      desc: "Identifying every asset, dependency, and 'architectural chasm' in your current environment."
+    },
+    {
+      id: "03",
+      title: "Doctrine Design",
+      desc: "Creating the unified 'White' architecture blueprint. No seams, no topographical maps for attackers."
+    },
+    {
+      id: "04",
+      title: "Pre-emptive Hardening",
+      desc: "Implementing 'Purple' intelligence. Designing out vulnerabilities before they can be exploited."
+    },
+    {
+      id: "05",
+      title: "Wizard Deployment",
+      desc: "Activating the CRA-3D Wizard for automated Article 14 reporting and evidence management."
+    },
+    {
+      id: "06",
+      title: "Assurance & Validation",
+      desc: "Generating the Audit-Proof Evidence Vault and obtaining measurable resilience metrics."
+    },
+    {
+      id: "07",
+      title: "Strategic Peace",
+      desc: "Entering the continuous protection cycle. Winning without fighting through superior design."
+    }
+  ];
+
+  const handleScrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <section className="bg-charcoal py-32 relative z-20 border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Header */}
+        <div className="mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-2 mb-4"
+          >
+            <div className="h-[1px] w-10 bg-neon-purple" />
+            <span className="text-neon-purple font-mono text-xs tracking-widest uppercase font-bold">The Pathway</span>
+          </motion.div>
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display text-4xl md:text-5xl font-bold text-white max-w-2xl"
+          >
+            Modular Implementation <br/> <span className="text-slate-500">Pathway (MIP)</span>
+          </motion.h2>
+        </div>
+
+        {/* Steps Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-12 mb-20">
+          {steps.map((step, index) => (
+            <StepCard 
+              key={step.id} 
+              {...step} 
+              index={index}
+            />
+          ))}
+          
+          {/* Final "Success" Placeholder to balance the 4x2 grid visually on desktop if needed, 
+              or we let 7 stand alone. 7 is a prime number, let's leave it as is, 
+              the layout will wrap naturally. */}
+        </div>
+
+        {/* CTA */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="flex justify-center"
+        >
+          <button 
+            onClick={handleScrollToContact}
+            className="group flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 rounded-full hover:bg-white hover:text-charcoal transition-all duration-300"
+          >
+            <span className="text-sm font-bold tracking-widest uppercase">Ready to start Step 01? Schedule a Strategic Intake</span>
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          </button>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+};
+
+export default MIPJourney;
+
+================================================================
+FILE: /home/vino/dev/triple-defence2025/components/Methodology.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Map, Grid, Rocket, Crown } from 'lucide-react';
+
+const Step: React.FC<{ 
+  number: string; 
+  title: string; 
+  desc: string; 
+  icon: React.ReactNode; 
+  isLast?: boolean; 
+  delay: number;
+}> = ({ number, title, desc, icon, isLast, delay }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay, ease: "easeOut" }}
+    className="relative flex flex-col flex-1 group"
+  >
+    {/* Connecting Line (Desktop) */}
+    {!isLast && (
+      <div className="hidden lg:block absolute top-8 left-[50%] right-[-50%] h-[1px] bg-slate-800 z-0">
+        <motion.div 
+           initial={{ width: 0 }}
+           whileInView={{ width: "100%" }}
+           transition={{ duration: 1, delay: delay + 0.5 }}
+           className="h-full bg-neon-purple/30"
+        />
+      </div>
+    )}
+
+    {/* Connecting Line (Mobile) */}
+    {!isLast && (
+      <div className="lg:hidden absolute left-6 top-[3rem] bottom-[-2rem] w-[1px] bg-slate-800 z-0" />
+    )}
+
+    <div className="relative z-10 flex flex-row lg:flex-col items-start gap-6 lg:gap-0">
+        {/* Number & Icon Container */}
+        <div className="flex-shrink-0">
+            <div className="relative w-12 h-12 lg:w-16 lg:h-16 flex items-center justify-center bg-charcoal border border-slate-800 rounded-full group-hover:border-neon-purple/50 transition-colors duration-500 mb-6 lg:mx-auto">
+                <div className="text-slate-400 group-hover:text-neon-purple transition-colors duration-300">
+                    {icon}
+                </div>
+                {/* Ping Effect for Govern */}
+                {title === "GOVERN" && (
+                    <div className="absolute inset-0 rounded-full border border-neon-purple/30 animate-ping opacity-20" />
+                )}
+            </div>
+        </div>
+
+        {/* Content */}
+        <div className="lg:text-center pt-2 lg:pt-0 pb-8 lg:pb-0">
+            <div className="flex items-center lg:justify-center gap-3 mb-2">
+                <span className="font-mono text-xs font-bold text-slate-600 tracking-widest">{number}</span>
+                <div className="h-[1px] w-8 bg-slate-800 lg:hidden" />
+            </div>
+            
+            <h3 className="font-display text-xl font-bold text-white mb-3 tracking-tight group-hover:text-neon-purple transition-colors duration-300">
+                {title}
+            </h3>
+            
+            <p className="text-slate-400 text-sm leading-relaxed max-w-xs lg:mx-auto">
+                {desc}
+            </p>
+        </div>
+    </div>
+  </motion.div>
+);
+
+const Methodology: React.FC = () => {
+  return (
+    <section id="methodology" className="py-24 bg-charcoal border-t border-white/5 relative overflow-hidden">
+        
+      {/* Background Decor */}
+      <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-white/5 via-transparent to-transparent" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        
+        {/* Header */}
+        <div className="text-center mb-20">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tighter"
+          >
+            From Idea to <span className="text-neon-purple">Strategic Peace</span>.
+          </motion.h2>
+          <p className="text-slate-500 max-w-xl mx-auto font-light">
+            A disciplined lifecycle approach to cyberprotection.
+          </p>
+        </div>
+
+        {/* Steps Container */}
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-4 justify-between">
+            
+            <Step 
+                number="01"
+                title="DEFINE"
+                icon={<Map size={24} />}
+                desc="Mapping your digital footprint and conceptualizing the vision."
+                delay={0.1}
+            />
+
+            <Step 
+                number="02"
+                title="DEVELOP"
+                icon={<Grid size={24} />}
+                desc="Designing the unified architecture and proactive strategy."
+                delay={0.2}
+            />
+
+            <Step 
+                number="03"
+                title="DEPLOY"
+                icon={<Rocket size={24} />}
+                desc="Implementing the unseen shield and eliminating architectural chasms."
+                delay={0.3}
+            />
+
+            <Step 
+                number="04"
+                title="GOVERN"
+                icon={<Crown size={24} />}
+                desc="Sustaining leadership through vPAC consultancy and continuous assurance."
+                isLast={true}
+                delay={0.4}
+            />
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Methodology;
+
+================================================================
+FILE: /home/vino/dev/triple-defence2025/components/MuppEngine.tsx
 ================================================================
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -908,7 +1619,7 @@ const MuppEngine: React.FC = () => {
             </h2>
             
             <p className="text-slate-400 text-lg leading-relaxed mb-8">
-              The <strong>Multi-Use Protection Platform (MUPP)</strong> is a revolutionary approach to endpoint security. It provides an unhackable layer that guarantees <span className="text-white font-medium">SL4 security levels</span> while automating 90% of CRA compliance tasks.
+              The <strong>Multi-Use Protection Platform (MUPP)</strong> is a revolutionary approach to endpoint protection. It provides an unhackable layer that guarantees <span className="text-white font-medium">SL4 protection levels</span> while automating 90% of CRA compliance tasks.
             </p>
 
             <div className="space-y-6">
@@ -982,7 +1693,7 @@ const MuppEngine: React.FC = () => {
                          <div className="absolute inset-0 m-auto w-32 h-32 bg-neon-purple/10 rounded-full blur-xl animate-pulse"></div>
                          <div className="absolute inset-0 m-auto flex flex-col items-center justify-center text-center z-10">
                             <span className="text-4xl font-display font-bold text-white">SL4</span>
-                            <span className="text-[10px] tracking-widest text-neon-purple uppercase">Security</span>
+                            <span className="text-[10px] tracking-widest text-neon-purple uppercase">Protection</span>
                          </div>
                          
                          {/* Scanning Line */}
@@ -993,7 +1704,7 @@ const MuppEngine: React.FC = () => {
                 {/* Floating Status Badge */}
                 <div className="absolute top-8 right-8 bg-slate-900/80 backdrop-blur-md border border-green-500/30 px-4 py-2 rounded-lg shadow-lg">
                     <div className="text-green-400 font-bold text-sm tracking-wide">COMPLIANT</div>
-                    <div className="text-slate-500 text-[10px] uppercase">Security Level: SL4</div>
+                    <div className="text-slate-500 text-[10px] uppercase">Protection Level: SL4</div>
                 </div>
 
                 {/* Bottom Console Text */}
@@ -1013,21 +1724,22 @@ const MuppEngine: React.FC = () => {
 export default MuppEngine;
 
 ================================================================
-FILE: src/components/Navigation.tsx
+FILE: /home/vino/dev/triple-defence2025/components/Navigation.tsx
 ================================================================
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Lock } from 'lucide-react';
 
-import logo from '../assets/logo.png';
-
-const CustomLogo: React.FC = () => (
-  <img
-    src={logo}
-    alt="TripleDefence Logo"
-    className="w-10 h-10 object-contain filter drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]"
-  />
-);
+const CustomLogo: React.FC = () => {
+  return (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="filter drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
+      <path d="M12 2L3 7V12C3 17.52 6.84 22.74 12 24C17.16 22.74 21 17.52 21 12V7L12 2Z" fill="#0f172a" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round"/>
+      <path d="M12 6L7.5 10V13.5C7.5 16.5 9.5 19.5 12 20.5C14.5 19.5 16.5 16.5 16.5 13.5V10L12 6Z" fill="#000000" stroke="#8b5cf6" strokeWidth="1.5"/>
+      <path d="M12 10V16" stroke="#8b5cf6" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M9 13H15" stroke="#8b5cf6" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  );
+};
 
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -1042,13 +1754,13 @@ const Navigation: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: 'MUPP Engine', id: 'mupp' },
-    { name: 'CRA-3D', id: 'cra3d' },
+    { name: 'Solutions', id: 'solutions' },
+    { name: 'Methodology', id: 'methodology' },
     { name: 'Sectors', id: 'sectors' },
     { name: 'Fines & Risk', id: 'risk' },
   ];
 
-  // Custom Smooth Scroll Function (Restored)
+  // Custom Smooth Scroll Function
   const smoothScrollTo = (e: React.MouseEvent, targetId: string, duration: number = 1500) => {
     e.preventDefault();
     const target = document.getElementById(targetId);
@@ -1058,7 +1770,7 @@ const Navigation: React.FC = () => {
     setMobileOpen(false);
 
     const headerOffset = 100;
-    const startPosition = window.pageYOffset;
+    const startPosition = window.scrollY || window.pageYOffset;
     const targetPosition = target.getBoundingClientRect().top + startPosition - headerOffset;
     const distance = targetPosition - startPosition;
     let startTime: number | null = null;
@@ -1083,7 +1795,7 @@ const Navigation: React.FC = () => {
         window.scrollTo(0, targetPosition);
       }
     };
-
+    
     requestAnimationFrame(animation);
   };
 
@@ -1094,15 +1806,16 @@ const Navigation: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${
+        isScrolled
           ? 'bg-charcoal/95 backdrop-blur-xl border-white/5 py-4'
           : 'bg-transparent border-transparent py-6'
-        }`}
+      }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <div
-          className="flex items-center gap-3 cursor-pointer group"
+        <div 
+          className="flex items-center gap-3 cursor-pointer group" 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           <CustomLogo />
@@ -1124,9 +1837,9 @@ const Navigation: React.FC = () => {
               <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-neon-purple transition-all duration-300 group-hover:w-full box-shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
             </a>
           ))}
-
+          
           {/* Portal Button (Trigger Toast) */}
-          <button
+          <button 
             onClick={() => handleToast("Portal access restricted. Please contact sales.")}
             className="flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors group"
           >
@@ -1137,7 +1850,7 @@ const Navigation: React.FC = () => {
 
         {/* CTA */}
         <div className="hidden md:block">
-          <button
+          <button 
             onClick={(e) => smoothScrollTo(e, 'contact', 1500)}
             className="px-5 py-2 text-xs font-bold tracking-widest text-charcoal bg-white hover:bg-slate-200 transition-all duration-300 rounded-sm shadow-[0_0_15px_rgba(255,255,255,0.1)]"
           >
@@ -1180,7 +1893,7 @@ const Navigation: React.FC = () => {
                 <Lock size={20} />
                 Portal
               </button>
-              <button
+              <button 
                 onClick={(e) => smoothScrollTo(e, 'contact', 1500)}
                 className="mt-4 w-full py-4 text-sm font-bold text-charcoal bg-white rounded-sm"
               >
@@ -1197,7 +1910,90 @@ const Navigation: React.FC = () => {
 export default Navigation;
 
 ================================================================
-FILE: src/components/RiskBento.tsx
+FILE: /home/vino/dev/triple-defence2025/components/Philosophy.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { EyeOff, Zap } from 'lucide-react';
+
+const Philosophy: React.FC = () => {
+  return (
+    <section className="relative py-24 bg-charcoal z-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Section Title */}
+        <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+        >
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tighter mb-4">
+                The TripleDefence Doctrine
+            </h2>
+            <div className="h-1 w-24 bg-neon-purple mx-auto rounded-full" />
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+            
+            {/* White Doctrine */}
+            <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="group relative p-10 bg-[#080808] border border-white/10 rounded-2xl hover:bg-white/[0.02] transition-colors duration-500"
+            >
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-white/50 transition-all duration-500" />
+                
+                <div className="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-lg bg-white/5 border border-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                    <EyeOff size={24} />
+                </div>
+
+                <h3 className="font-display text-2xl font-bold text-white mb-4">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">WHITE</span>
+                    <span className="block text-sm font-sans font-light text-slate-500 mt-1 tracking-wide uppercase">(The Clarity of Invisibility)</span>
+                </h3>
+
+                <p className="text-slate-400 leading-relaxed text-lg font-light">
+                    A unified architecture with no seams. Present nothing of value to the observer. You cannot fight what you cannot define.
+                </p>
+            </motion.div>
+
+            {/* Purple Doctrine */}
+            <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                className="group relative p-10 bg-[#080808] border border-white/10 rounded-2xl hover:bg-neon-purple/[0.02] transition-colors duration-500"
+            >
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-purple/30 to-transparent group-hover:via-neon-purple/70 transition-all duration-500" />
+
+                <div className="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-lg bg-neon-purple/10 border border-neon-purple/30 text-neon-purple shadow-[0_0_15px_rgba(139,92,246,0.2)]">
+                    <Zap size={24} />
+                </div>
+
+                <h3 className="font-display text-2xl font-bold text-white mb-4">
+                    <span className="text-neon-purple drop-shadow-[0_0_10px_rgba(139,92,246,0.5)]">PURPLE</span>
+                    <span className="block text-sm font-sans font-light text-slate-500 mt-1 tracking-wide uppercase">(The Power of Pre-emption)</span>
+                </h3>
+
+                <p className="text-slate-400 leading-relaxed text-lg font-light">
+                    Shift from reactive brute force to proactive design. Predict and negate threats before they manifest.
+                </p>
+            </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Philosophy;
+
+================================================================
+FILE: /home/vino/dev/triple-defence2025/components/RiskBento.tsx
 ================================================================
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -1258,7 +2054,7 @@ const RiskBento: React.FC = () => {
               or <span className="text-neon-red font-semibold">2.5%</span> of Global Turnover
             </p>
             <p className="text-sm text-slate-400 leading-relaxed max-w-md border-l-2 border-neon-red/50 pl-4">
-              Applied for failure to meet core cybersecurity requirements or conformity assessments. Targets manufacturers of products with digital elements.
+              Applied for failure to meet core cyberprotection requirements or conformity assessments. Targets manufacturers of products with digital elements.
             </p>
           </div>
           <div className="mt-auto w-full bg-slate-800/50 h-1.5 rounded-full overflow-hidden">
@@ -1321,7 +2117,7 @@ const RiskBento: React.FC = () => {
 export default RiskBento;
 
 ================================================================
-FILE: src/components/SolutionModule.tsx
+FILE: /home/vino/dev/triple-defence2025/components/SolutionModule.tsx
 ================================================================
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -1359,7 +2155,7 @@ const SolutionModule: React.FC = () => {
               Article 14 <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-blue-500">Automated Reporting.</span>
             </h2>
             <p className="text-slate-400 text-lg max-w-2xl">
-              TripleDefence serves as your bridge to ENISA. We integrate directly into your CI/CD pipeline, monitoring IoT devices and critical infrastructure for SL4 security anomalies.
+              TripleDefence serves as your bridge to ENISA. We integrate directly into your CI/CD pipeline, monitoring IoT devices and critical infrastructure for SL4 protection anomalies.
             </p>
           </div>
           <button className="hidden md:block px-6 py-3 border border-white/20 text-white text-xs font-mono tracking-widest uppercase hover:bg-white/5 hover:border-white/40 transition-all">
@@ -1384,7 +2180,7 @@ const SolutionModule: React.FC = () => {
             />
             <FeatureCard 
               icon={<Shield size={24} />}
-              title="SL4 Security"
+              title="SL4 Protection"
               desc="Continuous penetration testing simulations for Critical Class I & II products to ensure high-assurance resilience."
             />
             <FeatureCard 
@@ -1408,119 +2204,154 @@ const SolutionModule: React.FC = () => {
 export default SolutionModule;
 
 ================================================================
-FILE: src/index.css
-================================================================
-@import "tailwindcss";
-
-@theme {
-    --color-charcoal: #030303;
-    --color-slate-850: #151b28;
-    --color-slate-900: #0f172a;
-
-    --color-neon-purple: #8b5cf6;
-    --color-neon-red: #ef4444;
-    --color-neon-cyan: #06b6d4;
-
-    --font-sans: Inter, sans-serif;
-    --font-display: Sora, sans-serif;
-
-    --tracking-tighter: -0.03em;
-    --tracking-tight: -0.01em;
-
-    --animate-blob: blob 7s infinite;
-    --animate-scan: scan 4s linear infinite;
-    --animate-pulse-fast: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-    @keyframes blob {
-        0% {
-            transform: translate(0px, 0px) scale(1);
-        }
-
-        33% {
-            transform: translate(30px, -50px) scale(1.1);
-        }
-
-        66% {
-            transform: translate(-20px, 20px) scale(0.9);
-        }
-
-        100% {
-            transform: translate(0px, 0px) scale(1);
-        }
-    }
-
-    @keyframes scan {
-        0% {
-            top: -100%;
-        }
-
-        100% {
-            top: 200%;
-        }
-    }
-}
-
-/* Global Styles equivalent to index.html style block */
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 100px;
-    font-size: 90%;
-    overflow-x: hidden;
-}
-
-body {
-    background-color: var(--color-charcoal);
-    color: #e2e8f0;
-    overflow-x: hidden;
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--color-charcoal);
-}
-
-::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #475569;
-}
-
-.text-gradient-silver {
-    background: linear-gradient(180deg, #FFFFFF 0%, #94A3B8 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-================================================================
-FILE: src/index.tsx
+FILE: /home/vino/dev/triple-defence2025/components/Solutions.tsx
 ================================================================
 import React from 'react';
-import './index.css';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import { motion } from 'framer-motion';
+import { Layers, Database, Users, ArrowRight, Hexagon, Command } from 'lucide-react';
 
-const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error("Could not find root element to mount to");
-}
+const SolutionCard: React.FC<{ 
+  title: string; 
+  subtitle: string; 
+  desc: string; 
+  icon: React.ReactNode; 
+  delay: number;
+  action?: React.ReactNode;
+}> = ({ title, subtitle, desc, icon, delay, action }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay, ease: "easeOut" }}
+    className="group relative flex flex-col h-full bg-[#050505] border border-white/10 hover:border-white/20 transition-colors duration-500 overflow-hidden"
+  >
+    {/* Subtle Grid Background */}
+    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 group-hover:opacity-40 transition-opacity" />
+    
+    {/* Top Accent Line */}
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-neon-purple/50 transition-all duration-500" />
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <div className="relative z-10 p-8 flex flex-col h-full">
+      {/* Icon Header */}
+      <div className="flex justify-between items-start mb-6">
+        <div className="p-3 bg-white/5 border border-white/5 text-slate-300 group-hover:text-white group-hover:border-white/20 transition-all rounded-none">
+          {icon}
+        </div>
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-neon-purple">
+            <Hexagon size={16} className="animate-spin-slow" />
+        </div>
+      </div>
+
+      {/* Typography */}
+      <h3 className="font-display text-2xl font-bold text-white mb-1 tracking-tight">
+        {title}
+      </h3>
+      <span className="text-xs font-mono text-neon-purple uppercase tracking-widest mb-6 block opacity-80">
+        {subtitle}
+      </span>
+
+      <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
+        {desc}
+      </p>
+
+      {/* Action Area */}
+      <div className="mt-auto pt-6 border-t border-white/5">
+        {action ? (
+          action
+        ) : (
+          <div className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-widest group-hover:text-slate-400 transition-colors">
+            <div className="w-1.5 h-1.5 bg-slate-700 rounded-full group-hover:bg-neon-purple transition-colors" />
+            Integration Ready
+          </div>
+        )}
+      </div>
+    </div>
+  </motion.div>
 );
 
-================================================================
-FILE: src/vite-env.d.ts
-================================================================
-/// <reference types="vite/client" />
+const Solutions: React.FC = () => {
+  const handleDemoRequest = () => {
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Wizard Demo requested. Sales team will contact you." } }));
+  };
 
+  return (
+    <section id="solutions" className="py-32 bg-charcoal relative border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Section Header */}
+        <div className="mb-20 md:flex md:items-end md:justify-between">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="max-w-2xl"
+          >
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tighter">
+              Total <span className="text-neon-purple">Sovereignty</span>.
+            </h2>
+            <p className="text-slate-400 text-lg leading-relaxed">
+              Three pillars of the TripleDefence ecosystem. Designed for absolute architectural control and automated compliance.
+            </p>
+          </motion.div>
+          
+          <motion.div 
+             initial={{ opacity: 0 }}
+             whileInView={{ opacity: 1 }}
+             viewport={{ once: true }}
+             className="hidden md:block text-right"
+          >
+             <div className="font-mono text-xs text-slate-600 mb-2">SYSTEM STATUS</div>
+             <div className="flex items-center gap-2 text-green-500 font-mono text-xs font-bold bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                OPERATIONAL
+             </div>
+          </motion.div>
+        </div>
+
+        {/* The Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
+          
+          {/* CARD 1: MUPP */}
+          <SolutionCard 
+            title="MUPP"
+            subtitle="(The Architecture)"
+            icon={<Layers size={24} />}
+            desc="The intelligent abstraction layer. Unifying your entire security ecosystem into a single, cohesive operational language. Transcendence, not just integration."
+            delay={0.1}
+          />
+
+          {/* CARD 2: CRA-3D */}
+          <SolutionCard 
+            title="CRA-3D"
+            subtitle="(The Wizard)"
+            icon={<Database size={24} />}
+            desc="The ultimate reporting and incident management assistant. A structured, audit-proof vault for inventories, risk assessments, and compliance evidence. Ready for Article 14."
+            delay={0.2}
+            action={
+              <button 
+                onClick={handleDemoRequest}
+                className="group/btn w-full flex items-center justify-between px-4 py-3 bg-neon-purple/10 border border-neon-purple/30 hover:bg-neon-purple/20 hover:border-neon-purple/50 transition-all"
+              >
+                <span className="text-xs font-bold text-white tracking-widest uppercase">Request Wizard Demo</span>
+                <Command size={14} className="text-neon-purple group-hover/btn:text-white transition-colors" />
+              </button>
+            }
+          />
+
+          {/* CARD 3: vPAC */}
+          <SolutionCard 
+            title="vPAC"
+            subtitle="(The Consultancy)"
+            icon={<Users size={24} />}
+            desc="Virtual Protection Assurance Consultancy. Strategic guidance to implement the TripleDefence doctrine, ensuring technical sovereignty and measurable resilience."
+            delay={0.3}
+          />
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Solutions;
 
