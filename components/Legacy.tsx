@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, ShieldCheck } from 'lucide-react';
+import { Award, ShieldCheck, Database, Unlock } from 'lucide-react';
 
 const Legacy: React.FC = () => {
   return (
@@ -52,10 +52,38 @@ const Legacy: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto"
+            className="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto mb-20"
           >
              Long before the industry talked about Zero Trust, we were building it. <strong className="text-white font-medium">TripleDefence</strong> is the evolution of a decade-long doctrine: <span className="italic text-slate-300">protect the system, not the symptoms.</span>
           </motion.p>
+
+          {/* Independent by Design Callout */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full text-left"
+          >
+            <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl group hover:border-neon-purple/30 transition-all duration-500">
+               <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center mb-6 text-neon-purple">
+                  <Unlock size={20} />
+               </div>
+               <h4 className="text-white font-bold text-lg mb-3 tracking-tight">Independent by Design</h4>
+               <p className="text-slate-500 text-sm leading-relaxed">
+                  We offer real exit options. No proprietary traps. Migrate using open protocols like WebDAV at any time. Our commitment to your sovereignty is absolute.
+               </p>
+            </div>
+
+            <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl group hover:border-neon-purple/30 transition-all duration-500">
+               <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center mb-6 text-neon-purple">
+                  <Database size={20} />
+               </div>
+               <h4 className="text-white font-bold text-lg mb-3 tracking-tight">Data Sovereignty</h4>
+               <p className="text-slate-500 text-sm leading-relaxed">
+                  Your data remains yours. Accessible via open APIs and standard databases (MySQL/PostgreSQL). Built on modular frameworks to ensure zero vendor lock-in.
+               </p>
+            </div>
+          </motion.div>
        </div>
     </section>
   );

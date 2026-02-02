@@ -1,44 +1,51 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Database, Users, Hexagon, Command, CheckCircle2 } from 'lucide-react';
+import { Layers, Database, Users, Hexagon, Command, CheckCircle2, Cpu } from 'lucide-react';
 
 const SolutionCard: React.FC<{ 
   title: string; 
   subtitle: string; 
-  desc: string; 
+  desc: React.ReactNode; 
   icon: React.ReactNode; 
   delay: number;
   action?: React.ReactNode;
   featured?: boolean;
-}> = ({ title, subtitle, desc, icon, delay, action, featured }) => (
+  onClick?: () => void;
+}> = ({ title, subtitle, desc, icon, delay, action, featured, onClick }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    className={`group relative flex flex-col h-full transition-all duration-500 overflow-hidden rounded-xl
+    onClick={onClick}
+    className={`group relative flex flex-col h-full transition-all duration-500 rounded-xl
       ${featured 
         ? 'bg-[#080510] border border-neon-purple shadow-[0_0_30px_rgba(139,92,246,0.15)] z-10 scale-[1.03]' 
         : 'bg-[#050505] border border-white/10 hover:border-white/20'
-      }`}
+      }
+      ${onClick ? 'cursor-pointer' : ''}
+    `}
   >
-    {/* Featured Badge */}
+    {/* Background Effects Container (Masked) */}
+    <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+        {/* Subtle Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 group-hover:opacity-40 transition-opacity" />
+        
+        {/* Top Accent Line */}
+        <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-transparent to-transparent transition-all duration-500 
+          ${featured ? 'via-neon-purple opacity-100' : 'group-hover:via-white/20'}`} 
+        />
+    </div>
+
+    {/* Featured Badge - Protruding (Unmasked) */}
     {featured && (
-      <div className="absolute top-0 inset-x-0 flex justify-center -mt-3 z-20">
-         <div className="bg-neon-purple text-white text-[10px] font-bold tracking-widest px-3 py-1 rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)] flex items-center gap-1 uppercase ring-4 ring-[#080510]">
+      <div className="absolute top-0 inset-x-0 flex justify-center -mt-3.5 z-30">
+         <div className="bg-neon-purple text-white text-[10px] font-bold tracking-widest px-4 py-1 rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)] flex items-center gap-1 uppercase ring-4 ring-[#080510]">
             <CheckCircle2 size={12} />
             Article 14 Ready
          </div>
       </div>
     )}
-
-    {/* Subtle Grid Background */}
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 group-hover:opacity-40 transition-opacity" />
-    
-    {/* Top Accent Line */}
-    <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-transparent to-transparent transition-all duration-500 
-      ${featured ? 'via-neon-purple opacity-100' : 'group-hover:via-white/20'}`} 
-    />
 
     <div className="relative z-10 p-8 flex flex-col h-full">
       {/* Icon Header */}
@@ -63,9 +70,9 @@ const SolutionCard: React.FC<{
         {subtitle}
       </span>
 
-      <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
+      <div className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
         {desc}
-      </p>
+      </div>
 
       {/* Action Area */}
       <div className="mt-auto pt-6 border-t border-white/5">
@@ -85,6 +92,10 @@ const SolutionCard: React.FC<{
 const Solutions: React.FC = () => {
   const handleDemoRequest = () => {
     window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Wizard Demo requested. Sales team will contact you." } }));
+  };
+
+  const handleTechnicalToast = () => {
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Technical specifications for this module are restricted to partners." } }));
   };
 
   return (
@@ -131,19 +142,26 @@ const Solutions: React.FC = () => {
             icon={<Layers size={24} />}
             desc="The intelligent abstraction layer. Unifying your entire protection ecosystem into a single, cohesive operational language. Transcendence, not just integration."
             delay={0.1}
+            onClick={handleTechnicalToast}
           />
 
           {/* CARD 2: CRA-3D (FEATURED) */}
           <SolutionCard 
             title="CRA-3D"
-            subtitle="(The Wizard)"
+            subtitle="(The Wizard) — Powered by Flying Dutch"
             icon={<Database size={24} />}
-            desc="The ultimate reporting and incident management assistant. A structured, audit-proof vault for inventories, risk assessments, and compliance evidence. Ready for Article 14."
+            desc={
+              <>
+                Integrated with Sovereign Infrastructure. Leveraging the <span className="text-white font-medium">IntraVox/Nextcloud</span> framework to enable anonymous, secure public links for documentation sharing. Proof without vendor lock-in.
+                <br /><br />
+                <span className="text-neon-purple font-bold">Independent by Design:</span> WebDAV, MySQL/PostgreSQL support.
+              </>
+            }
             delay={0.2}
             featured={true}
             action={
               <button 
-                onClick={handleDemoRequest}
+                onClick={(e) => { e.stopPropagation(); handleDemoRequest(); }}
                 className="group/btn w-full flex items-center justify-between px-4 py-3 bg-neon-purple text-white shadow-[0_0_15px_rgba(139,92,246,0.4)] hover:bg-neon-purple/90 transition-all rounded-md"
               >
                 <span className="text-xs font-bold tracking-widest uppercase">Launch Wizard Demo</span>
@@ -157,8 +175,9 @@ const Solutions: React.FC = () => {
             title="vPAC"
             subtitle="(The Consultancy)"
             icon={<Users size={24} />}
-            desc="Virtual Protection Assurance Consultancy. Strategic guidance to implement the TripleDefence doctrine, ensuring technical sovereignty and measurable resilience."
+            desc="Chunk Workshop Approach: We decompose protection into manageable modules, delivering strategic hardening and consultancy that fits your operational pace. Strategic guidance to implement the TripleDefence doctrine."
             delay={0.3}
+            onClick={handleTechnicalToast}
           />
 
         </div>

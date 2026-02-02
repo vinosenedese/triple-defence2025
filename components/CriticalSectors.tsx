@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck, BoxSelect } from 'lucide-react';
 
 interface SectorProps {
   title: string;
@@ -88,6 +88,10 @@ const CriticalSectors: React.FC = () => {
     }
   ];
 
+  const handleContact = () => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: 'contact' }));
+  };
+
   return (
     <section id="sectors" className="py-32 bg-charcoal border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6">
@@ -97,9 +101,16 @@ const CriticalSectors: React.FC = () => {
             <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tighter">
               Critical <span className="text-slate-500">Scope.</span>
             </h2>
-            <p className="text-slate-400 text-lg font-light">
+            <p className="text-slate-400 text-lg font-light mb-6">
               Industries where failure is not an option. We provide the architectural backbone for Class I & II products under the EU Cyber Resilience Act.
             </p>
+
+            <div className="inline-flex items-start gap-4 p-4 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-300 max-w-xl">
+               <BoxSelect className="w-6 h-6 text-neon-purple flex-shrink-0 mt-1" />
+               <p>
+                 <span className="text-white font-bold">Not just for Manufacturers.</span> TripleDefence provides role-specific modules for Distributors, Importers, and Service Providers under CRA Articles 12 & 14.
+               </p>
+            </div>
           </div>
           
           <div className="hidden md:block pb-2">
@@ -121,7 +132,8 @@ const CriticalSectors: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A] flex flex-col justify-center items-center text-center p-8 hover:border-neon-purple/30 transition-colors"
+            onClick={handleContact}
+            className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A] flex flex-col justify-center items-center text-center p-8 hover:border-neon-purple/30 transition-colors cursor-pointer"
           >
              <div className="mb-6 p-4 rounded-full bg-white/5 border border-white/10 group-hover:bg-neon-purple/10 group-hover:border-neon-purple/30 transition-all">
                 <ArrowUpRight size={32} className="text-slate-400 group-hover:text-neon-purple transition-colors" />

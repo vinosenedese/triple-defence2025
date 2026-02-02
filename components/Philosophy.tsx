@@ -66,7 +66,7 @@ const Philosophy: React.FC = () => {
                 </h3>
 
                 <p className="text-slate-400 leading-relaxed text-lg font-light">
-                    Shift from reactive brute force to proactive design. Predict and negate threats before they manifest.
+                    Shift from reactive brute force to proactive design. Predict and negate threats before they manifest. Protection by Design.
                 </p>
             </motion.div>
 

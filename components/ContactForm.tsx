@@ -75,18 +75,34 @@ const ContactForm: React.FC = () => {
                     />
                 </div>
 
-                <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Sector</label>
-                    <div className="relative">
-                        <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
-                            <option>Critical Infrastructure</option>
-                            <option>Medical Devices</option>
-                            <option>Automotive</option>
-                            <option>Aerospace</option>
-                            <option>IoT Manufacturing</option>
-                        </select>
-                         <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
-                             <ChevronDown size={16} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Sector</label>
+                        <div className="relative">
+                            <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
+                                <option>Critical Infrastructure</option>
+                                <option>Medical Devices</option>
+                                <option>Automotive</option>
+                                <option>Aerospace</option>
+                                <option>IoT Manufacturing</option>
+                            </select>
+                             <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                                 <ChevronDown size={16} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">CRA Role</label>
+                        <div className="relative">
+                            <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
+                                <option>Manufacturer</option>
+                                <option>Distributor</option>
+                                <option>Importer</option>
+                                <option>Critical Service Provider</option>
+                            </select>
+                             <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                                 <ChevronDown size={16} />
+                            </div>
                         </div>
                     </div>
                 </div>

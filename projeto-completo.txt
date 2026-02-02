@@ -1,5 +1,5 @@
-DATA DE GERAÇÃO: 2026-01-29T13:58:28.693Z
-TOTAL DE ARQUIVOS: 18
+DATA DE GERAÇÃO: 2026-02-02T23:14:52.591Z
+TOTAL DE ARQUIVOS: 22
 
 ================================================================
 FILE: /home/vino/dev/triple-defence2025/components/AttentionBlocks.tsx
@@ -102,6 +102,284 @@ const AttentionBlocks: React.FC = () => {
 export default AttentionBlocks;
 
 ================================================================
+FILE: /home/vino/dev/triple-defence2025/components/BlogPage.tsx
+================================================================
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Clock, Calendar, Share2, Tag, ChevronRight } from 'lucide-react';
+
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
+
+interface BlogPost {
+  id: string;
+  category: string;
+  date: string;
+  readTime: string;
+  title: string;
+  excerpt: string;
+  content: React.ReactNode;
+}
+
+const BlogPage: React.FC = () => {
+  const [activePost, setActivePost] = useState<string | null>(null);
+
+  useEffect(() => {
+    const smoother = ScrollSmoother.get();
+    if (smoother) {
+      smoother.scrollTo(0, false);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [activePost]);
+
+  const handleRestricted = () => {
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Feature available in full member version." } }));
+  };
+
+  const handleConsultation = () => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: 'contact' }));
+  };
+
+  const posts: BlogPost[] = [
+    {
+      id: 'unidirectional',
+      category: 'SOVEREIGN HAZE',
+      date: 'OCT 14, 2024',
+      readTime: '8 MIN READ',
+      title: 'Unidirectional Connectivity: The End of SOC Cost Inflation',
+      excerpt: "Why traditional monitoring burns budget on false positives and how physical isolation restores economic sanity to cyber defense.",
+      content: (
+        <div className="relative space-y-8 text-slate-300 leading-relaxed font-sans text-lg">
+
+          <p className="font-serif text-xl italic text-slate-400 border-l-2 border-neon-purple pl-6 relative z-10">
+            "We have spent the last decade building faster alarms for fires we allow to start. It is time to build walls that fire cannot cross."
+          </p>
+
+          <h3 className="font-serif text-2xl text-white font-bold mt-8 mb-4 relative z-10">The Infinite Loop of Detection</h3>
+          <p className="relative z-10">
+            The modern Security Operations Center (SOC) is an economic failure. The premise is seductive: ingest all logs, apply machine learning, detect the anomaly, and respond before impact. In practice, this model creates a <strong>cost-asymmetry</strong> that favors the attacker.
+          </p>
+          <p className="relative z-10">
+            For every $1 the attacker spends on obfuscation, the defender spends $100 on ingestion, storage, correlation, and analyst fatigue. We are trying to find a needle in a haystack, but we are also paying for the storage of the hay.
+          </p>
+
+          <h3 className="font-serif text-2xl text-white font-bold mt-8 mb-4 relative z-10">The Physics of the Data Diode</h3>
+          <p className="relative z-10">
+            TripleDefence advocates for a return to physics. <strong>Unidirectional Gateways (Data Diodes)</strong> are not new, but their application in commercial compliance is the paradigm shift required by the Cyber Resilience Act.
+          </p>
+          <p className="relative z-10">
+            A data diode enforces a simple physical law: light can flow in only one direction. By placing a diode between the Critical Manufacturing Zone (OT) and the Corporate Network (IT), we achieve two absolute truths:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 marker:text-neon-purple relative z-10">
+            <li><strong>Visibility is preserved:</strong> Performance data, logs, and telemetry flow out to the cloud for analysis.</li>
+            <li><strong>Control is isolated:</strong> No packet, no matter how malicious, can physically travel back into the OT network to execute a command.</li>
+          </ul>
+
+          <h3 className="font-serif text-2xl text-white font-bold mt-8 mb-4 relative z-10">Economic Sanity</h3>
+          <p className="relative z-10">
+            When the "return path" is physically severed, the definition of a "threat" changes. We no longer care about a malware infection in the monitoring layer because it cannot laterally move to the control layer.
+          </p>
+          <p className="relative z-10">
+            This eliminates 90% of Tier-1 SOC alerts related to OT. We stop paying analysts to triage false positives on the edge, because the edge can no longer kill the core. This is not just security; it is <strong>Inflation Control</strong> for the CISO's budget.
+          </p>
+
+          <div className="bg-slate-900/50 p-6 rounded-lg border border-white/5 mt-8 relative z-10 backdrop-blur-sm">
+            <h4 className="font-serif text-white font-bold mb-2">The Doctrine Conclusion</h4>
+            <p className="text-sm">
+              Stop trying to out-think the attacker with software. Out-build them with architecture.
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'sharepoint',
+      category: 'COMPLIANCE',
+      date: 'SEP 28, 2024',
+      readTime: '5 MIN READ',
+      title: 'Why SharePoint is a Liability in the CRA Era',
+      excerpt: "The architectural flaws of collaborative platforms when facing strict Article 14 reporting requirements and data sovereignty mandates.",
+      content: (
+        <div className="space-y-6 text-slate-300 leading-relaxed font-sans text-lg">
+          <p><em>Access Restricted to Full Member status. Please contact sales to unlock the full Intelligence Feed.</em></p>
+        </div>
+      )
+    },
+    {
+      id: 'byzantine',
+      category: 'TECHNICAL',
+      date: 'AUG 02, 2024',
+      readTime: '12 MIN READ',
+      title: 'The Byzantine Fault Problem in Modern Detection Systems',
+      excerpt: "Mathematical proof that probabilistic detection cannot guarantee security in distributed critical infrastructure.",
+      content: (
+        <div className="space-y-6 text-slate-300 leading-relaxed font-sans text-lg">
+          <p><em>Access Restricted to Full Member status. Please contact sales to unlock the full Intelligence Feed.</em></p>
+        </div>
+      )
+    }
+  ];
+
+  const currentPost = posts.find(p => p.id === activePost);
+
+  return (
+    <div className="relative min-h-screen pt-32 pb-24 px-6 bg-charcoal overflow-hidden">
+
+      {/* "Haze" Gradient Effect */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(139,92,246,0.03)_100%)]" />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-transparent via-transparent to-neon-purple/5 opacity-50" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+
+        <AnimatePresence mode="wait">
+          {!activePost ? (
+            /* FEED VIEW */
+            <motion.div
+              key="feed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Back to Home Button */}
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }))}
+                className="group flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors mb-12 font-mono uppercase tracking-widest"
+              >
+                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                Back to Home
+              </button>
+
+              {/* Header */}
+              <div className="border-b border-white/10 pb-12 mb-16 relative">
+                <span className="font-mono text-xs text-neon-purple font-bold tracking-widest uppercase mb-4 block">
+                  TripleDefence Knowledge Base
+                </span>
+                <h1 className="font-serif text-5xl md:text-7xl text-white font-bold mb-6 tracking-tight">
+                  Executive Insights
+                </h1>
+                <p className="text-xl text-slate-400 max-w-2xl font-light">
+                  Deep dives into sovereign architecture, CRA doctrine, and the economics of defense.
+                </p>
+              </div>
+
+              {/* Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {posts.map((post, idx) => (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    onClick={() => setActivePost(post.id)}
+                    className="group cursor-pointer flex flex-col h-full bg-[#050505] border border-white/10 hover:border-neon-purple/50 transition-all duration-300 p-8 rounded-sm relative overflow-hidden"
+                  >
+                    {/* Card Haze Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <div className="relative z-10 flex justify-between items-center mb-6">
+                      <span className={`px-2 py-1 bg-white/5 text-[10px] font-mono font-bold tracking-widest uppercase rounded ${post.category === 'SOVEREIGN HAZE' ? 'text-neon-purple border border-neon-purple/20' : 'text-slate-400'}`}>
+                        {post.category}
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-600 uppercase">
+                        {post.date}
+                      </span>
+                    </div>
+
+                    <h2 className="relative z-10 font-serif text-2xl text-white font-bold leading-tight mb-4 group-hover:text-neon-purple transition-colors">
+                      {post.title}
+                    </h2>
+
+                    <p className="relative z-10 text-slate-400 text-sm leading-relaxed mb-8 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+
+                    <div className="relative z-10 mt-auto flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider group-hover:translate-x-2 transition-transform">
+                      Read Article <ChevronRight size={14} className="text-neon-purple" />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            /* ARTICLE VIEW */
+            <motion.div
+              key="article"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
+              className="max-w-4xl mx-auto"
+            >
+              {/* Back Button */}
+              <button
+                onClick={() => setActivePost(null)}
+                className="group flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors mb-12 font-mono uppercase tracking-widest"
+              >
+                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                Back to Intelligence
+              </button>
+
+              {/* Article Header */}
+              <header className="mb-12 border-b border-white/10 pb-12 relative">
+                <div className="flex flex-wrap gap-4 mb-8 text-xs font-mono font-bold tracking-widest text-slate-500 uppercase">
+                  <span className={currentPost?.category === 'SOVEREIGN HAZE' ? 'text-neon-purple' : ''}>[{currentPost?.category}]</span>
+                  <span className="flex items-center gap-2"><Calendar size={12} /> {currentPost?.date}</span>
+                  <span className="flex items-center gap-2"><Clock size={12} /> {currentPost?.readTime}</span>
+                </div>
+
+                <h1 className="font-serif text-4xl md:text-6xl text-white font-bold leading-tight mb-8">
+                  {currentPost?.title}
+                </h1>
+
+                <p className="text-xl md:text-2xl text-slate-400 font-light leading-relaxed">
+                  {currentPost?.excerpt}
+                </p>
+              </header>
+
+              {/* Article Content */}
+              <article className="prose prose-invert prose-lg max-w-none">
+                {currentPost?.content}
+              </article>
+
+              {/* Article Footer */}
+              <div className="mt-20 pt-10 border-t border-white/10 flex justify-between items-center">
+                <div className="flex gap-2">
+                  <button onClick={handleRestricted} className="px-3 py-1 bg-white/5 rounded-full text-xs text-slate-400 hover:bg-white/10 transition-colors">#CRA</button>
+                  <button onClick={handleRestricted} className="px-3 py-1 bg-white/5 rounded-full text-xs text-slate-400 hover:bg-white/10 transition-colors">#Architecture</button>
+                  <button onClick={handleRestricted} className="px-3 py-1 bg-white/5 rounded-full text-xs text-slate-400 hover:bg-white/10 transition-colors">#Sovereignty</button>
+                </div>
+                <button onClick={handleRestricted} className="text-slate-500 hover:text-white transition-colors">
+                  <Share2 size={20} />
+                </button>
+              </div>
+
+              {/* Next Read CTA */}
+              <div className="mt-16 p-8 bg-[#050505] border border-white/10 rounded-sm text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-neon-purple/5 opacity-50" />
+                <div className="relative z-10">
+                  <h4 className="font-serif text-2xl text-white mb-4">Ready to implement this doctrine?</h4>
+                  <button
+                    onClick={handleConsultation}
+                    className="px-8 py-3 bg-neon-purple text-white text-sm font-bold tracking-widest uppercase hover:bg-neon-purple/80 transition-colors"
+                  >
+                    Schedule Consultation
+                  </button>
+                </div>
+              </div>
+
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+      </div>
+    </div>
+  );
+};
+
+export default BlogPage;
+
+================================================================
 FILE: /home/vino/dev/triple-defence2025/components/ComparisonTable.tsx
 ================================================================
 import React from 'react';
@@ -164,8 +442,8 @@ const ComparisonTable: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="overflow-hidden rounded-2xl border border-white/10 bg-[#050505] shadow-2xl"
         >
-          {/* Table Header */}
-          <div className="grid grid-cols-12 bg-white/5 border-b border-white/10 text-sm font-bold tracking-widest uppercase">
+          {/* Table Header - HIDDEN ON MOBILE */}
+          <div className="hidden md:grid grid-cols-12 bg-white/5 border-b border-white/10 text-sm font-bold tracking-widest uppercase">
             <div className="col-span-4 md:col-span-4 p-6 text-slate-400 flex items-center gap-2">
                 Resource / Approach
             </div>
@@ -183,15 +461,19 @@ const ComparisonTable: React.FC = () => {
             {data.map((row, index) => (
               <div 
                 key={index} 
-                className="grid grid-cols-12 group hover:bg-white/[0.01] transition-colors"
+                className="flex flex-col md:grid md:grid-cols-12 group hover:bg-white/[0.01] transition-colors"
               >
                 {/* Feature Name */}
-                <div className="col-span-4 md:col-span-4 p-6 text-slate-200 font-medium text-sm md:text-base flex items-center">
+                <div className="md:col-span-4 p-6 text-slate-200 font-medium text-lg md:text-base flex items-center bg-white/[0.02] md:bg-transparent">
                   {row.feature}
                 </div>
 
                 {/* Traditional Side */}
-                <div className="col-span-4 md:col-span-4 p-6 text-slate-500 border-l border-white/5 text-sm md:text-base flex flex-col justify-center relative">
+                <div className="md:col-span-4 p-6 text-slate-500 border-t md:border-t-0 md:border-l border-white/5 text-sm md:text-base flex flex-col justify-center relative">
+                    {/* Mobile Only Label */}
+                    <span className="md:hidden text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center gap-2 text-slate-600">
+                         <AlertCircle size={10} /> Traditional
+                    </span>
                     <div className="flex items-start gap-3">
                          <X size={16} className="text-slate-700 mt-1 shrink-0" />
                          <span>{row.trad}</span>
@@ -199,7 +481,11 @@ const ComparisonTable: React.FC = () => {
                 </div>
 
                 {/* TripleDefence Side */}
-                <div className="col-span-4 md:col-span-4 p-6 text-white border-l border-neon-purple/20 bg-neon-purple/[0.03] text-sm md:text-base flex flex-col justify-center relative">
+                <div className="md:col-span-4 p-6 text-white border-t md:border-t-0 md:border-l border-neon-purple/20 bg-neon-purple/[0.03] text-sm md:text-base flex flex-col justify-center relative">
+                    {/* Mobile Only Label */}
+                    <span className="md:hidden text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center gap-2 text-neon-purple">
+                         <Shield size={10} /> TripleDefence
+                    </span>
                     <div className="flex items-start gap-3">
                         <div className="bg-green-500/10 p-1 rounded-full shrink-0 mt-0.5">
                             <Check size={12} className="text-green-500" />
@@ -471,18 +757,34 @@ const ContactForm: React.FC = () => {
                     />
                 </div>
 
-                <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Sector</label>
-                    <div className="relative">
-                        <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
-                            <option>Critical Infrastructure</option>
-                            <option>Medical Devices</option>
-                            <option>Automotive</option>
-                            <option>Aerospace</option>
-                            <option>IoT Manufacturing</option>
-                        </select>
-                         <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
-                             <ChevronDown size={16} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">Sector</label>
+                        <div className="relative">
+                            <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
+                                <option>Critical Infrastructure</option>
+                                <option>Medical Devices</option>
+                                <option>Automotive</option>
+                                <option>Aerospace</option>
+                                <option>IoT Manufacturing</option>
+                            </select>
+                             <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                                 <ChevronDown size={16} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-500 tracking-widest uppercase ml-1">CRA Role</label>
+                        <div className="relative">
+                            <select className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/50 transition-all appearance-none cursor-pointer text-sm">
+                                <option>Manufacturer</option>
+                                <option>Distributor</option>
+                                <option>Importer</option>
+                                <option>Critical Service Provider</option>
+                            </select>
+                             <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                                 <ChevronDown size={16} />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -509,6 +811,7 @@ FILE: /home/vino/dev/triple-defence2025/components/CountdownBar.tsx
 ================================================================
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { AlertTriangle } from 'lucide-react';
 
 const CountdownBar: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -521,17 +824,14 @@ const CountdownBar: React.FC = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Dates based on CRA timeline
-    // Start: Entry into Force (Approx Dec 2024)
-    // End: Full Enforcement (Dec 2027 - 36 months later)
+    // Dates based on Article 11 & 14 Enforcement
     const startDate = new Date('2024-12-01T00:00:00').getTime();
-    const targetDate = new Date('2027-12-01T00:00:00').getTime();
+    const targetDate = new Date('2026-09-11T00:00:00').getTime();
 
     const calculateTime = () => {
       const now = new Date().getTime();
       const difference = targetDate - now;
 
-      // Calculate progress percentage
       const totalDuration = targetDate - startDate;
       const elapsed = now - startDate;
       const currentProgress = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
@@ -548,57 +848,61 @@ const CountdownBar: React.FC = () => {
     };
 
     const timer = setInterval(calculateTime, 1000);
-    calculateTime(); // Initial call
+    calculateTime();
 
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="w-full px-6 flex justify-center -mt-12 relative z-30">
+    <div className="w-full px-6 flex justify-center -mt-20 relative z-30">
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-full max-w-7xl bg-[#080808] border border-white/10 rounded-[2.5rem] py-8 px-8 md:px-12 shadow-2xl shadow-black relative overflow-hidden"
+        className="w-full max-w-7xl bg-[#080808]/80 backdrop-blur-xl border border-neon-purple/30 rounded-[2.5rem] py-10 px-8 md:px-12 shadow-[0_0_50px_rgba(139,92,246,0.15)] relative overflow-hidden group hover:border-neon-purple transition-colors duration-500"
       >
-        {/* Subtle red glow effect for urgency */}
         <div className="absolute inset-0 bg-gradient-to-r from-neon-red/5 via-transparent to-neon-purple/5 pointer-events-none" />
         
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
           
-          {/* Section 1: Title */}
+          {/* Section 1: Title with Icon */}
           <div className="text-center lg:text-left min-w-fit">
-            <h3 className="font-display font-bold text-xl text-white tracking-tight mb-1">
-              Countdown to Full Enforcement
-            </h3>
-            <p className="text-slate-500 text-sm font-light">
-              Time remaining until December 2027.
+            <div className="flex items-center justify-center lg:justify-start gap-2 mb-2 text-neon-red">
+               <AlertTriangle size={16} className="animate-pulse" />
+               <h3 className="font-display font-bold text-xl text-white tracking-tight">
+                 Strategic Deadline
+               </h3>
+            </div>
+            <p className="text-slate-400 text-sm font-medium uppercase tracking-widest max-w-[300px]">
+              Countdown to Article 11 & 14 Enforcement <br/>
+              <span className="text-slate-600">(Incident Reporting Deadline)</span>
             </p>
           </div>
 
-          {/* Section 2: The Digits */}
-          <div className="flex items-start gap-4 md:gap-10">
+          {/* Section 2: The Digits (Larger) */}
+          <div className="flex items-start gap-4 md:gap-12">
             <TimeUnit value={timeLeft.days} label="DAYS" />
             <TimeUnit value={timeLeft.hours} label="HOURS" />
             <TimeUnit value={timeLeft.minutes} label="MIN" />
             <TimeUnit value={timeLeft.seconds} label="SEC" />
           </div>
 
-          {/* Section 3: Progress Bar */}
+          {/* Section 3: Progress Bar (Intense) */}
           <div className="w-full lg:w-auto lg:flex-1 flex flex-col justify-center min-w-[250px]">
-             {/* Bar Track */}
-             <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-white/5 relative">
-                {/* Progress Fill */}
+             <div className="w-full h-3 bg-slate-900 rounded-full overflow-hidden border border-white/5 relative">
                 <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 1.5, ease: "easeOut" }}
                     className="h-full bg-gradient-to-r from-neon-red via-purple-600 to-neon-purple relative"
                 >
-                    {/* Glowing Tip */}
-                    <div className="absolute right-0 top-0 bottom-0 w-2 bg-white blur-[2px]" />
+                    <div className="absolute right-0 top-0 bottom-0 w-3 bg-white shadow-[0_0_15px_#fff] blur-[1px]" />
                 </motion.div>
+             </div>
+             <div className="mt-3 flex justify-between text-[10px] font-mono text-slate-600 uppercase tracking-tighter font-bold">
+                <span>Phase: Adoption</span>
+                <span>Threshold: Sep 2026</span>
              </div>
           </div>
 
@@ -609,11 +913,11 @@ const CountdownBar: React.FC = () => {
 };
 
 const TimeUnit: React.FC<{ value: number; label: string }> = ({ value, label }) => (
-  <div className="flex flex-col items-center">
-    <div className="font-display text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter tabular-nums leading-none mb-2">
+  <div className="flex flex-col items-center group/unit">
+    <div className="font-display text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter tabular-nums leading-none mb-3 group-hover/unit:scale-105 transition-transform duration-300">
       {value.toString().padStart(2, '0')}
     </div>
-    <span className="text-[10px] font-bold text-slate-600 tracking-widest uppercase">
+    <span className="text-[10px] font-bold text-slate-600 tracking-[0.3em] uppercase group-hover/unit:text-neon-purple transition-colors">
       {label}
     </span>
   </div>
@@ -626,7 +930,7 @@ FILE: /home/vino/dev/triple-defence2025/components/CriticalSectors.tsx
 ================================================================
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck, BoxSelect } from 'lucide-react';
 
 interface SectorProps {
   title: string;
@@ -690,7 +994,7 @@ const CriticalSectors: React.FC = () => {
     {
       title: "Finance & Data",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
-      desc: "Secure trading infrastructure and banking data centers. Resilience against high-frequency attacks and systemic risks.",
+      desc: "Protected trading infrastructure and banking data centers. Resilience against high-frequency attacks and systemic risks.",
     },
     {
       title: "Manufacturing & OT",
@@ -714,6 +1018,10 @@ const CriticalSectors: React.FC = () => {
     }
   ];
 
+  const handleContact = () => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: 'contact' }));
+  };
+
   return (
     <section id="sectors" className="py-32 bg-charcoal border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6">
@@ -723,9 +1031,16 @@ const CriticalSectors: React.FC = () => {
             <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tighter">
               Critical <span className="text-slate-500">Scope.</span>
             </h2>
-            <p className="text-slate-400 text-lg font-light">
+            <p className="text-slate-400 text-lg font-light mb-6">
               Industries where failure is not an option. We provide the architectural backbone for Class I & II products under the EU Cyber Resilience Act.
             </p>
+
+            <div className="inline-flex items-start gap-4 p-4 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-300 max-w-xl">
+               <BoxSelect className="w-6 h-6 text-neon-purple flex-shrink-0 mt-1" />
+               <p>
+                 <span className="text-white font-bold">Not just for Manufacturers.</span> TripleDefence provides role-specific modules for Distributors, Importers, and Service Providers under CRA Articles 12 & 14.
+               </p>
+            </div>
           </div>
           
           <div className="hidden md:block pb-2">
@@ -747,7 +1062,8 @@ const CriticalSectors: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A] flex flex-col justify-center items-center text-center p-8 hover:border-neon-purple/30 transition-colors"
+            onClick={handleContact}
+            className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A] flex flex-col justify-center items-center text-center p-8 hover:border-neon-purple/30 transition-colors cursor-pointer"
           >
              <div className="mb-6 p-4 rounded-full bg-white/5 border border-white/10 group-hover:bg-neon-purple/10 group-hover:border-neon-purple/30 transition-all">
                 <ArrowUpRight size={32} className="text-slate-400 group-hover:text-neon-purple transition-colors" />
@@ -770,6 +1086,133 @@ const CriticalSectors: React.FC = () => {
 export default CriticalSectors;
 
 ================================================================
+FILE: /home/vino/dev/triple-defence2025/components/DoctrineFeed.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { FileText, ArrowUpRight, Lock } from 'lucide-react';
+
+interface FeedItemProps {
+  category: string;
+  date: string;
+  title: string;
+  excerpt: string;
+  index: number;
+}
+
+const FeedItem: React.FC<FeedItemProps> = ({ category, date, title, excerpt, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: index * 0.1, duration: 0.5 }}
+    className="group relative flex flex-col bg-[#050505] border border-white/10 p-8 rounded-sm hover:border-neon-purple/30 transition-all duration-300 h-full cursor-pointer"
+    onClick={() => window.dispatchEvent(new CustomEvent('navigate', { detail: 'insights' }))}
+  >
+    {/* Top Meta */}
+    <div className="flex justify-between items-start mb-6 border-b border-white/5 pb-4">
+      <span className={`font-mono text-[10px] font-bold tracking-widest uppercase ${category === 'SOVEREIGN HAZE' ? 'text-neon-purple' : 'text-slate-500'}`}>
+        [{category}]
+      </span>
+      <span className="font-mono text-[10px] text-slate-600 tracking-widest">
+        {date}
+      </span>
+    </div>
+
+    {/* Title */}
+    <h3 className="font-display text-xl text-slate-200 font-bold leading-tight mb-4 group-hover:text-white transition-colors">
+      {title}
+    </h3>
+
+    {/* Excerpt */}
+    <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow font-light">
+      {excerpt}
+    </p>
+
+    {/* Footer Action */}
+    <div className="mt-auto flex items-center gap-2 text-[10px] font-mono font-bold text-slate-600 uppercase tracking-wider group-hover:text-neon-purple transition-colors">
+      <FileText size={12} />
+      <span>Read Briefing</span>
+      <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0" />
+    </div>
+
+    {/* Hover Overlay */}
+    <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+  </motion.div>
+);
+
+const DoctrineFeed: React.FC = () => {
+  const handleViewAll = () => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: 'insights' }));
+  };
+
+  const items = [
+    {
+      category: "SOVEREIGN HAZE",
+      date: "OCT 14, 2024",
+      title: "Unidirectional Connectivity: The End of SOC Cost Inflation",
+      excerpt: "Why traditional monitoring burns budget on false positives and how physical isolation restores economic sanity to cyber defense.",
+    },
+    {
+      category: "COMPLIANCE",
+      date: "SEP 28, 2024",
+      title: "Why SharePoint is a Liability in the CRA Era",
+      excerpt: "The architectural flaws of collaborative platforms when facing strict Article 14 reporting requirements and data sovereignty mandates.",
+    },
+    {
+      category: "TECHNICAL",
+      date: "AUG 02, 2024",
+      title: "The Byzantine Fault Problem in Modern Detection Systems",
+      excerpt: "Mathematical proof that probabilistic detection cannot guarantee security in distributed critical infrastructure.",
+    }
+  ];
+
+  return (
+    <section className="py-32 bg-charcoal border-t border-white/5 relative">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+          <div className="max-w-2xl">
+             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tighter">
+                Doctrine <span className="text-slate-500">Insights & Intelligence</span>
+             </h2>
+             <p className="text-slate-400 font-light">
+                Tactical briefings for the sovereign architect.
+             </p>
+          </div>
+          <button 
+            onClick={handleViewAll}
+            className="hidden md:flex items-center gap-2 px-6 py-3 border border-white/20 text-white text-xs font-mono tracking-widest uppercase hover:bg-white hover:text-black transition-all"
+          >
+            <Lock size={12} />
+            View Full Feed
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {items.map((item, idx) => (
+            <FeedItem key={idx} {...item} index={idx} />
+          ))}
+        </div>
+        
+        <div className="md:hidden mt-12 flex justify-center">
+             <button 
+                onClick={handleViewAll}
+                className="flex items-center gap-2 px-6 py-3 border border-white/20 text-white text-xs font-mono tracking-widest uppercase hover:bg-white hover:text-black transition-all"
+              >
+                <Lock size={12} />
+                View Full Feed
+              </button>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default DoctrineFeed;
+
+================================================================
 FILE: /home/vino/dev/triple-defence2025/components/Footer.tsx
 ================================================================
 import React from 'react';
@@ -784,7 +1227,11 @@ const CustomLogo: React.FC = () => {
   );
 };
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigate?: (view: string) => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const handleToast = (msg: string) => {
     window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: msg } }));
   };
@@ -794,47 +1241,25 @@ const Footer: React.FC = () => {
     handleToast(msg);
   };
 
-  const smoothScrollTo = (e: React.MouseEvent, targetId: string) => {
+  const handleNavClick = (e: React.MouseEvent, target: string) => {
     e.preventDefault();
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    const headerOffset = 100; 
-    const startPosition = window.scrollY || window.pageYOffset;
-    const targetPosition = target.getBoundingClientRect().top + startPosition - headerOffset;
-    const distance = targetPosition - startPosition;
-    const duration = 1200; 
-    let startTime: number | null = null;
-
-    const ease = (t: number, b: number, c: number, d: number) => {
-      t /= d / 2;
-      if (t < 1) return c / 2 * t * t * t + b;
-      t -= 2;
-      return c / 2 * (t * t * t + 2) + b;
-    };
-
-    const animation = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
-      } else {
-        window.scrollTo(0, targetPosition);
-      }
-    };
-    requestAnimationFrame(animation);
+    if (onNavigate) {
+      onNavigate(target);
+    } else {
+       const element = document.getElementById(target);
+       if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <footer className="relative lg:fixed bottom-0 left-0 w-full h-auto lg:h-[400px] bg-black flex flex-col justify-between py-12 lg:py-12 z-0 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col justify-between">
         
+        {/* Adjusted Grid for V4 Layout (Brand: 3, Doctrine: 2, Product: 2, Legal: 2, CTA: 3) */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+          
           {/* Brand & Badge */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-3">
             <div className="flex items-center gap-2 mb-6">
               <CustomLogo />
               <span className="font-display font-bold text-xl text-white tracking-tight">
@@ -843,52 +1268,67 @@ const Footer: React.FC = () => {
             </div>
             
             {/* Sovereign Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/10 bg-white/5 rounded-md mb-8">
-                <Shield size={12} className="text-slate-400" />
-                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">
-                    Sovereign-Grade Protection
-                </span>
+            <div className="inline-flex flex-col gap-2 items-start mb-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/10 bg-white/5 rounded-md">
+                    <Shield size={12} className="text-slate-400" />
+                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">
+                        Sovereign-Grade Protection
+                    </span>
+                </div>
+                <p className="text-[9px] font-mono text-slate-600 mt-2 uppercase tracking-tight">
+                   Independent by Design: Open Protocols Only.
+                </p>
             </div>
 
             <div className="flex gap-4">
-              <a href="#" onClick={(e) => preventDefaultAndToast(e, "LinkedIn integration coming soon.")} className="text-slate-600 hover:text-white transition-colors">
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "TripleDefence official channels are currently private.")} className="text-slate-600 hover:text-white transition-colors">
                 <Linkedin size={20} strokeWidth={1.5} />
               </a>
-              <a href="#" onClick={(e) => preventDefaultAndToast(e, "Twitter feed unavailable.")} className="text-slate-600 hover:text-white transition-colors">
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "TripleDefence official channels are currently private.")} className="text-slate-600 hover:text-white transition-colors">
                 <Twitter size={20} strokeWidth={1.5} />
               </a>
-              <a href="#" onClick={(e) => preventDefaultAndToast(e, "GitHub repository is private.")} className="text-slate-600 hover:text-white transition-colors">
+              <a href="#" onClick={(e) => preventDefaultAndToast(e, "TripleDefence official channels are currently private.")} className="text-slate-600 hover:text-white transition-colors">
                 <Github size={20} strokeWidth={1.5} />
               </a>
             </div>
           </div>
 
-          {/* Links 1 */}
+          {/* Doctrine Section */}
           <div className="md:col-span-2">
-            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 text-opacity-80">Product</h4>
+            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 text-opacity-80">Doctrine</h4>
             <ul className="space-y-3 text-slate-500 text-sm font-medium">
-              <li><a href="#risk" onClick={(e) => smoothScrollTo(e, 'risk')} className="hover:text-white transition-colors">Risk Assessment</a></li>
-              <li><a href="#solutions" onClick={(e) => smoothScrollTo(e, 'solutions')} className="hover:text-white transition-colors">MUPP Platform</a></li>
-              <li><a href="#roadmap" onClick={(e) => smoothScrollTo(e, 'roadmap')} className="hover:text-white transition-colors">Compliance Roadmap</a></li>
+              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "White Paper download requested.")} className="hover:text-white transition-colors">White Paper</a></li>
+              <li><a href="#doctrine" onClick={(e) => handleNavClick(e, 'doctrine')} className="hover:text-white transition-colors">Triple-D Principles</a></li>
+              <li><a href="#risk" onClick={(e) => handleNavClick(e, 'risk')} className="hover:text-white transition-colors">CRA Alignment</a></li>
             </ul>
           </div>
 
-          {/* Links 2 */}
+          {/* Product Section */}
+          <div className="md:col-span-2">
+            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 text-opacity-80">Solutions</h4>
+            <ul className="space-y-3 text-slate-500 text-sm font-medium">
+              <li><a href="#solutions" onClick={(e) => handleNavClick(e, 'solutions')} className="hover:text-white transition-colors">MUPP Platform</a></li>
+              <li><a href="#mip" onClick={(e) => handleNavClick(e, 'mip')} className="hover:text-white transition-colors">Pathway (MIP)</a></li>
+              <li><a href="#" onClick={(e) => handleNavClick(e, 'insights')} className="hover:text-white transition-colors text-neon-purple/80">Insights & Blog</a></li>
+            </ul>
+          </div>
+
+          {/* Legal Section */}
           <div className="md:col-span-2">
             <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 text-opacity-80">Legal</h4>
             <ul className="space-y-3 text-slate-500 text-sm font-medium">
-              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Privacy Policy")} className="hover:text-white transition-colors">Privacy Protocol</a></li>
-              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Terms")} className="hover:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "SLA")} className="hover:text-white transition-colors">SLA Assurance</a></li>
+              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Legal document v4.0 is under final review.")} className="hover:text-white transition-colors">Protocol</a></li>
+              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Legal document v4.0 is under final review.")} className="hover:text-white transition-colors">Terms</a></li>
+              <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "Legal document v4.0 is under final review.")} className="hover:text-white transition-colors">SLA</a></li>
             </ul>
           </div>
 
           {/* CTA Box */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-3">
              <div className="bg-[#0A0A0A] border border-white/10 p-6 rounded-xl">
                 <h4 className="text-white font-bold mb-2">Automated Compliance</h4>
                 <p className="text-slate-500 text-xs mb-4 leading-relaxed">
-                   Article 14 reporting readiness requires architectural integration.
+                   Article 14 reporting readiness requires architectural integration. Zero proprietary lock-in.
                 </p>
                 <button 
                   onClick={() => handleToast("Wizard Demo Requested")}
@@ -919,7 +1359,7 @@ FILE: /home/vino/dev/triple-defence2025/components/Hero.tsx
 ================================================================
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, FileText, Activity } from 'lucide-react';
+import { ArrowRight, FileText, Activity, ShieldAlert } from 'lucide-react';
 
 interface HeroProps {
   mousePosition: { x: number; y: number };
@@ -953,9 +1393,6 @@ const Hero: React.FC<HeroProps> = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------
-  // CANVAS ANIMATION LOGIC
-  // ---------------------------------------------------------------------------
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -967,24 +1404,22 @@ const Hero: React.FC<HeroProps> = () => {
     let height = canvas.height = window.innerHeight;
     
     const particles: Particle[] = [];
-    const PROTECTION_RADIUS = 300; // The invisible barrier size
-    const THREAT_COLOR = '239, 68, 68'; // Tailwind Red-500
-    const SAFE_COLOR = '139, 92, 246'; // Tailwind Violet-500
+    const PROTECTION_RADIUS = 300;
+    const THREAT_COLOR = '239, 68, 68';
+    const SAFE_COLOR = '139, 92, 246';
     const BASE_SPEED = 0.8;
 
     const createParticle = (): Particle => {
-      // Spawn from edges
       const edge = Math.floor(Math.random() * 4);
       let x = 0, y = 0;
       
       switch(edge) {
-        case 0: x = Math.random() * width; y = -10; break; // Top
-        case 1: x = width + 10; y = Math.random() * height; break; // Right
-        case 2: x = Math.random() * width; y = height + 10; break; // Bottom
-        case 3: x = -10; y = Math.random() * height; break; // Left
+        case 0: x = Math.random() * width; y = -10; break;
+        case 1: x = width + 10; y = Math.random() * height; break;
+        case 2: x = Math.random() * width; y = height + 10; break;
+        case 3: x = -10; y = Math.random() * height; break;
       }
 
-      // Calculate velocity towards roughly the center
       const centerX = width / 2;
       const centerY = height / 2;
       const angle = Math.atan2(centerY - y, centerX - x);
@@ -996,13 +1431,12 @@ const Hero: React.FC<HeroProps> = () => {
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
         size: Math.random() * 1.5 + 0.5,
-        color: THREAT_COLOR, // Start as threat
+        color: THREAT_COLOR,
         isThreat: true,
         alpha: Math.random() * 0.5 + 0.2
       };
     };
 
-    // Initialize logic
     for (let i = 0; i < 80; i++) {
       particles.push(createParticle());
     }
@@ -1010,12 +1444,10 @@ const Hero: React.FC<HeroProps> = () => {
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
       
-      // Draw Static Engineering Grid (Subtle)
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
       ctx.lineWidth = 1;
       const gridSize = 100;
       
-      // Horizontal Lines
       for (let i = 0; i < height; i += gridSize) {
         ctx.beginPath();
         ctx.moveTo(0, i);
@@ -1023,7 +1455,6 @@ const Hero: React.FC<HeroProps> = () => {
         ctx.stroke();
       }
       
-      // Vertical Lines
       for (let i = 0; i < width; i += gridSize) {
         ctx.beginPath();
         ctx.moveTo(i, 0);
@@ -1034,42 +1465,34 @@ const Hero: React.FC<HeroProps> = () => {
       const centerX = width / 2;
       const centerY = height / 2;
 
-      // Update and Draw Particles
       particles.forEach((p, index) => {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Check distance to center
         const dx = p.x - centerX;
         const dy = p.y - centerY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        // THE NEUTRALIZATION LOGIC
-        // If particle crosses the barrier, it becomes safe
         if (p.isThreat && dist < PROTECTION_RADIUS) {
           p.isThreat = false;
           p.color = SAFE_COLOR;
-          p.vx *= 0.5; // Slow down when neutralized
+          p.vx *= 0.5;
           p.vy *= 0.5;
         }
 
-        // Fade out logic for neutralized particles or particles leaving screen
         if (!p.isThreat) {
            p.alpha -= 0.005;
         }
 
-        // Reset if transparent or out of bounds (too far)
         if (p.alpha <= 0 || p.x < -50 || p.x > width + 50 || p.y < -50 || p.y > height + 50) {
           particles[index] = createParticle();
         }
 
-        // Draw
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
         ctx.fill();
         
-        // Draw subtle trail if moving fast enough
         if (p.isThreat) {
            ctx.shadowBlur = 4;
            ctx.shadowColor = `rgba(${p.color}, 0.5)`;
@@ -1097,33 +1520,25 @@ const Hero: React.FC<HeroProps> = () => {
 
   return (
     <section className="relative h-screen min-h-[800px] w-full flex flex-col justify-center items-center overflow-hidden bg-[#030303]">
-      
-      {/* ---------------------------------------------------------------------------
-          LAYER 1: CANVAS BACKGROUND (Data Scatter Plot)
-         --------------------------------------------------------------------------- */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 z-0 pointer-events-none"
       />
       
-      {/* Vignette Overlay for Focus */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030303_90%)] z-0 pointer-events-none" />
 
-      {/* ---------------------------------------------------------------------------
-          LAYER 2: MAIN CONTENT (Operational Command Surface)
-         --------------------------------------------------------------------------- */}
       <div className="relative z-10 w-full max-w-7xl px-6 flex flex-col items-center justify-center text-center -mt-10">
         
-        {/* Minimalist Status Badge */}
+        {/* Framework Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-10 flex items-center gap-3 px-3 py-1 border border-white/10 bg-white/[0.02] rounded-full backdrop-blur-sm"
+          className="mb-8 flex items-center gap-3 px-4 py-1.5 border border-neon-purple/40 bg-neon-purple/5 rounded-full backdrop-blur-md shadow-[0_0_15px_rgba(139,92,246,0.1)]"
         >
-          <div className="w-1.5 h-1.5 rounded-full bg-neon-purple animate-pulse" />
-          <span className="text-[10px] font-mono font-medium tracking-[0.2em] text-slate-400 uppercase">
-            Active Countermeasures
+          <ShieldAlert className="w-3 h-3 text-neon-purple" />
+          <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-neon-purple uppercase">
+            TripleDefence Framework: Beyond Zero Trust
           </span>
         </motion.div>
 
@@ -1135,10 +1550,10 @@ const Hero: React.FC<HeroProps> = () => {
           className="relative"
         >
           <h1 className="font-display text-5xl sm:text-7xl md:text-9xl font-bold tracking-tighter text-white mb-8 leading-[0.9]">
-            WIN WITHOUT
+            UNEXPLOITABLE
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-500">
-              FIGHTING.
+              BY DESIGN.
             </span>
           </h1>
         </motion.div>
@@ -1150,17 +1565,16 @@ const Hero: React.FC<HeroProps> = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-16 tracking-tight"
         >
-          Threats don't wait for alerts. TripleDefence blocks vulnerability abuse before it strikes. We engineer <span className="text-white font-normal">proactive protection</span> into the core fabric of your organization.
+          TripleDefence is the evolution of cyberprotection. We don't just secure; we make your infrastructure <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">unexploitable by architectural design</span>.
         </motion.p>
 
-        {/* Precision Interfaces (Buttons) */}
+        {/* Precision Interfaces */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
         >
-          {/* Primary Action */}
           <button 
             onClick={smoothScrollToContact}
             className="group relative px-8 py-4 bg-transparent overflow-hidden rounded-sm transition-all duration-300"
@@ -1168,12 +1582,11 @@ const Hero: React.FC<HeroProps> = () => {
             <div className="absolute inset-0 border border-white/20 group-hover:border-white/40 transition-colors" />
             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="relative z-10 flex items-center gap-3 text-sm font-bold tracking-widest text-white uppercase">
-              Start Assessment
+              Check Compliance Role
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </span>
           </button>
           
-          {/* Secondary Action */}
           <button 
             onClick={() => handleToast("Documentation hub access requires clearance.")}
             className="group px-8 py-4 text-slate-500 hover:text-white transition-colors duration-300 flex items-center gap-2 text-sm font-medium tracking-wide"
@@ -1183,7 +1596,6 @@ const Hero: React.FC<HeroProps> = () => {
           </button>
         </motion.div>
 
-        {/* Bottom Metrics (Decorative) */}
         <motion.div
            initial={{ opacity: 0 }}
            animate={{ opacity: 1 }}
@@ -1210,7 +1622,7 @@ FILE: /home/vino/dev/triple-defence2025/components/Legacy.tsx
 ================================================================
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, ShieldCheck } from 'lucide-react';
+import { Award, ShieldCheck, Database, Unlock } from 'lucide-react';
 
 const Legacy: React.FC = () => {
   return (
@@ -1262,10 +1674,38 @@ const Legacy: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto"
+            className="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto mb-20"
           >
              Long before the industry talked about Zero Trust, we were building it. <strong className="text-white font-medium">TripleDefence</strong> is the evolution of a decade-long doctrine: <span className="italic text-slate-300">protect the system, not the symptoms.</span>
           </motion.p>
+
+          {/* Independent by Design Callout */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full text-left"
+          >
+            <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl group hover:border-neon-purple/30 transition-all duration-500">
+               <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center mb-6 text-neon-purple">
+                  <Unlock size={20} />
+               </div>
+               <h4 className="text-white font-bold text-lg mb-3 tracking-tight">Independent by Design</h4>
+               <p className="text-slate-500 text-sm leading-relaxed">
+                  We offer real exit options. No proprietary traps. Migrate using open protocols like WebDAV at any time. Our commitment to your sovereignty is absolute.
+               </p>
+            </div>
+
+            <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl group hover:border-neon-purple/30 transition-all duration-500">
+               <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center mb-6 text-neon-purple">
+                  <Database size={20} />
+               </div>
+               <h4 className="text-white font-bold text-lg mb-3 tracking-tight">Data Sovereignty</h4>
+               <p className="text-slate-500 text-sm leading-relaxed">
+                  Your data remains yours. Accessible via open APIs and standard databases (MySQL/PostgreSQL). Built on modular frameworks to ensure zero vendor lock-in.
+               </p>
+            </div>
+          </motion.div>
        </div>
     </section>
   );
@@ -1377,7 +1817,7 @@ const MIPJourney: React.FC = () => {
   };
 
   return (
-    <section className="bg-charcoal py-32 relative z-20 border-t border-white/5">
+    <section id="mip" className="bg-charcoal py-32 relative z-20 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}
@@ -1411,10 +1851,6 @@ const MIPJourney: React.FC = () => {
               index={index}
             />
           ))}
-          
-          {/* Final "Success" Placeholder to balance the 4x2 grid visually on desktop if needed, 
-              or we let 7 stand alone. 7 is a prime number, let's leave it as is, 
-              the layout will wrap naturally. */}
         </div>
 
         {/* CTA */}
@@ -1728,7 +2164,7 @@ FILE: /home/vino/dev/triple-defence2025/components/Navigation.tsx
 ================================================================
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Lock } from 'lucide-react';
+import { Menu, X, Lock, BookOpen } from 'lucide-react';
 
 const CustomLogo: React.FC = () => {
   return (
@@ -1741,7 +2177,12 @@ const CustomLogo: React.FC = () => {
   );
 };
 
-const Navigation: React.FC = () => {
+interface NavigationProps {
+  currentView: 'home' | 'insights';
+  onNavigate: (view: string) => void;
+}
+
+const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -1753,50 +2194,28 @@ const Navigation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // V4 Navigation Structure
   const navLinks = [
     { name: 'Solutions', id: 'solutions' },
-    { name: 'Methodology', id: 'methodology' },
-    { name: 'Sectors', id: 'sectors' },
-    { name: 'Fines & Risk', id: 'risk' },
+    { name: 'Doctrine', id: 'doctrine' },
+    { name: 'Pathway', id: 'mip' },
   ];
 
-  // Custom Smooth Scroll Function
-  const smoothScrollTo = (e: React.MouseEvent, targetId: string, duration: number = 1500) => {
+  const handleLinkClick = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    // Close mobile menu if open
     setMobileOpen(false);
+    onNavigate(id);
+  };
 
-    const headerOffset = 100;
-    const startPosition = window.scrollY || window.pageYOffset;
-    const targetPosition = target.getBoundingClientRect().top + startPosition - headerOffset;
-    const distance = targetPosition - startPosition;
-    let startTime: number | null = null;
+  const handleInsightsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    onNavigate('insights');
+  };
 
-    // Easing function: easeInOutCubic
-    const ease = (t: number, b: number, c: number, d: number) => {
-      t /= d / 2;
-      if (t < 1) return c / 2 * t * t * t + b;
-      t -= 2;
-      return c / 2 * (t * t * t + 2) + b;
-    };
-
-    const animation = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
-      } else {
-        window.scrollTo(0, targetPosition);
-      }
-    };
-    
-    requestAnimationFrame(animation);
+  const handleLogoClick = () => {
+    setMobileOpen(false);
+    onNavigate('home');
   };
 
   const handleToast = (message: string) => {
@@ -1816,7 +2235,7 @@ const Navigation: React.FC = () => {
         {/* Logo */}
         <div 
           className="flex items-center gap-3 cursor-pointer group" 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={handleLogoClick}
         >
           <CustomLogo />
           <span className="font-display font-bold text-lg tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-400 transition-all">
@@ -1830,7 +2249,7 @@ const Navigation: React.FC = () => {
             <a
               key={link.name}
               href={`#${link.id}`}
-              onClick={(e) => smoothScrollTo(e, link.id, 1200)}
+              onClick={(e) => handleLinkClick(e, link.id)}
               className="relative text-sm font-medium text-slate-400 hover:text-white transition-colors duration-300 py-1 group tracking-wide cursor-pointer"
             >
               {link.name}
@@ -1838,9 +2257,21 @@ const Navigation: React.FC = () => {
             </a>
           ))}
           
-          {/* Portal Button (Trigger Toast) */}
+          {/* Insights (Blog) Link */}
+          <button
+             onClick={handleInsightsClick}
+             className={`flex items-center gap-2 text-sm font-medium transition-colors duration-300 py-1 group tracking-wide ${currentView === 'insights' ? 'text-white' : 'text-slate-400 hover:text-white'}`}
+          >
+             <BookOpen size={14} className={currentView === 'insights' ? 'text-neon-purple' : ''} />
+             Insights
+             {currentView === 'insights' && (
+               <span className="absolute bottom-[-4px] left-0 w-full h-[1px] bg-neon-purple box-shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
+             )}
+          </button>
+
+          {/* Portal Button */}
           <button 
-            onClick={() => handleToast("Portal access restricted. Please contact sales.")}
+            onClick={() => handleToast("Biometric authentication required. Access restricted.")}
             className="flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors group"
           >
             <Lock size={14} className="group-hover:text-neon-purple transition-colors" />
@@ -1848,13 +2279,13 @@ const Navigation: React.FC = () => {
           </button>
         </div>
 
-        {/* CTA */}
+        {/* CTA (Audit) */}
         <div className="hidden md:block">
           <button 
-            onClick={(e) => smoothScrollTo(e, 'contact', 1500)}
+            onClick={() => onNavigate('contact')}
             className="px-5 py-2 text-xs font-bold tracking-widest text-charcoal bg-white hover:bg-slate-200 transition-all duration-300 rounded-sm shadow-[0_0_15px_rgba(255,255,255,0.1)]"
           >
-            BOOK AUDIT
+            START AUDIT
           </button>
         </div>
 
@@ -1881,23 +2312,30 @@ const Navigation: React.FC = () => {
                   key={link.name}
                   href={`#${link.id}`}
                   className="text-slate-300 text-xl font-medium"
-                  onClick={(e) => smoothScrollTo(e, link.id, 1200)}
+                  onClick={(e) => handleLinkClick(e, link.id)}
                 >
                   {link.name}
                 </a>
               ))}
               <button
-                onClick={() => handleToast("Portal access restricted.")}
+                onClick={handleInsightsClick}
+                className="text-slate-300 text-xl font-medium text-left flex items-center gap-3"
+              >
+                <BookOpen size={20} />
+                Insights
+              </button>
+              <button
+                onClick={() => handleToast("Biometric authentication required. Access restricted.")}
                 className="text-slate-300 text-xl font-medium text-left flex items-center gap-3"
               >
                 <Lock size={20} />
                 Portal
               </button>
               <button 
-                onClick={(e) => smoothScrollTo(e, 'contact', 1500)}
+                onClick={() => { setMobileOpen(false); onNavigate('contact'); }}
                 className="mt-4 w-full py-4 text-sm font-bold text-charcoal bg-white rounded-sm"
               >
-                BOOK AUDIT
+                START AUDIT
               </button>
             </div>
           </motion.div>
@@ -1980,7 +2418,7 @@ const Philosophy: React.FC = () => {
                 </h3>
 
                 <p className="text-slate-400 leading-relaxed text-lg font-light">
-                    Shift from reactive brute force to proactive design. Predict and negate threats before they manifest.
+                    Shift from reactive brute force to proactive design. Predict and negate threats before they manifest. Protection by Design.
                 </p>
             </motion.div>
 
@@ -2208,36 +2646,64 @@ FILE: /home/vino/dev/triple-defence2025/components/Solutions.tsx
 ================================================================
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Database, Users, ArrowRight, Hexagon, Command } from 'lucide-react';
+import { Layers, Database, Users, Hexagon, Command, CheckCircle2, Cpu } from 'lucide-react';
 
 const SolutionCard: React.FC<{ 
   title: string; 
   subtitle: string; 
-  desc: string; 
+  desc: React.ReactNode; 
   icon: React.ReactNode; 
   delay: number;
   action?: React.ReactNode;
-}> = ({ title, subtitle, desc, icon, delay, action }) => (
+  featured?: boolean;
+  onClick?: () => void;
+}> = ({ title, subtitle, desc, icon, delay, action, featured, onClick }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    className="group relative flex flex-col h-full bg-[#050505] border border-white/10 hover:border-white/20 transition-colors duration-500 overflow-hidden"
+    onClick={onClick}
+    className={`group relative flex flex-col h-full transition-all duration-500 rounded-xl
+      ${featured 
+        ? 'bg-[#080510] border border-neon-purple shadow-[0_0_30px_rgba(139,92,246,0.15)] z-10 scale-[1.03]' 
+        : 'bg-[#050505] border border-white/10 hover:border-white/20'
+      }
+      ${onClick ? 'cursor-pointer' : ''}
+    `}
   >
-    {/* Subtle Grid Background */}
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 group-hover:opacity-40 transition-opacity" />
-    
-    {/* Top Accent Line */}
-    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-neon-purple/50 transition-all duration-500" />
+    {/* Background Effects Container (Masked) */}
+    <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+        {/* Subtle Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 group-hover:opacity-40 transition-opacity" />
+        
+        {/* Top Accent Line */}
+        <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-transparent to-transparent transition-all duration-500 
+          ${featured ? 'via-neon-purple opacity-100' : 'group-hover:via-white/20'}`} 
+        />
+    </div>
+
+    {/* Featured Badge - Protruding (Unmasked) */}
+    {featured && (
+      <div className="absolute top-0 inset-x-0 flex justify-center -mt-3.5 z-30">
+         <div className="bg-neon-purple text-white text-[10px] font-bold tracking-widest px-4 py-1 rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)] flex items-center gap-1 uppercase ring-4 ring-[#080510]">
+            <CheckCircle2 size={12} />
+            Article 14 Ready
+         </div>
+      </div>
+    )}
 
     <div className="relative z-10 p-8 flex flex-col h-full">
       {/* Icon Header */}
-      <div className="flex justify-between items-start mb-6">
-        <div className="p-3 bg-white/5 border border-white/5 text-slate-300 group-hover:text-white group-hover:border-white/20 transition-all rounded-none">
+      <div className="flex justify-between items-start mb-6 pt-2">
+        <div className={`p-3 border transition-all rounded-lg
+            ${featured 
+              ? 'bg-neon-purple/10 border-neon-purple/30 text-neon-purple shadow-[0_0_15px_rgba(139,92,246,0.2)]' 
+              : 'bg-white/5 border-white/5 text-slate-300 group-hover:text-white group-hover:border-white/20'
+            }`}>
           {icon}
         </div>
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-neon-purple">
+        <div className={`transition-opacity duration-500 ${featured ? 'opacity-100 text-neon-purple' : 'opacity-0 group-hover:opacity-100 text-slate-500'}`}>
             <Hexagon size={16} className="animate-spin-slow" />
         </div>
       </div>
@@ -2246,13 +2712,13 @@ const SolutionCard: React.FC<{
       <h3 className="font-display text-2xl font-bold text-white mb-1 tracking-tight">
         {title}
       </h3>
-      <span className="text-xs font-mono text-neon-purple uppercase tracking-widest mb-6 block opacity-80">
+      <span className={`text-xs font-mono uppercase tracking-widest mb-6 block opacity-80 ${featured ? 'text-neon-purple font-bold' : 'text-slate-500'}`}>
         {subtitle}
       </span>
 
-      <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
+      <div className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
         {desc}
-      </p>
+      </div>
 
       {/* Action Area */}
       <div className="mt-auto pt-6 border-t border-white/5">
@@ -2272,6 +2738,10 @@ const SolutionCard: React.FC<{
 const Solutions: React.FC = () => {
   const handleDemoRequest = () => {
     window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Wizard Demo requested. Sales team will contact you." } }));
+  };
+
+  const handleTechnicalToast = () => {
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Technical specifications for this module are restricted to partners." } }));
   };
 
   return (
@@ -2309,31 +2779,39 @@ const Solutions: React.FC = () => {
         </div>
 
         {/* The Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           
           {/* CARD 1: MUPP */}
           <SolutionCard 
             title="MUPP"
             subtitle="(The Architecture)"
             icon={<Layers size={24} />}
-            desc="The intelligent abstraction layer. Unifying your entire security ecosystem into a single, cohesive operational language. Transcendence, not just integration."
+            desc="The intelligent abstraction layer. Unifying your entire protection ecosystem into a single, cohesive operational language. Transcendence, not just integration."
             delay={0.1}
+            onClick={handleTechnicalToast}
           />
 
-          {/* CARD 2: CRA-3D */}
+          {/* CARD 2: CRA-3D (FEATURED) */}
           <SolutionCard 
             title="CRA-3D"
-            subtitle="(The Wizard)"
+            subtitle="(The Wizard) — Powered by Flying Dutch"
             icon={<Database size={24} />}
-            desc="The ultimate reporting and incident management assistant. A structured, audit-proof vault for inventories, risk assessments, and compliance evidence. Ready for Article 14."
+            desc={
+              <>
+                Integrated with Sovereign Infrastructure. Leveraging the <span className="text-white font-medium">IntraVox/Nextcloud</span> framework to enable anonymous, secure public links for documentation sharing. Proof without vendor lock-in.
+                <br /><br />
+                <span className="text-neon-purple font-bold">Independent by Design:</span> WebDAV, MySQL/PostgreSQL support.
+              </>
+            }
             delay={0.2}
+            featured={true}
             action={
               <button 
-                onClick={handleDemoRequest}
-                className="group/btn w-full flex items-center justify-between px-4 py-3 bg-neon-purple/10 border border-neon-purple/30 hover:bg-neon-purple/20 hover:border-neon-purple/50 transition-all"
+                onClick={(e) => { e.stopPropagation(); handleDemoRequest(); }}
+                className="group/btn w-full flex items-center justify-between px-4 py-3 bg-neon-purple text-white shadow-[0_0_15px_rgba(139,92,246,0.4)] hover:bg-neon-purple/90 transition-all rounded-md"
               >
-                <span className="text-xs font-bold text-white tracking-widest uppercase">Request Wizard Demo</span>
-                <Command size={14} className="text-neon-purple group-hover/btn:text-white transition-colors" />
+                <span className="text-xs font-bold tracking-widest uppercase">Launch Wizard Demo</span>
+                <Command size={14} className="group-hover/btn:translate-x-1 transition-transform" />
               </button>
             }
           />
@@ -2343,8 +2821,9 @@ const Solutions: React.FC = () => {
             title="vPAC"
             subtitle="(The Consultancy)"
             icon={<Users size={24} />}
-            desc="Virtual Protection Assurance Consultancy. Strategic guidance to implement the TripleDefence doctrine, ensuring technical sovereignty and measurable resilience."
+            desc="Chunk Workshop Approach: We decompose protection into manageable modules, delivering strategic hardening and consultancy that fits your operational pace. Strategic guidance to implement the TripleDefence doctrine."
             delay={0.3}
+            onClick={handleTechnicalToast}
           />
 
         </div>
@@ -2354,4 +2833,278 @@ const Solutions: React.FC = () => {
 };
 
 export default Solutions;
+
+================================================================
+FILE: /home/vino/dev/triple-defence2025/components/StrategicPositioning.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const StrategicPositioning: React.FC = () => {
+  return (
+    <section className="bg-black py-32 relative overflow-hidden">
+      {/* Background Subtle elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[1px] h-full bg-gradient-to-b from-white/5 via-transparent to-transparent opacity-50" />
+        <div className="absolute top-0 right-1/4 w-[1px] h-full bg-gradient-to-b from-white/5 via-transparent to-transparent opacity-50" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <span className="text-[10px] font-mono font-bold tracking-[0.4em] text-slate-500 uppercase">
+            The TripleDefence Advantage
+          </span>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative max-w-5xl mx-auto p-12 md:p-20 border border-white/10 rounded-sm bg-gradient-to-b from-white/[0.02] to-transparent shadow-[0_0_50px_rgba(0,0,0,1)]"
+        >
+          {/* Decorative Corner Accents */}
+          <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/20" />
+          <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/20" />
+          <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-white/20" />
+          <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/20" />
+
+          <div className="flex flex-col gap-10">
+            <h3 className="font-display text-2xl md:text-4xl text-slate-300 font-light leading-tight">
+              TripleDefence transforms CRA compliance from:
+            </h3>
+            
+            <div className="space-y-4">
+              <p className="font-display text-3xl md:text-5xl lg:text-6xl font-bold italic text-slate-600 line-through decoration-neon-red/40 decoration-2">
+                "Detect and report exploitation under <span className="text-slate-500 line-through decoration-neon-red/60">uncertainty</span>"
+              </p>
+              
+              <div className="flex items-center justify-center py-4">
+                <div className="h-[1px] w-12 bg-neon-purple/50" />
+                <span className="px-4 font-mono text-xs text-neon-purple font-bold tracking-widest">INTO</span>
+                <div className="h-[1px] w-12 bg-neon-purple/50" />
+              </div>
+
+              <p className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter leading-none">
+                "Prove that exploitation is <br />
+                <span className="text-neon-purple drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]">
+                  impossible by design.
+                </span>"
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 1 }}
+          className="mt-16 max-w-2xl mx-auto text-center"
+        >
+          <p className="text-lg md:text-xl text-slate-400 font-light leading-relaxed">
+            This is the strongest regulatory position any manufacturer can take. We move you from reactive reporting to <span className="text-white font-medium">architectural sovereignty</span>.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default StrategicPositioning;
+
+================================================================
+FILE: /home/vino/dev/triple-defence2025/components/TripleDDoctrine.tsx
+================================================================
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Shield, Flame, ArrowRight, Lock, Zap, Server, Activity, AlertTriangle, EyeOff, TrendingDown } from 'lucide-react';
+
+const PrincipleItem: React.FC<{ title: string; desc: string; icon: React.ReactNode; index: number }> = ({ title, desc, icon, index }) => (
+  <motion.div
+    initial={{ opacity: 0, x: -30 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
+    className="flex items-start gap-4 mb-8 group"
+  >
+    <div className="p-3 rounded-lg bg-neon-purple/10 border border-neon-purple/30 text-neon-purple shadow-[0_0_15px_rgba(139,92,246,0.2)] group-hover:bg-neon-purple group-hover:text-white transition-all duration-300">
+      {icon}
+    </div>
+    <div>
+      <h4 className="text-white font-bold text-lg mb-1 group-hover:text-neon-purple transition-colors">{title}</h4>
+      <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
+    </div>
+  </motion.div>
+);
+
+const ChallengeItem: React.FC<{ title: string; desc: string; icon: React.ReactNode; index: number }> = ({ title, desc, icon, index }) => (
+  <motion.div
+    initial={{ opacity: 0, x: 30 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
+    className="flex flex-row-reverse md:flex-row items-start gap-4 mb-8 group text-right md:text-left"
+  >
+    <div className="md:order-1 flex-1">
+      <h4 className="text-slate-300 font-bold text-lg mb-1 group-hover:text-neon-red transition-colors">{title}</h4>
+      <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>
+    </div>
+    <div className="md:order-[-1] p-3 rounded-lg bg-neon-red/5 border border-neon-red/10 text-neon-red/60 group-hover:text-neon-red group-hover:border-neon-red/40 transition-all duration-300">
+      {icon}
+    </div>
+  </motion.div>
+);
+
+const TripleDDoctrine: React.FC = () => {
+  return (
+    <section id="doctrine" className="relative bg-[#020202] py-32 overflow-hidden">
+      
+      {/* Background Split */}
+      <div className="absolute inset-0 flex pointer-events-none">
+        <div className="w-full md:w-1/2 h-full bg-gradient-to-r from-neon-purple/[0.03] to-transparent" />
+        <div className="w-full md:w-1/2 h-full bg-gradient-to-l from-neon-red/[0.03] to-transparent" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        
+        {/* Central Conflict Visual (Mobile: Top, Desktop: Center) */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 hidden md:flex items-center justify-center opacity-30">
+            <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+                className="relative w-[500px] h-[500px]"
+            >
+                {/* The Fire (Back) */}
+                <div className="absolute inset-0 flex items-center justify-center translate-x-10">
+                    <div className="w-64 h-64 bg-neon-red/20 rounded-full blur-[80px]" />
+                    <Flame className="w-96 h-96 text-neon-red/10 animate-pulse" />
+                </div>
+                {/* The Shield (Front) */}
+                <div className="absolute inset-0 flex items-center justify-center -translate-x-10">
+                    <Shield className="w-96 h-96 text-neon-purple/20 fill-black/50 drop-shadow-[0_0_30px_rgba(139,92,246,0.3)]" />
+                </div>
+            </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 relative z-10">
+            
+            {/* LEFT SIDE: PRINCIPLES (The Solution) */}
+            <div className="relative">
+                <motion.div 
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-12 border-b border-neon-purple/30 pb-4 inline-block"
+                >
+                    <h3 className="font-display text-2xl font-bold text-white tracking-wide">
+                        Triple-D <span className="text-neon-purple">Principles</span>
+                    </h3>
+                    <span className="text-xs font-mono text-neon-purple/70 uppercase tracking-widest">The Sovereign Standard</span>
+                </motion.div>
+
+                <div className="space-y-2">
+                    <PrincipleItem 
+                        index={0}
+                        title="Unidirectional Connectivity"
+                        desc="Data flows OUT, never IN. Hardware-enforced diodes ensure external threats physically cannot reach the operational core."
+                        icon={<ArrowRight size={20} />}
+                    />
+                    <PrincipleItem 
+                        index={1}
+                        title="Physical Isolation"
+                        desc="Attack surfaces are physically separated from critical logic. Compromise of the edge does not equal compromise of the core."
+                        icon={<Server size={20} />}
+                    />
+                    <PrincipleItem 
+                        index={2}
+                        title="Zero-Day Immunity"
+                        desc="Directional control renders typical CVEs irrelevant. If the path doesn't exist, the vulnerability cannot be exploited."
+                        icon={<Lock size={20} />}
+                    />
+                    <PrincipleItem 
+                        index={3}
+                        title="Deterministic Security"
+                        desc="No Byzantine Faults. System behavior is mathematically predictable, eliminating the 'unknown unknowns' of cyber defense."
+                        icon={<Zap size={20} />}
+                    />
+                </div>
+            </div>
+
+            {/* RIGHT SIDE: CHALLENGES (The Problem) */}
+            <div className="relative md:text-left">
+                 <motion.div 
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-12 border-b border-neon-red/30 pb-4 inline-block md:ml-auto md:mr-0 w-full md:w-auto text-left md:text-right"
+                >
+                    <h3 className="font-display text-2xl font-bold text-slate-400 tracking-wide">
+                        CRA <span className="text-neon-red">Challenges</span>
+                    </h3>
+                    <span className="text-xs font-mono text-neon-red/70 uppercase tracking-widest">The Regulatory Risk</span>
+                </motion.div>
+
+                <div className="space-y-2">
+                    <ChallengeItem 
+                        index={0}
+                        title="The Assumption of Detection"
+                        desc="A fragile model relying on catching the attacker *after* entry. In a CRA world, this is a liability."
+                        icon={<EyeOff size={20} />}
+                    />
+                    <ChallengeItem 
+                        index={1}
+                        title="Collapsing SOC Costs"
+                        desc="Traditional monitoring burns budget on false positives and forensic analysis of unpreventable breaches."
+                        icon={<TrendingDown size={20} />}
+                    />
+                    <ChallengeItem 
+                        index={2}
+                        title="Pervasive Alert Fatigue"
+                        desc="When everything is an alert, nothing is. TripleDefence removes the noise by removing the attack surface."
+                        icon={<Activity size={20} />}
+                    />
+                    <ChallengeItem 
+                        index={3}
+                        title="Operationally Crippling Zero-Days"
+                        desc="Patching panic cycles disrupt operations. We remove the urgency by neutralizing the vector."
+                        icon={<AlertTriangle size={20} />}
+                    />
+                </div>
+            </div>
+
+        </div>
+
+        {/* THE BOTTOM LINE */}
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="mt-24 text-center relative z-20"
+        >
+            <div className="inline-block p-1 rounded-2xl bg-gradient-to-r from-neon-red/20 via-transparent to-neon-purple/20">
+                <div className="bg-[#080808] border border-white/10 rounded-xl px-8 py-10 md:px-16">
+                    <p className="font-display text-xl md:text-3xl font-light text-slate-300 leading-relaxed">
+                        "Without TripleDefence, you triage <span className="text-neon-red font-bold">uncertainty</span>.<br className="hidden md:block" /> 
+                        With TripleDefence, you prove the <span className="text-white font-bold underline decoration-neon-purple decoration-2 underline-offset-4">attack path does not exist</span>."
+                    </p>
+                </div>
+            </div>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+};
+
+export default TripleDDoctrine;
 

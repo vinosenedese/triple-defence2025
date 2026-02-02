@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, FileText, Activity } from 'lucide-react';
+import { ArrowRight, FileText, Activity, ShieldAlert } from 'lucide-react';
 
 interface HeroProps {
   mousePosition: { x: number; y: number };
@@ -34,9 +34,6 @@ const Hero: React.FC<HeroProps> = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------
-  // CANVAS ANIMATION LOGIC
-  // ---------------------------------------------------------------------------
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -48,24 +45,22 @@ const Hero: React.FC<HeroProps> = () => {
     let height = canvas.height = window.innerHeight;
     
     const particles: Particle[] = [];
-    const PROTECTION_RADIUS = 300; // The invisible barrier size
-    const THREAT_COLOR = '239, 68, 68'; // Tailwind Red-500
-    const SAFE_COLOR = '139, 92, 246'; // Tailwind Violet-500
+    const PROTECTION_RADIUS = 300;
+    const THREAT_COLOR = '239, 68, 68';
+    const SAFE_COLOR = '139, 92, 246';
     const BASE_SPEED = 0.8;
 
     const createParticle = (): Particle => {
-      // Spawn from edges
       const edge = Math.floor(Math.random() * 4);
       let x = 0, y = 0;
       
       switch(edge) {
-        case 0: x = Math.random() * width; y = -10; break; // Top
-        case 1: x = width + 10; y = Math.random() * height; break; // Right
-        case 2: x = Math.random() * width; y = height + 10; break; // Bottom
-        case 3: x = -10; y = Math.random() * height; break; // Left
+        case 0: x = Math.random() * width; y = -10; break;
+        case 1: x = width + 10; y = Math.random() * height; break;
+        case 2: x = Math.random() * width; y = height + 10; break;
+        case 3: x = -10; y = Math.random() * height; break;
       }
 
-      // Calculate velocity towards roughly the center
       const centerX = width / 2;
       const centerY = height / 2;
       const angle = Math.atan2(centerY - y, centerX - x);
@@ -77,13 +72,12 @@ const Hero: React.FC<HeroProps> = () => {
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
         size: Math.random() * 1.5 + 0.5,
-        color: THREAT_COLOR, // Start as threat
+        color: THREAT_COLOR,
         isThreat: true,
         alpha: Math.random() * 0.5 + 0.2
       };
     };
 
-    // Initialize logic
     for (let i = 0; i < 80; i++) {
       particles.push(createParticle());
     }
@@ -91,12 +85,10 @@ const Hero: React.FC<HeroProps> = () => {
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
       
-      // Draw Static Engineering Grid (Subtle)
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
       ctx.lineWidth = 1;
       const gridSize = 100;
       
-      // Horizontal Lines
       for (let i = 0; i < height; i += gridSize) {
         ctx.beginPath();
         ctx.moveTo(0, i);
@@ -104,7 +96,6 @@ const Hero: React.FC<HeroProps> = () => {
         ctx.stroke();
       }
       
-      // Vertical Lines
       for (let i = 0; i < width; i += gridSize) {
         ctx.beginPath();
         ctx.moveTo(i, 0);
@@ -115,42 +106,34 @@ const Hero: React.FC<HeroProps> = () => {
       const centerX = width / 2;
       const centerY = height / 2;
 
-      // Update and Draw Particles
       particles.forEach((p, index) => {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Check distance to center
         const dx = p.x - centerX;
         const dy = p.y - centerY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        // THE NEUTRALIZATION LOGIC
-        // If particle crosses the barrier, it becomes safe
         if (p.isThreat && dist < PROTECTION_RADIUS) {
           p.isThreat = false;
           p.color = SAFE_COLOR;
-          p.vx *= 0.5; // Slow down when neutralized
+          p.vx *= 0.5;
           p.vy *= 0.5;
         }
 
-        // Fade out logic for neutralized particles or particles leaving screen
         if (!p.isThreat) {
            p.alpha -= 0.005;
         }
 
-        // Reset if transparent or out of bounds (too far)
         if (p.alpha <= 0 || p.x < -50 || p.x > width + 50 || p.y < -50 || p.y > height + 50) {
           particles[index] = createParticle();
         }
 
-        // Draw
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
         ctx.fill();
         
-        // Draw subtle trail if moving fast enough
         if (p.isThreat) {
            ctx.shadowBlur = 4;
            ctx.shadowColor = `rgba(${p.color}, 0.5)`;
@@ -178,33 +161,25 @@ const Hero: React.FC<HeroProps> = () => {
 
   return (
     <section className="relative h-screen min-h-[800px] w-full flex flex-col justify-center items-center overflow-hidden bg-[#030303]">
-      
-      {/* ---------------------------------------------------------------------------
-          LAYER 1: CANVAS BACKGROUND (Data Scatter Plot)
-         --------------------------------------------------------------------------- */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 z-0 pointer-events-none"
       />
       
-      {/* Vignette Overlay for Focus */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030303_90%)] z-0 pointer-events-none" />
 
-      {/* ---------------------------------------------------------------------------
-          LAYER 2: MAIN CONTENT (Operational Command Surface)
-         --------------------------------------------------------------------------- */}
       <div className="relative z-10 w-full max-w-7xl px-6 flex flex-col items-center justify-center text-center -mt-10">
         
-        {/* Minimalist Status Badge */}
+        {/* Framework Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-10 flex items-center gap-3 px-3 py-1 border border-white/10 bg-white/[0.02] rounded-full backdrop-blur-sm"
+          className="mb-8 flex items-center gap-3 px-4 py-1.5 border border-neon-purple/40 bg-neon-purple/5 rounded-full backdrop-blur-md shadow-[0_0_15px_rgba(139,92,246,0.1)]"
         >
-          <div className="w-1.5 h-1.5 rounded-full bg-neon-purple animate-pulse" />
-          <span className="text-[10px] font-mono font-medium tracking-[0.2em] text-slate-400 uppercase">
-            Active Countermeasures
+          <ShieldAlert className="w-3 h-3 text-neon-purple" />
+          <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-neon-purple uppercase">
+            TripleDefence Framework: Beyond Zero Trust
           </span>
         </motion.div>
 
@@ -216,10 +191,10 @@ const Hero: React.FC<HeroProps> = () => {
           className="relative"
         >
           <h1 className="font-display text-5xl sm:text-7xl md:text-9xl font-bold tracking-tighter text-white mb-8 leading-[0.9]">
-            WIN WITHOUT
+            UNEXPLOITABLE
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-500">
-              FIGHTING.
+              BY DESIGN.
             </span>
           </h1>
         </motion.div>
@@ -231,17 +206,16 @@ const Hero: React.FC<HeroProps> = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-16 tracking-tight"
         >
-          Threats don't wait for alerts. TripleDefence blocks vulnerability abuse before it strikes. We engineer <span className="text-white font-normal">proactive protection</span> into the core fabric of your organization.
+          TripleDefence is the evolution of cyberprotection. We don't just secure; we make your infrastructure <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">unexploitable by architectural design</span>.
         </motion.p>
 
-        {/* Precision Interfaces (Buttons) */}
+        {/* Precision Interfaces */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
         >
-          {/* Primary Action */}
           <button 
             onClick={smoothScrollToContact}
             className="group relative px-8 py-4 bg-transparent overflow-hidden rounded-sm transition-all duration-300"
@@ -249,12 +223,11 @@ const Hero: React.FC<HeroProps> = () => {
             <div className="absolute inset-0 border border-white/20 group-hover:border-white/40 transition-colors" />
             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="relative z-10 flex items-center gap-3 text-sm font-bold tracking-widest text-white uppercase">
-              Start Assessment
+              Check Compliance Role
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </span>
           </button>
           
-          {/* Secondary Action */}
           <button 
             onClick={() => handleToast("Documentation hub access requires clearance.")}
             className="group px-8 py-4 text-slate-500 hover:text-white transition-colors duration-300 flex items-center gap-2 text-sm font-medium tracking-wide"
@@ -264,7 +237,6 @@ const Hero: React.FC<HeroProps> = () => {
           </button>
         </motion.div>
 
-        {/* Bottom Metrics (Decorative) */}
         <motion.div
            initial={{ opacity: 0 }}
            animate={{ opacity: 1 }}
