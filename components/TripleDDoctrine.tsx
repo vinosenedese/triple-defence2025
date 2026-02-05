@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Flame, ArrowRight, Lock, Zap, Server, Activity, AlertTriangle, EyeOff, TrendingDown } from 'lucide-react';
+import { Shield, Flame, ArrowRight, Lock, Zap, Server, Activity, AlertTriangle, EyeOff, TrendingDown, Map, Cpu, Rocket } from 'lucide-react';
 
 const PrincipleItem: React.FC<{ title: string; desc: string; icon: React.ReactNode; index: number }> = ({ title, desc, icon, index }) => (
   <motion.div
@@ -14,7 +14,7 @@ const PrincipleItem: React.FC<{ title: string; desc: string; icon: React.ReactNo
       {icon}
     </div>
     <div>
-      <h4 className="text-white font-bold text-lg mb-1 group-hover:text-neon-purple transition-colors">{title}</h4>
+      <h4 className="text-white font-bold text-lg mb-1 group-hover:text-neon-purple transition-colors uppercase tracking-widest">{title}</h4>
       <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
     </div>
   </motion.div>
@@ -73,7 +73,7 @@ const TripleDDoctrine: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 relative z-10">
             
-            {/* LEFT SIDE: PRINCIPLES (The Solution) */}
+            {/* LEFT SIDE: THE TRIPLE D MODEL (The Solution) */}
             <div className="relative">
                 <motion.div 
                     initial={{ opacity: 0, y: -20 }}
@@ -82,35 +82,29 @@ const TripleDDoctrine: React.FC = () => {
                     className="mb-12 border-b border-neon-purple/30 pb-4 inline-block"
                 >
                     <h3 className="font-display text-2xl font-bold text-white tracking-wide">
-                        Triple-D <span className="text-neon-purple">Principles</span>
+                        The Sovereignty: <span className="text-neon-purple">The Triple D Model</span>
                     </h3>
-                    <span className="text-xs font-mono text-neon-purple/70 uppercase tracking-widest">The Sovereign Standard</span>
+                    <span className="text-xs font-mono text-neon-purple/70 uppercase tracking-widest">Protection by Design</span>
                 </motion.div>
 
                 <div className="space-y-2">
                     <PrincipleItem 
                         index={0}
-                        title="Unidirectional Connectivity"
-                        desc="Data flows OUT, never IN. Hardware-enforced diodes ensure external threats physically cannot reach the operational core."
-                        icon={<ArrowRight size={20} />}
+                        title="DEFINE"
+                        desc="Build a complete truth map of your digital estate. No blind spots before the CRA finds them."
+                        icon={<Map size={20} />}
                     />
                     <PrincipleItem 
                         index={1}
-                        title="Physical Isolation"
-                        desc="Attack surfaces are physically separated from critical logic. Compromise of the edge does not equal compromise of the core."
-                        icon={<Server size={20} />}
+                        title="DEVELOP"
+                        desc="Architectural protection via unidirectional connectivity. Zero-day immunity through strict directional control."
+                        icon={<Cpu size={20} />}
                     />
                     <PrincipleItem 
                         index={2}
-                        title="Zero-Day Immunity"
-                        desc="Directional control renders typical CVEs irrelevant. If the path doesn't exist, the vulnerability cannot be exploited."
-                        icon={<Lock size={20} />}
-                    />
-                    <PrincipleItem 
-                        index={3}
-                        title="Deterministic Security"
-                        desc="No Byzantine Faults. System behavior is mathematically predictable, eliminating the 'unknown unknowns' of cyber defense."
-                        icon={<Zap size={20} />}
+                        title="DEPLOY"
+                        desc="Operationalize compliance with EU-only regimes and deterministic evidence. No more firefighting."
+                        icon={<Rocket size={20} />}
                     />
                 </div>
             </div>
@@ -124,7 +118,7 @@ const TripleDDoctrine: React.FC = () => {
                     className="mb-12 border-b border-neon-red/30 pb-4 inline-block md:ml-auto md:mr-0 w-full md:w-auto text-left md:text-right"
                 >
                     <h3 className="font-display text-2xl font-bold text-slate-400 tracking-wide">
-                        CRA <span className="text-neon-red">Challenges</span>
+                        The Siege: <span className="text-neon-red">Legacy Vulnerabilities</span>
                     </h3>
                     <span className="text-xs font-mono text-neon-red/70 uppercase tracking-widest">The Regulatory Risk</span>
                 </motion.div>
@@ -170,8 +164,7 @@ const TripleDDoctrine: React.FC = () => {
             <div className="inline-block p-1 rounded-2xl bg-gradient-to-r from-neon-red/20 via-transparent to-neon-purple/20">
                 <div className="bg-[#080808] border border-white/10 rounded-xl px-8 py-10 md:px-16">
                     <p className="font-display text-xl md:text-3xl font-light text-slate-300 leading-relaxed">
-                        "Without TripleDefence, you triage <span className="text-neon-red font-bold">uncertainty</span>.<br className="hidden md:block" /> 
-                        With TripleDefence, you prove the <span className="text-white font-bold underline decoration-neon-purple decoration-2 underline-offset-4">attack path does not exist</span>."
+                        "While others triage the damage, we ensure <span className="text-white font-bold underline decoration-neon-purple decoration-2 underline-offset-4">the attack path never exists</span>."
                     </p>
                 </div>
             </div>

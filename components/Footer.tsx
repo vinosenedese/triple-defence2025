@@ -83,16 +83,16 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-3 text-slate-500 text-sm font-medium">
               <li><a href="#" onClick={(e) => preventDefaultAndToast(e, "White Paper download requested.")} className="hover:text-white transition-colors">White Paper</a></li>
               <li><a href="#doctrine" onClick={(e) => handleNavClick(e, 'doctrine')} className="hover:text-white transition-colors">Triple-D Principles</a></li>
-              <li><a href="#risk" onClick={(e) => handleNavClick(e, 'risk')} className="hover:text-white transition-colors">CRA Alignment</a></li>
+              <li><a href="#threats" onClick={(e) => handleNavClick(e, 'threats')} className="hover:text-white transition-colors">Threat Matrix</a></li>
             </ul>
           </div>
 
           {/* Product Section */}
           <div className="md:col-span-2">
-            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 text-opacity-80">Solutions</h4>
+            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 text-opacity-80">Intelligence</h4>
             <ul className="space-y-3 text-slate-500 text-sm font-medium">
-              <li><a href="#solutions" onClick={(e) => handleNavClick(e, 'solutions')} className="hover:text-white transition-colors">MUPP Platform</a></li>
-              <li><a href="#mip" onClick={(e) => handleNavClick(e, 'mip')} className="hover:text-white transition-colors">Pathway (MIP)</a></li>
+              <li><a href="#sectors" onClick={(e) => handleNavClick(e, 'sectors')} className="hover:text-white transition-colors">Critical Sectors</a></li>
+              <li><a href="#roadmap" onClick={(e) => handleNavClick(e, 'roadmap')} className="hover:text-white transition-colors">Compliance Timeline</a></li>
               <li><a href="#" onClick={(e) => handleNavClick(e, 'insights')} className="hover:text-white transition-colors text-neon-purple/80">Insights & Blog</a></li>
             </ul>
           </div>
@@ -110,7 +110,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* CTA Box */}
           <div className="md:col-span-3">
             <div className="bg-[#0A0A0A] border border-white/10 p-6 rounded-xl">
-              <h4 className="text-white font-bold mb-2">Automated Compliance</h4>
+              <h4 className="text-white font-bold mb-2">Battle-Ready Resilience</h4>
               <p className="text-slate-500 text-xs mb-4 leading-relaxed">
                 Article 14 reporting readiness requires architectural integration. Zero proprietary lock-in.
               </p>

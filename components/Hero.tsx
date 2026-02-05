@@ -204,9 +204,9 @@ const Hero: React.FC<HeroProps> = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-16 tracking-tight"
+          className="text-lg md:text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed mb-16 tracking-tight"
         >
-          TripleDefence is the evolution of cyberprotection. We don't just secure; we make your infrastructure <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">unexploitable by architectural design</span>.
+          TripleDefence makes CRA compliance predictable by eliminating exploitability through a <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">unidirectional, sovereign-by-design architecture</span>.
         </motion.p>
 
         {/* Precision Interfaces */}

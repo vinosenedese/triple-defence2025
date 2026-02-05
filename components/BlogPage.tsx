@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Clock, Calendar, Share2, Tag, ChevronRight } from 'lucide-react';
-
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
 
 interface BlogPost {
   id: string;
@@ -16,15 +14,6 @@ interface BlogPost {
 
 const BlogPage: React.FC = () => {
   const [activePost, setActivePost] = useState<string | null>(null);
-
-  useEffect(() => {
-    const smoother = ScrollSmoother.get();
-    if (smoother) {
-      smoother.scrollTo(0, false);
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, [activePost]);
 
   const handleRestricted = () => {
     window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "Feature available in full member version." } }));
@@ -44,11 +33,11 @@ const BlogPage: React.FC = () => {
       excerpt: "Why traditional monitoring burns budget on false positives and how physical isolation restores economic sanity to cyber defense.",
       content: (
         <div className="relative space-y-8 text-slate-300 leading-relaxed font-sans text-lg">
-
+          
           <p className="font-serif text-xl italic text-slate-400 border-l-2 border-neon-purple pl-6 relative z-10">
             "We have spent the last decade building faster alarms for fires we allow to start. It is time to build walls that fire cannot cross."
           </p>
-
+          
           <h3 className="font-serif text-2xl text-white font-bold mt-8 mb-4 relative z-10">The Infinite Loop of Detection</h3>
           <p className="relative z-10">
             The modern Security Operations Center (SOC) is an economic failure. The premise is seductive: ingest all logs, apply machine learning, detect the anomaly, and respond before impact. In practice, this model creates a <strong>cost-asymmetry</strong> that favors the attacker.
@@ -76,7 +65,7 @@ const BlogPage: React.FC = () => {
           <p className="relative z-10">
             This eliminates 90% of Tier-1 SOC alerts related to OT. We stop paying analysts to triage false positives on the edge, because the edge can no longer kill the core. This is not just security; it is <strong>Inflation Control</strong> for the CISO's budget.
           </p>
-
+          
           <div className="bg-slate-900/50 p-6 rounded-lg border border-white/5 mt-8 relative z-10 backdrop-blur-sm">
             <h4 className="font-serif text-white font-bold mb-2">The Doctrine Conclusion</h4>
             <p className="text-sm">
@@ -118,13 +107,13 @@ const BlogPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen pt-32 pb-24 px-6 bg-charcoal overflow-hidden">
-
+      
       {/* "Haze" Gradient Effect */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(139,92,246,0.03)_100%)]" />
       <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-transparent via-transparent to-neon-purple/5 opacity-50" />
-
+      
       <div className="max-w-7xl mx-auto relative z-10">
-
+        
         <AnimatePresence mode="wait">
           {!activePost ? (
             /* FEED VIEW */
@@ -136,7 +125,7 @@ const BlogPage: React.FC = () => {
               transition={{ duration: 0.5 }}
             >
               {/* Back to Home Button */}
-              <button
+              <button 
                 onClick={() => window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }))}
                 className="group flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors mb-12 font-mono uppercase tracking-widest"
               >
@@ -170,7 +159,7 @@ const BlogPage: React.FC = () => {
                   >
                     {/* Card Haze Hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
+                    
                     <div className="relative z-10 flex justify-between items-center mb-6">
                       <span className={`px-2 py-1 bg-white/5 text-[10px] font-mono font-bold tracking-widest uppercase rounded ${post.category === 'SOVEREIGN HAZE' ? 'text-neon-purple border border-neon-purple/20' : 'text-slate-400'}`}>
                         {post.category}
@@ -206,7 +195,7 @@ const BlogPage: React.FC = () => {
               className="max-w-4xl mx-auto"
             >
               {/* Back Button */}
-              <button
+              <button 
                 onClick={() => setActivePost(null)}
                 className="group flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors mb-12 font-mono uppercase tracking-widest"
               >
@@ -221,7 +210,7 @@ const BlogPage: React.FC = () => {
                   <span className="flex items-center gap-2"><Calendar size={12} /> {currentPost?.date}</span>
                   <span className="flex items-center gap-2"><Clock size={12} /> {currentPost?.readTime}</span>
                 </div>
-
+                
                 <h1 className="font-serif text-4xl md:text-6xl text-white font-bold leading-tight mb-8">
                   {currentPost?.title}
                 </h1>
@@ -252,13 +241,13 @@ const BlogPage: React.FC = () => {
               <div className="mt-16 p-8 bg-[#050505] border border-white/10 rounded-sm text-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-neon-purple/5 opacity-50" />
                 <div className="relative z-10">
-                  <h4 className="font-serif text-2xl text-white mb-4">Ready to implement this doctrine?</h4>
-                  <button
+                    <h4 className="font-serif text-2xl text-white mb-4">Ready to implement this doctrine?</h4>
+                    <button 
                     onClick={handleConsultation}
                     className="px-8 py-3 bg-neon-purple text-white text-sm font-bold tracking-widest uppercase hover:bg-neon-purple/80 transition-colors"
-                  >
+                    >
                     Schedule Consultation
-                  </button>
+                    </button>
                 </div>
               </div>
 

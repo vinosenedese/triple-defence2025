@@ -140,7 +140,7 @@ const Solutions: React.FC = () => {
             title="MUPP"
             subtitle="(The Architecture)"
             icon={<Layers size={24} />}
-            desc="The intelligent abstraction layer. Unifying your entire protection ecosystem into a single, cohesive operational language. Transcendence, not just integration."
+            desc="The Inevitable Wall. An intelligent abstraction layer that renders exploitation physically impossible. In the war of attrition, MUPP is the strategic high ground."
             delay={0.1}
             onClick={handleTechnicalToast}
           />

@@ -7,32 +7,32 @@ const ComparisonTable: React.FC = () => {
     {
       feature: "Strategic Focus",
       trad: "Post-infiltration detection",
-      td: "Upfront resilience engineering",
+      td: "Exploitation cannot occur",
     },
     {
       feature: "Response Time",
       trad: "Reacts after alert/breach",
-      td: "Neutralizes before manifestation",
+      td: "Structurally impossible",
     },
     {
       feature: "Visibility",
       trad: "Blind spots in complex layers",
-      td: "Chasm-free (No architectural gaps)",
+      td: "Evidence is absent - attack path does not exist",
     },
     {
       feature: "Philosophy",
       trad: "Security by Reaction",
-      td: "Protection by Design",
+      td: "Architecturally guaranteed",
     },
     {
       feature: "Compliance (CRA)",
       trad: "Manual/Reactive documentation",
-      td: "Native & Automated Governance",
+      td: "Deterministic Governance (Article 14 guaranteed)",
     },
     {
       feature: "Result",
       trad: "Damage Mitigation",
-      td: "Preemption & Strategic Peace",
+      td: "Strategic Sovereignty",
     },
   ];
 

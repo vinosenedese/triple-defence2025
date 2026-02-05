@@ -29,11 +29,11 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // V4 Navigation Structure
+  // Updated Navigation Structure
   const navLinks = [
-    { name: 'Solutions', id: 'solutions' },
     { name: 'Doctrine', id: 'doctrine' },
-    { name: 'Pathway', id: 'mip' },
+    { name: 'Threats', id: 'threats' },
+    { name: 'Sovereignty', id: 'sectors' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent, id: string) => {

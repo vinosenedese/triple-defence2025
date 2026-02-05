@@ -1,21 +1,13 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
+import React, { useState, useEffect, useRef } from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import Philosophy from './components/Philosophy';
 import StrategicPositioning from './components/StrategicPositioning';
 import TripleDDoctrine from './components/TripleDDoctrine';
-import AttentionBlocks from './components/AttentionBlocks';
-import ComparisonTable from './components/ComparisonTable';
-import MIPJourney from './components/MIPJourney';
-import Solutions from './components/Solutions';
+import HallOfVulnerabilities from './components/HallOfVulnerabilities';
 import CriticalSectors from './components/CriticalSectors';
-import RiskBento from './components/RiskBento';
 import CountdownBar from './components/CountdownBar';
 import ComplianceTimeline from './components/ComplianceTimeline';
-import DoctrineFeed from './components/DoctrineFeed';
 import BlogPage from './components/BlogPage';
 import Legacy from './components/Legacy';
 import ContactForm from './components/ContactForm';
@@ -30,29 +22,9 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>('home');
   const mainRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
-    const smoother = ScrollSmoother.create({
-      wrapper: '#smooth-wrapper',
-      content: '#smooth-content',
-      smooth: 1.5,
-      effects: true
-    });
-
-    return () => {
-      if (smoother) smoother.kill();
-    };
-  }, []);
-
   // Scroll to top whenever the view changes
   useEffect(() => {
-    const smoother = ScrollSmoother.get();
-    if (smoother) {
-      smoother.scrollTo(0, false);
-    } else {
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
   }, [currentView]);
 
   useEffect(() => {
@@ -62,7 +34,7 @@ const App: React.FC = () => {
 
     const handleNavigate = (e: CustomEvent) => {
       const target = e.detail;
-
+      
       if (target === 'insights') {
         setCurrentView('insights');
       } else if (target === 'home') {
@@ -70,15 +42,15 @@ const App: React.FC = () => {
       } else {
         // Handle section navigation (e.g. #solutions)
         setCurrentView('home');
-
+        
         // Use a timeout to allow the view to switch/render before scrolling
         setTimeout(() => {
           const element = document.getElementById(target);
           if (element) {
-            const headerOffset = 100;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+             const headerOffset = 100;
+             const elementPosition = element.getBoundingClientRect().top;
+             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+             window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
           }
         }, 100);
       }
@@ -86,7 +58,7 @@ const App: React.FC = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('navigate', handleNavigate as EventListener);
-
+    
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('navigate', handleNavigate as EventListener);
@@ -99,12 +71,12 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen selection:bg-neon-purple/30 text-slate-200 overflow-x-hidden">
+    <div className="relative min-h-screen bg-charcoal selection:bg-neon-purple/30 text-slate-200 overflow-x-hidden">
       <ConstructionToast />
       <Navigation currentView={currentView} onNavigate={onNavigate} />
-
+      
       {/* Global Mouse Spotlight */}
-      <div
+      <div 
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
         style={{
           background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(139, 92, 246, 0.07), transparent 40%)`
@@ -112,74 +84,76 @@ const App: React.FC = () => {
       />
 
       {/* Main Content Wrapper */}
-      <main ref={mainRef} className="relative z-10 w-full">
-        <div id="smooth-wrapper">
-          <div id="smooth-content" className="w-full relative z-20 flex flex-col">
+      <main ref={mainRef} className="relative z-10 bg-charcoal shadow-2xl shadow-black mb-0 lg:mb-[400px]">
             <AnimatePresence mode="wait">
               {currentView === 'home' ? (
-                <motion.div
+                <motion.div 
                   key="home"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="bg-charcoal relative z-30"
                 >
-                  {/* 1. Hero */}
+                  {/* 1. Hero (Unexploitable by Design) */}
                   <Hero mousePosition={mousePosition} />
-
-                  {/* 1.5. CountdownBar */}
-                  <CountdownBar />
 
                   {/* 2. Philosophy (Doctrine) */}
                   <Philosophy />
 
-                  {/* 2.5 Strategic Positioning */}
+                  {/* 3. HallOfVulnerabilities (Battle-Ready Intelligence) */}
+                  <HallOfVulnerabilities />
+
+                  {/* 4. Strategic Positioning (The Bottom Line) */}
                   <StrategicPositioning />
 
-                  {/* 2.6 TripleD Doctrine */}
+                  {/* 5. TripleD Doctrine (The Circle) */}
                   <TripleDDoctrine />
-
-                  {/* 3. AttentionBlocks */}
-                  <AttentionBlocks />
-
-                  {/* 4. ComparisonTable */}
-                  <ComparisonTable />
-
-                  {/* 5. MIPJourney */}
-                  <MIPJourney />
-
-                  {/* 6. Solutions */}
-                  <Solutions />
-
-                  {/* 7. CriticalSectors */}
+                  
+                  {/* 6. Critical Sectors (Sovereign Scope) */}
                   <CriticalSectors />
-
-                  {/* 8. RiskBento */}
-                  <RiskBento />
-
-                  {/* 9. ComplianceTimeline */}
-                  <div className="relative pt-24 pb-0 bg-charcoal">
+                  
+                  {/* 7. The Deadline (Countdown + Timeline) */}
+                  <div className="relative pt-24 pb-0 bg-charcoal border-t border-white/5">
+                    <CountdownBar />
                     <ComplianceTimeline />
                   </div>
 
-                  {/* 9.5 Doctrine Feed */}
-                  <DoctrineFeed />
-
-                  {/* 10. Legacy */}
+                  {/* 8. Legacy (2012) */}
                   <Legacy />
 
-                  {/* 11. ContactForm */}
+                  {/* Executive Summary Highlight */}
+                  <section className="py-20 bg-[#050505] border-t border-white/5 overflow-hidden">
+                    <div className="max-w-7xl mx-auto px-6">
+                      <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center"
+                      >
+                        <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 tracking-tight leading-tight">
+                          Stop reacting. Start protecting. <br className="hidden md:block" />
+                          <span className="text-neon-purple">Stay in control.</span>
+                        </h2>
+                        <div className="flex justify-center mb-8">
+                          <div className="h-1 w-24 bg-gradient-to-r from-transparent via-neon-purple to-transparent" />
+                        </div>
+                        <p className="font-display text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed italic">
+                          "CRA reporting becomes routine, not a crisis."
+                        </p>
+                      </motion.div>
+                    </div>
+                  </section>
+                  
+                  {/* 9. ContactForm */}
                   <ContactForm />
                 </motion.div>
               ) : (
-                <motion.div
+                <motion.div 
                   key="insights"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="bg-charcoal relative z-30"
                 >
                   <BlogPage />
                 </motion.div>
@@ -187,19 +161,11 @@ const App: React.FC = () => {
             </AnimatePresence>
 
             {/* Spacer to push content up so the footer reveal feels natural */}
-            {/* Spacer to push content up to reveal Footer */}
-            {/* Height matches Footer height (h-auto lg:h-[400px]) */}
-            {/* The transparent spacer allows the fixed footer (z-0) to be seen when scrolling past content */}
-            <div className="w-full h-[400px] pointer-events-none hidden lg:block" />
-            <div className="h-12 lg:hidden bg-charcoal" />
-          </div>
-        </div>
+            <div className="h-12 bg-charcoal" />
       </main>
 
       {/* Footer - Fixed at bottom on Desktop, Relative on Mobile */}
-      <div className="relative z-0 lg:fixed lg:bottom-0 lg:left-0 lg:w-full lg:z-[1]">
-        <Footer onNavigate={onNavigate} />
-      </div>
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 };
