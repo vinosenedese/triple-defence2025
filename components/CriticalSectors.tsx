@@ -62,6 +62,16 @@ const SectorCard: React.FC<SectorProps> = ({ title, image, desc, index }) => (
 const CriticalSectors: React.FC = () => {
   const sectors = [
     {
+      title: "Advanced Healthcare",
+      image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=2070&auto=format&fit=crop",
+      desc: "Connected medical devices and hospital networks. Protecting patient data and life-critical systems.",
+    },
+    {
+      title: "Maritime & Transport",
+      image: "https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?q=80&w=2070&auto=format&fit=crop", 
+      desc: "Port operations, vessel navigation systems, and autonomous fleets. Protecting global supply chains from disruption.",
+    },
+    {
       title: "Finance & Data",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
       desc: "Protected trading infrastructure and banking data centers. Resilience against high-frequency attacks and systemic risks.",
@@ -72,19 +82,9 @@ const CriticalSectors: React.FC = () => {
       desc: "Robotics, SCADA, and Industrial IoT. Preventing production halts and ensuring safety in automated environments.",
     },
     {
-      title: "Logistics & Transport",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop",
-      desc: "Port operations, rail grids, and autonomous fleets. Protecting the supply chain from disruption.",
-    },
-    {
       title: "Public Infrastructure",
       image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=2144&auto=format&fit=crop",
       desc: "Smart cities, power grids, and government services. Ensuring continuity for essential societal functions.",
-    },
-    {
-      title: "Advanced Healthcare",
-      image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=2070&auto=format&fit=crop",
-      desc: "Connected medical devices and hospital networks. Protecting patient data and life-critical systems.",
     }
   ];
 

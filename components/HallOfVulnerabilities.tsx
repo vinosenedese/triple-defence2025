@@ -75,7 +75,7 @@ const HallOfVulnerabilities: React.FC = () => {
       category: "Identity Theft",
       date: "OCT 14, 2024",
       title: "NTDS.dit Exfiltration: Identity Sovereignty at Risk",
-      image: "https://images.unsplash.com/photo-1558494949-efc52728101c?q=80&w=2070&auto=format&fit=crop", // Abstract Server/Data
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop", // Abstract Lock/Cyber
       desc: "Adversaries are targeting Active Directory database files to clone identity infrastructure. TripleDefence architecture renders the DC physically unreachable from the edge, making exfiltration impossible."
     },
     {

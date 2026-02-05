@@ -53,9 +53,9 @@ const StrategicPositioning: React.FC = () => {
               </div>
 
               <p className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter leading-none">
-                "Prove that exploitation is <br />
+                "Reducing threat abuse by <br />
                 <span className="text-neon-purple drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]">
-                  impossible by design.
+                  pulverizing threat access
                 </span>"
               </p>
             </div>

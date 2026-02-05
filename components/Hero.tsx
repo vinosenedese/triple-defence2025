@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, FileText, Activity, ShieldAlert } from 'lucide-react';
+import CountdownBar from './CountdownBar';
 
 interface HeroProps {
   mousePosition: { x: number; y: number };
@@ -160,7 +161,7 @@ const Hero: React.FC<HeroProps> = () => {
   }, []);
 
   return (
-    <section className="relative h-screen min-h-[800px] w-full flex flex-col justify-center items-center overflow-hidden bg-[#030303]">
+    <section className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-[#030303] py-20">
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 z-0 pointer-events-none"
@@ -168,7 +169,7 @@ const Hero: React.FC<HeroProps> = () => {
       
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030303_90%)] z-0 pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-7xl px-6 flex flex-col items-center justify-center text-center -mt-10">
+      <div className="relative z-10 w-full max-w-7xl px-6 flex flex-col items-center justify-center text-center mt-20">
         
         {/* Framework Badge */}
         <motion.div
@@ -204,7 +205,7 @@ const Hero: React.FC<HeroProps> = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-lg md:text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed mb-16 tracking-tight"
+          className="text-lg md:text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed mb-12 tracking-tight"
         >
           TripleDefence makes CRA compliance predictable by eliminating exploitability through a <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">unidirectional, sovereign-by-design architecture</span>.
         </motion.p>
@@ -237,11 +238,15 @@ const Hero: React.FC<HeroProps> = () => {
           </button>
         </motion.div>
 
+        {/* Countdown Integration */}
+        <CountdownBar />
+
+        {/* System Integrity Footer (Integrated or moved) */}
         <motion.div
            initial={{ opacity: 0 }}
            animate={{ opacity: 1 }}
            transition={{ delay: 1, duration: 1 }}
-           className="absolute bottom-[-150px] md:bottom-[-200px] left-0 right-0 flex justify-between px-10 text-[10px] font-mono text-slate-700 pointer-events-none"
+           className="mt-12 flex justify-between w-full px-10 text-[10px] font-mono text-slate-700 pointer-events-none"
         >
            <div className="flex items-center gap-2">
              <Activity size={12} /> SYSTEM INTEGRITY: 100%

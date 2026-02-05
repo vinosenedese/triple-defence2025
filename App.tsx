@@ -6,7 +6,6 @@ import StrategicPositioning from './components/StrategicPositioning';
 import TripleDDoctrine from './components/TripleDDoctrine';
 import HallOfVulnerabilities from './components/HallOfVulnerabilities';
 import CriticalSectors from './components/CriticalSectors';
-import CountdownBar from './components/CountdownBar';
 import ComplianceTimeline from './components/ComplianceTimeline';
 import BlogPage from './components/BlogPage';
 import Legacy from './components/Legacy';
@@ -103,7 +102,7 @@ const App: React.FC = () => {
                   {/* 3. HallOfVulnerabilities (Battle-Ready Intelligence) */}
                   <HallOfVulnerabilities />
 
-                  {/* 4. Strategic Positioning (The Bottom Line) */}
+                  {/* 4. StrategicPositioning (The Bottom Line) */}
                   <StrategicPositioning />
 
                   {/* 5. TripleD Doctrine (The Circle) */}
@@ -112,11 +111,8 @@ const App: React.FC = () => {
                   {/* 6. Critical Sectors (Sovereign Scope) */}
                   <CriticalSectors />
                   
-                  {/* 7. The Deadline (Countdown + Timeline) */}
-                  <div className="relative pt-24 pb-0 bg-charcoal border-t border-white/5">
-                    <CountdownBar />
-                    <ComplianceTimeline />
-                  </div>
+                  {/* 7. The Deadline (Timeline Only - Countdown moved to Hero) */}
+                  <ComplianceTimeline />
 
                   {/* 8. Legacy (2012) */}
                   <Legacy />
@@ -138,7 +134,7 @@ const App: React.FC = () => {
                           <div className="h-1 w-24 bg-gradient-to-r from-transparent via-neon-purple to-transparent" />
                         </div>
                         <p className="font-display text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed italic">
-                          "CRA reporting becomes routine, not a crisis."
+                          "CRA compliancy becomes simple not a crisis"
                         </p>
                       </motion.div>
                     </div>

@@ -82,9 +82,8 @@ const TripleDDoctrine: React.FC = () => {
                     className="mb-12 border-b border-neon-purple/30 pb-4 inline-block"
                 >
                     <h3 className="font-display text-2xl font-bold text-white tracking-wide">
-                        The Sovereignty: <span className="text-neon-purple">The Triple D Model</span>
+                        Become Sovereign: <span className="text-neon-purple">The Triple D Doctrine</span>
                     </h3>
-                    <span className="text-xs font-mono text-neon-purple/70 uppercase tracking-widest">Protection by Design</span>
                 </motion.div>
 
                 <div className="space-y-2">

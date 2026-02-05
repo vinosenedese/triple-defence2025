@@ -11,7 +11,6 @@ const CustomLogo: React.FC = () => {
     />
   );
 };
-
 interface NavigationProps {
   currentView: 'home' | 'insights';
   onNavigate: (view: string) => void;
@@ -119,7 +118,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
             onClick={() => onNavigate('contact')}
             className="px-5 py-2 text-xs font-bold tracking-widest text-charcoal bg-white hover:bg-slate-200 transition-all duration-300 rounded-sm shadow-[0_0_15px_rgba(255,255,255,0.1)]"
           >
-            START AUDIT
+            START REQUEST DEMO
           </button>
         </div>
 
@@ -169,7 +168,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
                 onClick={() => { setMobileOpen(false); onNavigate('contact'); }}
                 className="mt-4 w-full py-4 text-sm font-bold text-charcoal bg-white rounded-sm"
               >
-                START AUDIT
+                START REQUEST DEMO
               </button>
             </div>
           </motion.div>
