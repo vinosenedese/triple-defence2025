@@ -2,11 +2,15 @@ const fs = require('fs');
 const path = require('path');
 
 // Configurações
-const DIR = path.join(__dirname, 'components'); // Pasta alvo
+// Configurações
+const DIR = __dirname; // Raiz do projeto
 const OUTPUT_FILE = 'projeto-completo.txt'; // Arquivo de saída
 
+// Pastas a ignorar
+const IGNORED_DIRS = ['node_modules', '.git', 'dist', 'out', '.vscode', '.idea'];
+
 // Extensões que queremos ler (para ignorar imagens, fontes, etc.)
-const EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.html', '.json'];
+const EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.html', '.json', '.md'];
 
 // Função recursiva para ler arquivos
 function readDir(dir, fileList = []) {
@@ -17,7 +21,9 @@ function readDir(dir, fileList = []) {
         const stat = fs.statSync(filePath);
 
         if (stat.isDirectory()) {
-            readDir(filePath, fileList);
+            if (!IGNORED_DIRS.includes(file)) {
+                readDir(filePath, fileList);
+            }
         } else {
             const ext = path.extname(file).toLowerCase();
             if (EXTENSIONS.includes(ext)) {

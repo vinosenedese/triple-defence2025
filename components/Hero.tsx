@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, FileText, Activity, ShieldAlert } from 'lucide-react';
+import { ArrowRight, FileText, Activity, ShieldAlert, Cpu } from 'lucide-react';
 import CountdownBar from './CountdownBar';
 
 interface HeroProps {
@@ -171,7 +171,7 @@ const Hero: React.FC<HeroProps> = () => {
 
       <div className="relative z-10 w-full max-w-7xl px-6 flex flex-col items-center justify-center text-center mt-20">
         
-        {/* Framework Badge */}
+        {/* APEX Badge */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -180,7 +180,7 @@ const Hero: React.FC<HeroProps> = () => {
         >
           <ShieldAlert className="w-3 h-3 text-neon-purple" />
           <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-neon-purple uppercase">
-            TripleDefence Framework: Beyond Zero Trust
+            APEX: The Sovereign Standard for CRA Compliance
           </span>
         </motion.div>
 
@@ -189,28 +189,33 @@ const Hero: React.FC<HeroProps> = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className="relative"
+          className="relative mb-6"
         >
-          <h1 className="font-display text-5xl sm:text-7xl md:text-9xl font-bold tracking-tighter text-white mb-8 leading-[0.9]">
-            UNEXPLOITABLE
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-500">
-              BY DESIGN.
-            </span>
+          <h1 className="font-display text-4xl sm:text-6xl md:text-[5.5rem] lg:text-[7rem] font-bold tracking-tighter text-white mb-6 leading-[0.95]">
+            Sovereign Autonomous <br />
+            Technology Operations <span className="text-slate-500">(SATO)</span>
           </h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="text-xl md:text-3xl font-light text-slate-300 tracking-tight italic"
+          >
+            "100% security doesn’t exist — <span className="text-white font-medium">but 100% protection does.</span>"
+          </motion.p>
         </motion.div>
 
-        {/* Subheadline */}
+        {/* Impact Subheadline */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="text-lg md:text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed mb-12 tracking-tight"
         >
-          TripleDefence makes CRA compliance predictable by eliminating exploitability through a <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">unidirectional, sovereign-by-design architecture</span>.
+          TripleDefence is a <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">Cyberprotection Technology Operations</span> company. We move you from reactive cybersecurity to proactive protection, reaching <span className="text-white font-medium">Maturity Level 4</span>.
         </motion.p>
 
-        {/* Precision Interfaces */}
+        {/* SATO Interfaces */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -218,30 +223,30 @@ const Hero: React.FC<HeroProps> = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
         >
           <button 
-            onClick={smoothScrollToContact}
+            onClick={() => handleToast("APEX Platform Initialization...")}
             className="group relative px-8 py-4 bg-transparent overflow-hidden rounded-sm transition-all duration-300"
           >
             <div className="absolute inset-0 border border-white/20 group-hover:border-white/40 transition-colors" />
             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="relative z-10 flex items-center gap-3 text-sm font-bold tracking-widest text-white uppercase">
-              Check Compliance Role
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              Launch APEX Demo
+              <Activity className="w-4 h-4 transition-transform group-hover:scale-110" />
             </span>
           </button>
           
           <button 
-            onClick={() => handleToast("Documentation hub access requires clearance.")}
+            onClick={() => handleToast("FDC Protocol Overview requested.")}
             className="group px-8 py-4 text-slate-500 hover:text-white transition-colors duration-300 flex items-center gap-2 text-sm font-medium tracking-wide"
           >
-             <FileText className="w-4 h-4" />
-             <span className="border-b border-transparent group-hover:border-white transition-all">View Documentation</span>
+             <Cpu className="w-4 h-4" />
+             <span className="border-b border-transparent group-hover:border-white transition-all">Explore FDC Technology</span>
           </button>
         </motion.div>
 
         {/* Countdown Integration */}
         <CountdownBar />
 
-        {/* System Integrity Footer (Integrated or moved) */}
+        {/* System Integrity Footer */}
         <motion.div
            initial={{ opacity: 0 }}
            animate={{ opacity: 1 }}
@@ -249,10 +254,10 @@ const Hero: React.FC<HeroProps> = () => {
            className="mt-12 flex justify-between w-full px-10 text-[10px] font-mono text-slate-700 pointer-events-none"
         >
            <div className="flex items-center gap-2">
-             <Activity size={12} /> SYSTEM INTEGRITY: 100%
+             <Activity size={12} /> SATO ENGINE STATUS: NOMINAL
            </div>
            <div>
-             SECURE_SESSION_ID: 0x84F2
+             APEX_SESSION_ID: 0xSATO_772
            </div>
         </motion.div>
 

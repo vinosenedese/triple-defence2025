@@ -11,6 +11,7 @@ const CustomLogo: React.FC = () => {
     />
   );
 };
+
 interface NavigationProps {
   currentView: 'home' | 'insights';
   onNavigate: (view: string) => void;

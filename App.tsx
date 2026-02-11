@@ -4,6 +4,8 @@ import Hero from './components/Hero';
 import Philosophy from './components/Philosophy';
 import StrategicPositioning from './components/StrategicPositioning';
 import TripleDDoctrine from './components/TripleDDoctrine';
+import SatoEngine from './components/SatoEngine';
+import ZeroDayFeed from './components/ZeroDayFeed';
 import HallOfVulnerabilities from './components/HallOfVulnerabilities';
 import CriticalSectors from './components/CriticalSectors';
 import ComplianceTimeline from './components/ComplianceTimeline';
@@ -99,22 +101,28 @@ const App: React.FC = () => {
                   {/* 2. Philosophy (Doctrine) */}
                   <Philosophy />
 
-                  {/* 3. HallOfVulnerabilities (Battle-Ready Intelligence) */}
+                  {/* 3. Zero Day Feed (Live Intelligence) */}
+                  <ZeroDayFeed />
+
+                  {/* 4. HallOfVulnerabilities (Battle-Ready Intelligence) */}
                   <HallOfVulnerabilities />
 
-                  {/* 4. StrategicPositioning (The Bottom Line) */}
+                  {/* 5. StrategicPositioning (The Bottom Line) */}
                   <StrategicPositioning />
 
-                  {/* 5. TripleD Doctrine (The Circle) */}
+                  {/* 6. TripleD Doctrine (The Circle) */}
                   <TripleDDoctrine />
+
+                  {/* 7. SATO Engine (The Implementation) */}
+                  <SatoEngine />
                   
-                  {/* 6. Critical Sectors (Sovereign Scope) */}
+                  {/* 8. CriticalSectors (Sovereign Scope) */}
                   <CriticalSectors />
                   
-                  {/* 7. The Deadline (Timeline Only - Countdown moved to Hero) */}
+                  {/* 9. The Deadline (Timeline Only) */}
                   <ComplianceTimeline />
 
-                  {/* 8. Legacy (2012) */}
+                  {/* 10. Legacy (2012) */}
                   <Legacy />
 
                   {/* Executive Summary Highlight */}
@@ -140,7 +148,7 @@ const App: React.FC = () => {
                     </div>
                   </section>
                   
-                  {/* 9. ContactForm */}
+                  {/* 11. ContactForm */}
                   <ContactForm />
                 </motion.div>
               ) : (

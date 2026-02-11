@@ -1,173 +1,147 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Flame, ArrowRight, Lock, Zap, Server, Activity, AlertTriangle, EyeOff, TrendingDown, Map, Cpu, Rocket } from 'lucide-react';
+import { ArrowRight, EyeOff, BellOff, ShieldCheck, Binary, FileCheck, Crown, Quote } from 'lucide-react';
 
-const PrincipleItem: React.FC<{ title: string; desc: string; icon: React.ReactNode; index: number }> = ({ title, desc, icon, index }) => (
+const DoctrineItem: React.FC<{ 
+  id: string; 
+  title: string; 
+  quote: string; 
+  icon: React.ReactNode; 
+  index: number;
+  isLast?: boolean;
+}> = ({ id, title, quote, icon, index, isLast }) => (
   <motion.div
-    initial={{ opacity: 0, x: -30 }}
-    whileInView={{ opacity: 1, x: 0 }}
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
-    className="flex items-start gap-4 mb-8 group"
+    transition={{ duration: 0.6, delay: index * 0.1 }}
+    className={`group relative flex flex-col md:flex-row items-start md:items-center gap-6 p-8 border-b border-white/5 ${isLast ? 'border-none bg-white/[0.02] rounded-xl mt-8' : ''}`}
   >
-    <div className="p-3 rounded-lg bg-neon-purple/10 border border-neon-purple/30 text-neon-purple shadow-[0_0_15px_rgba(139,92,246,0.2)] group-hover:bg-neon-purple group-hover:text-white transition-all duration-300">
-      {icon}
+    {/* Numbering */}
+    <div className="flex-shrink-0">
+      <span className="font-display text-4xl font-bold text-white/10 group-hover:text-neon-purple/50 transition-colors duration-500">
+        {id}
+      </span>
     </div>
-    <div>
-      <h4 className="text-white font-bold text-lg mb-1 group-hover:text-neon-purple transition-colors uppercase tracking-widest">{title}</h4>
-      <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
-    </div>
-  </motion.div>
-);
 
-const ChallengeItem: React.FC<{ title: string; desc: string; icon: React.ReactNode; index: number }> = ({ title, desc, icon, index }) => (
-  <motion.div
-    initial={{ opacity: 0, x: 30 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
-    className="flex flex-row-reverse md:flex-row items-start gap-4 mb-8 group text-right md:text-left"
-  >
-    <div className="md:order-1 flex-1">
-      <h4 className="text-slate-300 font-bold text-lg mb-1 group-hover:text-neon-red transition-colors">{title}</h4>
-      <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>
+    {/* Icon (Mobile hidden, Desktop visible) */}
+    <div className={`hidden md:flex flex-shrink-0 w-12 h-12 items-center justify-center rounded-full border ${isLast ? 'bg-neon-purple text-white border-neon-purple' : 'bg-transparent border-white/10 text-slate-500 group-hover:border-neon-purple/50 group-hover:text-neon-purple'} transition-all duration-300`}>
+        {icon}
     </div>
-    <div className="md:order-[-1] p-3 rounded-lg bg-neon-red/5 border border-neon-red/10 text-neon-red/60 group-hover:text-neon-red group-hover:border-neon-red/40 transition-all duration-300">
-      {icon}
+
+    {/* Content */}
+    <div className="flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 w-full">
+        {/* Title */}
+        <div className="flex items-center">
+            <h3 className={`font-display text-xl md:text-2xl font-bold uppercase tracking-wide ${isLast ? 'text-white' : 'text-slate-200 group-hover:text-white'} transition-colors`}>
+                {title}
+            </h3>
+        </div>
+
+        {/* The "Sun Tzu" Quote */}
+        <div className="relative pl-6 border-l-2 border-neon-purple/30 group-hover:border-neon-purple transition-colors">
+            <p className={`font-serif text-lg md:text-xl italic leading-relaxed ${isLast ? 'text-white' : 'text-slate-400 group-hover:text-slate-300'}`}>
+                "{quote}"
+            </p>
+        </div>
     </div>
   </motion.div>
 );
 
 const TripleDDoctrine: React.FC = () => {
+  const principles = [
+    {
+      id: "01",
+      title: "Unidirectional Connectivity",
+      quote: "If nothing can reach the device, nothing can exploit it.",
+      icon: <ArrowRight size={20} />
+    },
+    {
+      id: "02",
+      title: "Physical Isolation",
+      quote: "Physical camouflage of attack surfaces. No inbound paths, no ghosts to chase.",
+      icon: <EyeOff size={20} />
+    },
+    {
+      id: "03",
+      title: "Zero Inbound Alerts",
+      quote: "Protection becomes peaceful. There is nothing to alert on.",
+      icon: <BellOff size={20} />
+    },
+    {
+      id: "04",
+      title: "Zero-Day Immunity",
+      quote: "Zero-days still exist, but exploitation is physically impossible.",
+      icon: <ShieldCheck size={20} />
+    },
+    {
+      id: "05",
+      title: "Deterministic Security",
+      quote: "No more probabilistic guesses. Security becomes binary and measurable.",
+      icon: <Binary size={20} />
+    },
+    {
+      id: "06",
+      title: "CRA Reporting Reframed",
+      quote: "From 'detect and report' to 'proving the path simply doesn't exist'.",
+      icon: <FileCheck size={20} />
+    },
+    {
+      id: "07",
+      title: "Strategic Conclusion",
+      quote: "When exploitation is impossible, compliance becomes the easiest part of your job.",
+      icon: <Crown size={20} />
+    }
+  ];
+
   return (
     <section id="doctrine" className="relative bg-[#020202] py-32 overflow-hidden">
-      
-      {/* Background Split */}
-      <div className="absolute inset-0 flex pointer-events-none">
-        <div className="w-full md:w-1/2 h-full bg-gradient-to-r from-neon-purple/[0.03] to-transparent" />
-        <div className="w-full md:w-1/2 h-full bg-gradient-to-l from-neon-red/[0.03] to-transparent" />
+      {/* Ambient Background */}
+      <div className="absolute inset-0 pointer-events-none">
+         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-white/10 via-transparent to-transparent" />
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neon-purple/[0.03] rounded-full blur-[120px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
         
-        {/* Central Conflict Visual (Mobile: Top, Desktop: Center) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 hidden md:flex items-center justify-center opacity-30">
-            <motion.div 
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-                className="relative w-[500px] h-[500px]"
-            >
-                {/* The Fire (Back) */}
-                <div className="absolute inset-0 flex items-center justify-center translate-x-10">
-                    <div className="w-64 h-64 bg-neon-red/20 rounded-full blur-[80px]" />
-                    <Flame className="w-96 h-96 text-neon-red/10 animate-pulse" />
-                </div>
-                {/* The Shield (Front) */}
-                <div className="absolute inset-0 flex items-center justify-center -translate-x-10">
-                    <Shield className="w-96 h-96 text-neon-purple/20 fill-black/50 drop-shadow-[0_0_30px_rgba(139,92,246,0.3)]" />
-                </div>
-            </motion.div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 relative z-10">
-            
-            {/* LEFT SIDE: THE TRIPLE D MODEL (The Solution) */}
-            <div className="relative">
-                <motion.div 
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-12 border-b border-neon-purple/30 pb-4 inline-block"
-                >
-                    <h3 className="font-display text-2xl font-bold text-white tracking-wide">
-                        Become Sovereign: <span className="text-neon-purple">The Triple D Doctrine</span>
-                    </h3>
-                </motion.div>
-
-                <div className="space-y-2">
-                    <PrincipleItem 
-                        index={0}
-                        title="DEFINE"
-                        desc="Build a complete truth map of your digital estate. No blind spots before the CRA finds them."
-                        icon={<Map size={20} />}
-                    />
-                    <PrincipleItem 
-                        index={1}
-                        title="DEVELOP"
-                        desc="Architectural protection via unidirectional connectivity. Zero-day immunity through strict directional control."
-                        icon={<Cpu size={20} />}
-                    />
-                    <PrincipleItem 
-                        index={2}
-                        title="DEPLOY"
-                        desc="Operationalize compliance with EU-only regimes and deterministic evidence. No more firefighting."
-                        icon={<Rocket size={20} />}
-                    />
-                </div>
-            </div>
-
-            {/* RIGHT SIDE: CHALLENGES (The Problem) */}
-            <div className="relative md:text-left">
-                 <motion.div 
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-12 border-b border-neon-red/30 pb-4 inline-block md:ml-auto md:mr-0 w-full md:w-auto text-left md:text-right"
-                >
-                    <h3 className="font-display text-2xl font-bold text-slate-400 tracking-wide">
-                        The Siege: <span className="text-neon-red">Legacy Vulnerabilities</span>
-                    </h3>
-                    <span className="text-xs font-mono text-neon-red/70 uppercase tracking-widest">The Regulatory Risk</span>
-                </motion.div>
-
-                <div className="space-y-2">
-                    <ChallengeItem 
-                        index={0}
-                        title="The Assumption of Detection"
-                        desc="A fragile model relying on catching the attacker *after* entry. In a CRA world, this is a liability."
-                        icon={<EyeOff size={20} />}
-                    />
-                    <ChallengeItem 
-                        index={1}
-                        title="Collapsing SOC Costs"
-                        desc="Traditional monitoring burns budget on false positives and forensic analysis of unpreventable breaches."
-                        icon={<TrendingDown size={20} />}
-                    />
-                    <ChallengeItem 
-                        index={2}
-                        title="Pervasive Alert Fatigue"
-                        desc="When everything is an alert, nothing is. TripleDefence removes the noise by removing the attack surface."
-                        icon={<Activity size={20} />}
-                    />
-                    <ChallengeItem 
-                        index={3}
-                        title="Operationally Crippling Zero-Days"
-                        desc="Patching panic cycles disrupt operations. We remove the urgency by neutralizing the vector."
-                        icon={<AlertTriangle size={20} />}
-                    />
-                </div>
-            </div>
-
-        </div>
-
-        {/* THE BOTTOM LINE */}
-        <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+        {/* Header */}
+        <div className="text-center mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="mt-24 text-center relative z-20"
-        >
-            <div className="inline-block p-1 rounded-2xl bg-gradient-to-r from-neon-red/20 via-transparent to-neon-purple/20">
-                <div className="bg-[#080808] border border-white/10 rounded-xl px-8 py-10 md:px-16">
-                    <p className="font-display text-xl md:text-3xl font-light text-slate-300 leading-relaxed">
-                        "While others triage the damage, we ensure <span className="text-white font-bold underline decoration-neon-purple decoration-2 underline-offset-4">the attack path never exists</span>."
-                    </p>
-                </div>
-            </div>
-        </motion.div>
+            className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-neon-purple/30 bg-neon-purple/5"
+          >
+             <Quote size={12} className="text-neon-purple" />
+             <span className="text-[10px] font-mono font-bold text-neon-purple uppercase tracking-widest">
+                The Seven Pillars
+             </span>
+          </motion.div>
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tighter"
+          >
+            Battlefield <span className="text-slate-500">Mastery.</span>
+          </motion.h2>
+          <p className="font-serif italic text-slate-400 text-lg max-w-2xl mx-auto">
+            "The supreme art of war is to subdue the enemy without fighting."
+          </p>
+        </div>
+
+        {/* The List */}
+        <div className="bg-[#050505] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+            {principles.map((p, idx) => (
+                <DoctrineItem 
+                    key={p.id}
+                    {...p}
+                    index={idx}
+                    isLast={idx === principles.length - 1}
+                />
+            ))}
+        </div>
 
       </div>
     </section>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, FileText, Activity, ShieldCheck } from 'lucide-react';
+import { Shield, Activity, Database, ShieldCheck } from 'lucide-react';
 
 interface BlockProps {
   id: string;
@@ -47,26 +47,26 @@ const AttentionBlocks: React.FC = () => {
   const blocks = [
     {
       id: "01",
-      title: "DASI - Digital Architecture Integration",
-      desc: "Eliminate architectural chasms. We fuse policy, visibility, and enforcement into a single operational heartbeat, ensuring no silent spaces for adversaries to exploit.",
+      title: "Modular Compliance Framework",
+      desc: "Adaptive governance for Manufacturers, Distributors, and Service Providers. Modular by design to fit any role under the EU Cyber Resilience Act.",
       icon: <Shield size={32} strokeWidth={1.5} />,
     },
     {
       id: "02",
-      title: "Incident & Reporting Tool",
-      desc: "Automated Article 14 compliance. A direct bridge to ENISA for exploited vulnerabilities, ensuring you meet the 24h/72h reporting deadlines effortlessly.",
-      icon: <FileText size={32} strokeWidth={1.5} />,
-    },
-    {
-      id: "03",
-      title: "Operational Efficiency & Peace",
-      desc: "Win without fighting. Reduction of alert fatigue and 30-50% operational cost reduction by replacing reactive firefighting with proactive design.",
+      title: "Real-Time Readiness",
+      desc: "The APEX engine tracks tasks, SBOMs, and deadlines in massive computing environments, moving you from panic to deterministic compliance.",
       icon: <Activity size={32} strokeWidth={1.5} />,
     },
     {
+      id: "03",
+      title: "Sovereign Evidence Vault",
+      desc: "Audit-proof documentation with zero vendor lock-in. Powered by Nextcloud framework to ensure your long-term secrets remain exclusively yours.",
+      icon: <Database size={32} strokeWidth={1.5} />,
+    },
+    {
       id: "04",
-      title: "Compliance & Visibility Readiness",
-      desc: "Audit-proof evidence vault. Real-time tracking of tasks and automated SBOM generation. Gain absolute control over your digital estate and regulatory obligations.",
+      title: "Continuous Operational Resilience",
+      desc: "Integrated lifecycle security that scales with your infrastructure. SATO isn't just a shield—it's the continuous operation of unexploitable systems.",
       icon: <ShieldCheck size={32} strokeWidth={1.5} />,
     },
   ];
@@ -77,7 +77,6 @@ const AttentionBlocks: React.FC = () => {
         {/* 
             Grid Container
             Using gap-px with a white/10 background creates perfect 1px borders between the black cards.
-            This is cleaner than using border-r/border-b on individual items.
         */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10 overflow-hidden">
           {blocks.map((block, index) => (

@@ -1,7 +1,40 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const StrategicPositioning: React.FC = () => {
+  const [index, setIndex] = useState(0);
+
+  const phrases = [
+    {
+      main: "Reducing threat abuse by",
+      highlight: "pulverizing threat access."
+    },
+    {
+      main: "We stop treating cyberthreats as surprises —",
+      highlight: "they are environmental conditions."
+    },
+    {
+      main: "We embed protection into",
+      highlight: "the culture, not just the tooling."
+    },
+    {
+      main: "We build systems that assume",
+      highlight: "adversaries are already inside."
+    },
+    {
+      main: "Turning cyberprotection into",
+      highlight: "your ultimate competitive advantage."
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % phrases.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="bg-black py-32 relative overflow-hidden">
       {/* Background Subtle elements */}
@@ -46,18 +79,30 @@ const StrategicPositioning: React.FC = () => {
                 "Detect and report exploitation under <span className="text-slate-500 line-through decoration-neon-red/60">uncertainty</span>"
               </p>
               
-              <div className="flex items-center justify-center py-4">
+              <div className="flex items-center justify-center py-8">
                 <div className="h-[1px] w-12 bg-neon-purple/50" />
                 <span className="px-4 font-mono text-xs text-neon-purple font-bold tracking-widest">INTO</span>
                 <div className="h-[1px] w-12 bg-neon-purple/50" />
               </div>
 
-              <p className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter leading-none">
-                "Reducing threat abuse by <br />
-                <span className="text-neon-purple drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]">
-                  pulverizing threat access
-                </span>"
-              </p>
+              {/* Animated Text Carousel */}
+              <div className="min-h-[200px] flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.p 
+                    key={index}
+                    initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter leading-none text-center"
+                  >
+                    "{phrases[index].main} <br className="hidden md:block" />
+                    <span className="text-neon-purple drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]">
+                      {phrases[index].highlight}
+                    </span>"
+                  </motion.p>
+                </AnimatePresence>
+              </div>
             </div>
           </div>
         </motion.div>
