@@ -29,7 +29,6 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Updated Navigation Structure
   const navLinks = [
     { name: 'Doctrine', id: 'doctrine' },
     { name: 'Threats', id: 'threats' },
@@ -61,8 +60,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${isScrolled
-        ? 'bg-charcoal/95 backdrop-blur-xl border-white/5 py-4'
-        : 'bg-transparent border-transparent py-6'
+          ? 'bg-charcoal/95 backdrop-blur-xl border-white/5 py-4'
+          : 'bg-transparent border-transparent py-6'
         }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -73,7 +72,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
         >
           <CustomLogo />
           <span className="font-display font-bold text-lg tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-400 transition-all">
-            Triple<span className="text-slate-500 group-hover:text-slate-300">Defence</span>
+            Triple<span className="text-slate-300 group-hover:text-slate-100">Defence</span>
           </span>
         </div>
 
@@ -84,40 +83,38 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
               key={link.name}
               href={`#${link.id}`}
               onClick={(e) => handleLinkClick(e, link.id)}
-              className="relative text-sm font-medium text-slate-400 hover:text-white transition-colors duration-300 py-1 group tracking-wide cursor-pointer"
+              className="relative text-sm font-semibold text-slate-300 hover:text-white transition-colors duration-300 py-1 group tracking-wide cursor-pointer drop-shadow-sm"
             >
               {link.name}
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-neon-purple transition-all duration-300 group-hover:w-full box-shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-neon-purple transition-all duration-300 group-hover:w-full shadow-[0_0_10px_rgba(139,92,246,1)]" />
             </a>
           ))}
 
-          {/* Insights (Blog) Link */}
           <button
             onClick={handleInsightsClick}
-            className={`flex items-center gap-2 text-sm font-medium transition-colors duration-300 py-1 group tracking-wide ${currentView === 'insights' ? 'text-white' : 'text-slate-400 hover:text-white'}`}
+            className={`flex items-center gap-2 text-sm font-semibold transition-colors duration-300 py-1 group tracking-wide relative ${currentView === 'insights' ? 'text-white' : 'text-slate-300 hover:text-white'}`}
           >
             <BookOpen size={14} className={currentView === 'insights' ? 'text-neon-purple' : ''} />
             Insights
             {currentView === 'insights' && (
-              <span className="absolute bottom-[-4px] left-0 w-full h-[1px] bg-neon-purple box-shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
+              <span className="absolute bottom-[-4px] left-0 w-full h-[1px] bg-neon-purple shadow-[0_0_10px_rgba(139,92,246,1)]" />
             )}
           </button>
 
-          {/* Portal Button */}
           <button
-            onClick={() => handleToast("Biometric authentication required. Access restricted.")}
-            className="flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors group"
+            onClick={() => handleToast("This module is restricted to sovereign partners.")}
+            className="flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-white transition-colors group"
           >
             <Lock size={14} className="group-hover:text-neon-purple transition-colors" />
             Portal
           </button>
         </div>
 
-        {/* CTA (Audit) */}
+        {/* CTA */}
         <div className="hidden md:block">
           <button
             onClick={() => onNavigate('contact')}
-            className="px-5 py-2 text-xs font-bold tracking-widest text-charcoal bg-white hover:bg-slate-200 transition-all duration-300 rounded-sm shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+            className="px-5 py-2 text-xs font-bold tracking-widest text-charcoal bg-white hover:bg-neon-purple hover:text-white transition-all duration-300 rounded-sm shadow-[0_0_15px_rgba(255,255,255,0.1)]"
           >
             START REQUEST DEMO
           </button>
@@ -131,7 +128,6 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -145,7 +141,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
                 <a
                   key={link.name}
                   href={`#${link.id}`}
-                  className="text-slate-300 text-xl font-medium"
+                  className="text-slate-200 text-xl font-bold"
                   onClick={(e) => handleLinkClick(e, link.id)}
                 >
                   {link.name}
@@ -153,14 +149,14 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
               ))}
               <button
                 onClick={handleInsightsClick}
-                className="text-slate-300 text-xl font-medium text-left flex items-center gap-3"
+                className="text-slate-200 text-xl font-bold text-left flex items-center gap-3"
               >
                 <BookOpen size={20} />
                 Insights
               </button>
               <button
-                onClick={() => handleToast("Biometric authentication required. Access restricted.")}
-                className="text-slate-300 text-xl font-medium text-left flex items-center gap-3"
+                onClick={() => handleToast("This module is restricted to sovereign partners.")}
+                className="text-slate-200 text-xl font-bold text-left flex items-center gap-3"
               >
                 <Lock size={20} />
                 Portal

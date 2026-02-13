@@ -25,14 +25,8 @@ const Hero: React.FC<HeroProps> = () => {
     window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: msg } }));
   };
 
-  const smoothScrollToContact = () => {
-    const target = document.getElementById('contact');
-    if (target) {
-      const headerOffset = 100;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-    }
+  const handleNavigateToContact = () => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: 'contact' }));
   };
 
   useEffect(() => {
@@ -171,17 +165,16 @@ const Hero: React.FC<HeroProps> = () => {
 
       <div className="relative z-10 w-full max-w-7xl px-6 flex flex-col items-center justify-center text-center mt-20">
         
-        {/* APEX Badge */}
+        {/* Tagline */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-8 flex items-center gap-3 px-4 py-1.5 border border-neon-purple/40 bg-neon-purple/5 rounded-full backdrop-blur-md shadow-[0_0_15px_rgba(139,92,246,0.1)]"
+          className="mb-8"
         >
-          <ShieldAlert className="w-3 h-3 text-neon-purple" />
-          <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-neon-purple uppercase">
-            APEX: The Sovereign Standard for CRA Compliance
-          </span>
+          <p className="text-white italic text-lg md:text-xl font-light tracking-tight">
+            100% Cybersecurity doesn’t exist — But 100% <span className="text-neon-purple font-medium not-italic">Cyberprotection</span> does.
+          </p>
         </motion.div>
 
         {/* Headline */}
@@ -191,18 +184,12 @@ const Hero: React.FC<HeroProps> = () => {
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           className="relative mb-6"
         >
-          <h1 className="font-display text-4xl sm:text-6xl md:text-[5.5rem] lg:text-[7rem] font-bold tracking-tighter text-white mb-6 leading-[0.95]">
-            Sovereign Autonomous <br />
-            Technology Operations <span className="text-slate-500">(SATO)</span>
+          <h1 className="font-display text-4xl sm:text-6xl md:text-[5.5rem] lg:text-[7.2rem] font-bold tracking-tighter text-white mb-6 leading-[0.95]">
+            Proactive Cyberprotection & <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple via-purple-400 to-indigo-400">
+              Technology Operations (TO)
+            </span>
           </h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-xl md:text-3xl font-light text-slate-300 tracking-tight italic"
-          >
-            "100% security doesn’t exist — <span className="text-white font-medium">but 100% protection does.</span>"
-          </motion.p>
         </motion.div>
 
         {/* Impact Subheadline */}
@@ -210,9 +197,9 @@ const Hero: React.FC<HeroProps> = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-lg md:text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed mb-12 tracking-tight"
+          className="text-lg md:text-2xl text-slate-300 max-w-5xl mx-auto font-light leading-relaxed mb-12 tracking-tight"
         >
-          TripleDefence is a <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">Cyberprotection Technology Operations</span> company. We move you from reactive cybersecurity to proactive protection, reaching <span className="text-white font-medium">Maturity Level 4</span>.
+          TripleDefence enhances your operations through <span className="text-neon-purple font-bold">Security Level 4 (SL4)</span> excellence—ensuring your infrastructure is <span className="text-neon-purple font-bold">Secure by Design</span> from the core to the edge.
         </motion.p>
 
         {/* SATO Interfaces */}
@@ -223,13 +210,13 @@ const Hero: React.FC<HeroProps> = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
         >
           <button 
-            onClick={() => handleToast("APEX Platform Initialization...")}
+            onClick={handleNavigateToContact}
             className="group relative px-8 py-4 bg-transparent overflow-hidden rounded-sm transition-all duration-300"
           >
             <div className="absolute inset-0 border border-white/20 group-hover:border-white/40 transition-colors" />
             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="relative z-10 flex items-center gap-3 text-sm font-bold tracking-widest text-white uppercase">
-              Launch APEX Demo
+              MAKE AN APPOINTMENT CONSULTANT
               <Activity className="w-4 h-4 transition-transform group-hover:scale-110" />
             </span>
           </button>

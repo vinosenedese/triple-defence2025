@@ -38,10 +38,10 @@ const Philosophy: React.FC = () => {
 
                 <h3 className="font-display text-2xl font-bold text-white mb-4">
                     <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">WHITE</span>
-                    <span className="block text-sm font-sans font-light text-slate-500 mt-1 tracking-wide uppercase">(The Clarity of Invisibility)</span>
+                    <span className="block text-sm font-sans font-light text-slate-300 mt-1 tracking-wide uppercase">(The Clarity of Invisibility)</span>
                 </h3>
 
-                <p className="text-slate-400 leading-relaxed text-lg font-light">
+                <p className="text-slate-200 leading-relaxed text-lg font-normal drop-shadow-sm">
                     A unified architecture with no seams. Present nothing of value to the observer. You cannot fight what you cannot define.
                 </p>
             </motion.div>
@@ -62,10 +62,10 @@ const Philosophy: React.FC = () => {
 
                 <h3 className="font-display text-2xl font-bold text-white mb-4">
                     <span className="text-neon-purple drop-shadow-[0_0_10px_rgba(139,92,246,0.5)]">PURPLE</span>
-                    <span className="block text-sm font-sans font-light text-slate-500 mt-1 tracking-wide uppercase">(The Power of Pre-emption)</span>
+                    <span className="block text-sm font-sans font-light text-slate-300 mt-1 tracking-wide uppercase">(The Power of Pre-emption)</span>
                 </h3>
 
-                <p className="text-slate-400 leading-relaxed text-lg font-light">
+                <p className="text-slate-200 leading-relaxed text-lg font-normal drop-shadow-sm">
                     Shift from reactive brute force to proactive design. Predict and negate threats before they manifest. Protection by Design.
                 </p>
             </motion.div>

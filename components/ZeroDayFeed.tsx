@@ -75,6 +75,7 @@ const ZeroDayFeed: React.FC = () => {
           {/* Navigation Controls */}
           <div className="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 z-20">
             <button 
+              handlePrev={handlePrev}
               onClick={handlePrev}
               className="p-3 text-slate-600 hover:text-neon-purple transition-colors bg-black/50 border border-white/5 rounded-full backdrop-blur-sm"
             >
@@ -116,17 +117,17 @@ const ZeroDayFeed: React.FC = () => {
                     </span>
                   </div>
                   
-                  <p className="text-slate-400 text-base md:text-lg font-light leading-relaxed mb-6 italic">
+                  <p className="text-slate-200 text-base md:text-lg font-normal leading-relaxed mb-6 italic">
                     "{exploits[currentIndex].desc}"
                   </p>
                   
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-600 uppercase tracking-widest">
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
                        <Terminal size={12} />
                        <span>Reference: {exploits[currentIndex].cve}</span>
                     </div>
                     <div className="h-[1px] w-12 bg-white/10" />
-                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-600 uppercase tracking-widest">
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
                        <Activity size={12} />
                        <span>Vector: Remote Execution</span>
                     </div>
@@ -169,7 +170,7 @@ const ZeroDayFeed: React.FC = () => {
         </motion.div>
 
         {/* Peacefully Firm Footer Text */}
-        <p className="mt-12 text-[10px] font-mono text-slate-700 tracking-[0.5em] uppercase text-center max-w-md mx-auto leading-relaxed">
+        <p className="mt-12 text-sm md:text-base font-mono text-white tracking-[0.2em] uppercase text-center max-w-2xl mx-auto leading-relaxed font-medium">
           Architectural Finality is the only defense against infinite vulnerability.
         </p>
 

@@ -19,13 +19,13 @@ const DoctrineItem: React.FC<{
   >
     {/* Numbering */}
     <div className="flex-shrink-0">
-      <span className="font-display text-4xl font-bold text-white/10 group-hover:text-neon-purple/50 transition-colors duration-500">
+      <span className="font-display text-4xl font-bold text-white/20 group-hover:text-neon-purple/50 transition-colors duration-500">
         {id}
       </span>
     </div>
 
-    {/* Icon (Mobile hidden, Desktop visible) */}
-    <div className={`hidden md:flex flex-shrink-0 w-12 h-12 items-center justify-center rounded-full border ${isLast ? 'bg-neon-purple text-white border-neon-purple' : 'bg-transparent border-white/10 text-slate-500 group-hover:border-neon-purple/50 group-hover:text-neon-purple'} transition-all duration-300`}>
+    {/* Icon */}
+    <div className={`hidden md:flex flex-shrink-0 w-12 h-12 items-center justify-center rounded-full border ${isLast ? 'bg-neon-purple text-white border-neon-purple' : 'bg-transparent border-white/10 text-slate-300 group-hover:border-neon-purple/50 group-hover:text-neon-purple'} transition-all duration-300`}>
         {icon}
     </div>
 
@@ -38,9 +38,9 @@ const DoctrineItem: React.FC<{
             </h3>
         </div>
 
-        {/* The "Sun Tzu" Quote */}
+        {/* Quote */}
         <div className="relative pl-6 border-l-2 border-neon-purple/30 group-hover:border-neon-purple transition-colors">
-            <p className={`font-serif text-lg md:text-xl italic leading-relaxed ${isLast ? 'text-white' : 'text-slate-400 group-hover:text-slate-300'}`}>
+            <p className={`font-serif text-lg md:text-xl italic leading-relaxed ${isLast ? 'text-white' : 'text-slate-200 group-hover:text-white'} drop-shadow-sm`}>
                 "{quote}"
             </p>
         </div>
@@ -71,7 +71,7 @@ const TripleDDoctrine: React.FC = () => {
     {
       id: "04",
       title: "Zero-Day Immunity",
-      quote: "Zero-days still exist, but exploitation is physically impossible.",
+      quote: "Zero-days still exist, but exploitation is virtually impossible.",
       icon: <ShieldCheck size={20} />
     },
     {
@@ -96,15 +96,12 @@ const TripleDDoctrine: React.FC = () => {
 
   return (
     <section id="doctrine" className="relative bg-[#020202] py-32 overflow-hidden">
-      {/* Ambient Background */}
       <div className="absolute inset-0 pointer-events-none">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-white/10 via-transparent to-transparent" />
          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neon-purple/[0.03] rounded-full blur-[120px]" />
       </div>
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
-        
-        {/* Header */}
         <div className="text-center mb-20">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -124,14 +121,13 @@ const TripleDDoctrine: React.FC = () => {
             viewport={{ once: true }}
             className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tighter"
           >
-            Battlefield <span className="text-slate-500">Mastery.</span>
+            Battlefield <span className="text-slate-300">Mastery.</span>
           </motion.h2>
-          <p className="font-serif italic text-slate-400 text-lg max-w-2xl mx-auto">
+          <p className="font-serif italic text-slate-200 text-lg max-w-2xl mx-auto drop-shadow-sm">
             "The supreme art of war is to subdue the enemy without fighting."
           </p>
         </div>
 
-        {/* The List */}
         <div className="bg-[#050505] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
             {principles.map((p, idx) => (
                 <DoctrineItem 
@@ -142,7 +138,6 @@ const TripleDDoctrine: React.FC = () => {
                 />
             ))}
         </div>
-
       </div>
     </section>
   );

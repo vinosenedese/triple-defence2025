@@ -43,7 +43,7 @@ const ThreatCard: React.FC<{ post: ThreatPost; index: number }> = ({ post, index
 
     {/* Content */}
     <div className="relative z-20 p-8 flex flex-col flex-grow bg-[#050505]">
-      <div className="flex items-center gap-2 mb-4 text-xs font-mono text-slate-500">
+      <div className="flex items-center gap-2 mb-4 text-xs font-mono text-slate-300">
         <Terminal size={12} />
         <span>DETECTED: {post.date}</span>
       </div>
@@ -52,7 +52,7 @@ const ThreatCard: React.FC<{ post: ThreatPost; index: number }> = ({ post, index
         {post.title}
       </h3>
 
-      <p className="text-slate-400 text-sm font-light leading-relaxed mb-8 flex-grow">
+      <p className="text-slate-200 text-base font-normal leading-relaxed mb-8 flex-grow">
         {post.desc}
       </p>
 
@@ -60,9 +60,9 @@ const ThreatCard: React.FC<{ post: ThreatPost; index: number }> = ({ post, index
       <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
          <div className="flex items-center gap-2 text-green-500">
             <Shield size={14} className="fill-green-500/10" />
-            <span className="text-[10px] font-bold tracking-widest uppercase">Physically Neutralized</span>
+            <span className="text-xs font-bold tracking-widest uppercase">Virtually Neutralized</span>
          </div>
-         <ArrowUpRight size={16} className="text-slate-600 group-hover:text-white transition-colors" />
+         <ArrowUpRight size={16} className="text-white group-hover:text-neon-purple transition-colors" />
       </div>
     </div>
   </motion.div>
@@ -76,7 +76,7 @@ const HallOfVulnerabilities: React.FC = () => {
       date: "OCT 14, 2024",
       title: "NTDS.dit Exfiltration: Identity Sovereignty at Risk",
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop", // Abstract Lock/Cyber
-      desc: "Adversaries are targeting Active Directory database files to clone identity infrastructure. TripleDefence architecture renders the DC physically unreachable from the edge, making exfiltration impossible."
+      desc: "Adversaries are targeting Active Directory database files to clone identity infrastructure. TripleDefence architecture renders the DC virtually unreachable from the edge, making exfiltration impossible."
     },
     {
       id: "citrix",
@@ -108,7 +108,7 @@ const HallOfVulnerabilities: React.FC = () => {
              viewport={{ once: true }} 
              className="mb-6 flex justify-center"
           >
-             <div className="px-4 py-1 border border-white/10 bg-white/5 text-[10px] font-mono font-bold text-slate-400 tracking-[0.3em] uppercase">
+             <div className="px-4 py-1 border border-white/10 bg-white/5 text-[10px] font-mono font-bold text-slate-300 tracking-[0.3em] uppercase">
                 Active Threat Intelligence
              </div>
           </motion.div>
@@ -132,9 +132,9 @@ const HallOfVulnerabilities: React.FC = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="font-display text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed"
+            className="font-display text-lg md:text-xl text-white/90 max-w-3xl mx-auto font-normal leading-relaxed"
           >
-            "We don't study the law. We neutralize the monsters. See the threats others miss and that TripleDefence renders <span className="text-white font-normal underline decoration-neon-purple/50 underline-offset-4">physically impossible</span> to exploit."
+            "We don't study the law. We neutralize the monsters. See the threats others miss and that TripleDefence renders <span className="text-white font-bold underline decoration-neon-purple/50 underline-offset-4">virtually impossible</span> to exploit."
           </motion.p>
         </div>
 
@@ -153,7 +153,7 @@ const HallOfVulnerabilities: React.FC = () => {
             transition={{ delay: 0.6 }}
             className="border-t border-white/5 pt-8 flex justify-between items-center"
         >
-            <div className="flex items-center gap-4 text-xs font-mono text-slate-600">
+            <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
                 <span className="font-bold">ARCHIVE ACCESS:</span>
                 <span>RESTRICTED TO MEMBERS</span>
             </div>

@@ -17,41 +17,35 @@ const SectorCard: React.FC<SectorProps> = ({ title, image, desc, index }) => (
     transition={{ delay: index * 0.1, duration: 0.6 }}
     className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-charcoal"
   >
-    {/* Background Image */}
     <div className="absolute inset-0 z-0">
       <img 
         src={image} 
         alt={title} 
         className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
       />
-      {/* Heavy Overlay for Readability */}
-      <div className="absolute inset-0 bg-black/80 group-hover:bg-black/60 transition-colors duration-500" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
+      <div className="absolute inset-0 bg-black/85 group-hover:bg-black/65 transition-colors duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95" />
     </div>
 
-    {/* Content Container */}
     <div className="relative z-10 h-full flex flex-col justify-between p-8">
-      
-      {/* Top Badge */}
       <div className="flex justify-between items-start">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 backdrop-blur-md border border-white/10 rounded-full">
             <ShieldCheck size={12} className="text-neon-purple" />
-            <span className="text-[10px] font-mono font-bold text-slate-300 tracking-widest uppercase">
+            <span className="text-[10px] font-mono font-bold text-slate-200 tracking-widest uppercase">
                 Critical Class I & II Compliant
             </span>
         </div>
-        <div className="p-2 rounded-full border border-white/20 text-white opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+        <div className="p-2 rounded-full border border-white/20 text-white opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-sm">
             <ArrowUpRight size={18} />
         </div>
       </div>
 
-      {/* Bottom Text */}
       <div>
         <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-400 transition-all">
           {title}
         </h3>
-        <div className="h-[1px] w-12 bg-neon-purple mb-4 group-hover:w-full transition-all duration-500 ease-out" />
-        <p className="text-slate-400 text-sm leading-relaxed max-w-sm group-hover:text-slate-200 transition-colors">
+        <div className="h-[1px] w-12 bg-neon-purple mb-4 group-hover:w-full transition-all duration-500 ease-out shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
+        <p className="text-slate-200 text-sm leading-relaxed max-w-sm group-hover:text-white transition-colors font-medium drop-shadow-sm">
           {desc}
         </p>
       </div>
@@ -88,33 +82,32 @@ const CriticalSectors: React.FC = () => {
     }
   ];
 
-  const handleContact = () => {
-    window.dispatchEvent(new CustomEvent('navigate', { detail: 'contact' }));
+  const handleConsult = () => {
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: "This module is restricted to sovereign partners." } }));
   };
 
   return (
     <section id="sectors" className="py-32 bg-charcoal border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6">
-        
         <div className="flex flex-col md:flex-row justify-between items-end mb-20">
           <div className="max-w-2xl">
             <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tighter">
-              Critical <span className="text-slate-500">Scope.</span>
+              Critical <span className="text-slate-300">Scope.</span>
             </h2>
-            <p className="text-slate-400 text-lg font-light mb-6">
+            <p className="text-slate-200 text-lg font-normal mb-6 drop-shadow-sm">
               Industries where failure is not an option. We provide the architectural backbone for Class I & II products under the EU Cyber Resilience Act.
             </p>
 
-            <div className="inline-flex items-start gap-4 p-4 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-300 max-w-xl">
+            <div className="inline-flex items-start gap-4 p-4 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-200 max-w-xl shadow-sm">
                <BoxSelect className="w-6 h-6 text-neon-purple flex-shrink-0 mt-1" />
-               <p>
+               <p className="font-medium">
                  <span className="text-white font-bold">Not just for Manufacturers.</span> TripleDefence provides role-specific modules for Distributors, Importers, and Service Providers under CRA Articles 12 & 14.
                </p>
             </div>
           </div>
           
           <div className="hidden md:block pb-2">
-             <div className="text-right text-xs font-mono text-slate-600 tracking-widest uppercase">
+             <div className="text-right text-xs font-mono text-slate-400 tracking-widest uppercase font-bold">
                 Sector Coverage
              </div>
              <div className="h-[1px] w-32 bg-white/20 mt-2" />
@@ -126,27 +119,25 @@ const CriticalSectors: React.FC = () => {
             <SectorCard key={idx} {...sector} index={idx} />
           ))}
           
-          {/* Last Card: Call to Action style */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            onClick={handleContact}
-            className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A] flex flex-col justify-center items-center text-center p-8 hover:border-neon-purple/30 transition-colors cursor-pointer"
+            onClick={handleConsult}
+            className="group relative h-[450px] overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A] flex flex-col justify-center items-center text-center p-8 hover:border-neon-purple/30 transition-colors cursor-pointer shadow-lg"
           >
              <div className="mb-6 p-4 rounded-full bg-white/5 border border-white/10 group-hover:bg-neon-purple/10 group-hover:border-neon-purple/30 transition-all">
-                <ArrowUpRight size={32} className="text-slate-400 group-hover:text-neon-purple transition-colors" />
+                <ArrowUpRight size={32} className="text-slate-200 group-hover:text-neon-purple transition-colors" />
              </div>
              <h3 className="font-display text-2xl font-bold text-white mb-2">Your Sector?</h3>
-             <p className="text-slate-500 text-sm max-w-xs mx-auto mb-8">
+             <p className="text-slate-300 text-sm max-w-xs mx-auto mb-8 font-medium">
                 TripleDefence adapts to any high-compliance environment.
              </p>
              <button className="px-6 py-3 border border-white/20 text-white text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all">
                 Consult Experts
              </button>
           </motion.div>
-
         </div>
       </div>
     </section>

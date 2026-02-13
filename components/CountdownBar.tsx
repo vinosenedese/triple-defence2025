@@ -61,14 +61,14 @@ const CountdownBar: React.FC = () => {
           
           {/* Section 1: Title with Icon */}
           <div className="text-center xl:text-left min-w-fit">
-            <div className="flex items-center justify-center xl:justify-start gap-2 mb-2 text-neon-red">
-               <AlertTriangle size={16} className="animate-pulse" />
-               <h3 className="font-display font-bold text-xl text-white tracking-tight">
+            <div className="flex items-center justify-center xl:justify-start gap-2 mb-2">
+               <AlertTriangle size={16} className="text-red-600 animate-pulse" />
+               <h3 className="font-display font-bold text-2xl text-white tracking-tight uppercase">
                  Strategic Deadline
                </h3>
             </div>
-            <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">
-              Countdown to Article 11 & 14 Enforcement
+            <p className="text-slate-300 text-sm font-medium uppercase tracking-widest">
+              CRA incident vulnerability monitoring enforcement
             </p>
           </div>
 
@@ -118,7 +118,7 @@ const TimeUnit: React.FC<{ value: number; label: string }> = ({ value, label }) 
     <div className="font-display text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter tabular-nums leading-none mb-2 group-hover/unit:scale-105 transition-transform duration-300">
       {value.toString().padStart(2, '0')}
     </div>
-    <span className="text-[9px] font-bold text-slate-600 tracking-[0.2em] uppercase group-hover/unit:text-neon-purple transition-colors">
+    <span className="text-[9px] font-bold text-slate-400 tracking-[0.2em] uppercase group-hover/unit:text-neon-purple transition-colors">
       {label}
     </span>
   </div>
