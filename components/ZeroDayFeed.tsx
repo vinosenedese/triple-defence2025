@@ -1,142 +1,181 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { AlertTriangle, Zap, ArrowRight, Terminal, Flame, Activity } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AlertTriangle, ChevronLeft, ChevronRight, Terminal, Activity, ShieldAlert } from 'lucide-react';
 
 const ZeroDayFeed: React.FC = () => {
-    const handleNeutralize = () => {
-        window.dispatchEvent(new CustomEvent('navigate', { detail: 'contact' }));
-    };
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    const exploits = [
-        {
-            title: "CentOS 9: Critical Privilege Escalation",
-            desc: "Privilege escalation bypass found in the wild. Exploitation trivial via unpatched kernel modules.",
-            severity: "CRITICAL",
-            cve: "CVE-2026-0042"
-        },
-        {
-            title: "Ivanti Connect Secure",
-            desc: "New auth bypass exploitation stacking up. Adversaries chaining bugs to bypass MFA completely.",
-            severity: "HIGH",
-            cve: "CVE-2026-1193"
-        }
-    ];
+  const exploits = [
+    {
+      title: "Microsoft Office Word 0-day Vulnerability (CVE-2026-21514)",
+      desc: "Critical zero-day in OLE controls allowing attackers to bypass essential security decisions. Actively exploited in the wild.",
+      severity: "CRITICAL",
+      cve: "CVE-2026-21514"
+    },
+    {
+      title: "CentOS 9: Critical Privilege Escalation",
+      desc: "Privilege escalation bypass found in the wild. Exploitation trivial via unpatched kernel modules.",
+      severity: "CRITICAL",
+      cve: "CVE-2026-0042"
+    },
+    {
+      title: "Ivanti Connect Secure",
+      desc: "New auth bypass exploitation stacking up. Adversaries chaining bugs to bypass MFA completely.",
+      severity: "HIGH",
+      cve: "CVE-2026-1193"
+    }
+  ];
 
-    return (
-        <section className="bg-black py-24 relative overflow-hidden border-y border-neon-red/20">
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % exploits.length);
+  };
 
-            {/* Background Red Pulse */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.15),transparent_70%)] animate-pulse pointer-events-none" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ef44440a_1px,transparent_1px),linear-gradient(to_bottom,#ef44440a_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none opacity-50" />
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + exploits.length) % exploits.length);
+  };
 
-            <div className="max-w-4xl mx-auto px-6 relative z-10 flex flex-col items-center">
+  const handleAction = () => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: 'contact' }));
+  };
 
-                {/* Header Block */}
-                <div className="text-center mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 text-neon-red border border-neon-red/50 px-4 py-1 rounded bg-neon-red/10 mb-6 animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.4)]"
-                    >
-                        <Flame size={14} className="fill-neon-red" />
-                        <span className="font-mono text-xs font-bold tracking-widest uppercase">Live Threat Intelligence</span>
-                    </motion.div>
+  return (
+    <section className="bg-[#000000] py-32 relative overflow-hidden border-y border-red-950/30">
+      
+      {/* Sovereign Intelligence Background (Minimalist) */}
+      <div className="absolute inset-0 pointer-events-none opacity-20">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:100px_100px]" />
+      </div>
 
-                    <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-4 tracking-tighter">
-                        CRITICAL EXPLOIT STACK - <span className="text-neon-red drop-shadow-[0_0_10px_rgba(239,68,68,0.8)]">[FEBRUARY 2026]</span>
-                    </h2>
+      <div className="max-w-6xl mx-auto px-6 relative z-10 flex flex-col items-center">
+        
+        {/* Header Block */}
+        <div className="text-center mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 text-slate-500 border border-white/10 px-4 py-1.5 rounded-sm bg-white/5 mb-8"
+          >
+            <ShieldAlert size={14} className="text-red-900" />
+            <span className="font-mono text-[10px] font-bold tracking-[0.4em] uppercase">Sovereign Intelligence Feed</span>
+          </motion.div>
 
-                    <div className="flex items-center justify-center gap-4">
-                        <Activity className="text-neon-red animate-bounce" size={24} />
-                        <p className="font-mono text-xl md:text-2xl text-white tracking-tighter">
-                            ZERO-DAYS DETECTED THIS MONTH: <span className="text-4xl md:text-5xl font-bold text-neon-red">12</span>
-                        </p>
-                    </div>
+          <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-6 tracking-tighter">
+            ACTIVE EXPLOIT <span className="text-red-900">VECTORING</span>
+          </h2>
+          
+          <p className="font-mono text-slate-500 text-sm tracking-widest uppercase">
+            Surveillance Status: <span className="text-red-900 animate-pulse">Monitoring Live Vulnerabilities</span>
+          </p>
+        </div>
+
+        {/* Carousel Container */}
+        <div className="relative w-full max-w-4xl group">
+          
+          {/* Navigation Controls */}
+          <div className="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 z-20">
+            <button 
+              onClick={handlePrev}
+              className="p-3 text-slate-600 hover:text-neon-purple transition-colors bg-black/50 border border-white/5 rounded-full backdrop-blur-sm"
+            >
+              <ChevronLeft size={24} />
+            </button>
+          </div>
+          
+          <div className="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 z-20">
+            <button 
+              onClick={handleNext}
+              className="p-3 text-slate-600 hover:text-neon-purple transition-colors bg-black/50 border border-white/5 rounded-full backdrop-blur-sm"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+
+          {/* Carousel Slide */}
+          <div className="min-h-[240px] relative overflow-hidden rounded-sm border border-red-900/20 bg-[#050505]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="p-8 md:p-12 flex flex-col md:flex-row items-start gap-8"
+              >
+                <div className="p-5 bg-red-950/10 border border-red-900/30 text-red-900 shrink-0">
+                  <AlertTriangle size={32} />
                 </div>
 
-                {/* The Formula */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-16 bg-[#0f0505] border border-neon-red/30 p-6 rounded-xl shadow-[inset_0_0_30px_rgba(239,68,68,0.1)]"
-                >
-                    <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 font-mono text-sm md:text-lg">
-                        <span className="text-white font-bold opacity-80">CyberRisk</span>
-                        <span className="text-slate-500">=</span>
-                        <span className="text-neon-red font-bold animate-pulse">Threat</span>
-                        <span className="text-slate-500">×</span>
-                        <span className="text-neon-red font-bold animate-pulse delay-75">Vulnerability</span>
-                        <span className="text-slate-500">×</span>
-                        <span className="text-neon-red font-bold animate-pulse delay-150">Impact</span>
+                <div className="flex-grow">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4 gap-4">
+                    <h3 className="text-white font-bold text-xl md:text-2xl font-display tracking-tight leading-tight max-w-xl">
+                      {exploits[currentIndex].title}
+                    </h3>
+                    <span className="inline-block bg-red-900/20 text-red-500 text-[9px] font-bold px-3 py-1 border border-red-900/30 rounded-full uppercase tracking-widest whitespace-nowrap">
+                      {exploits[currentIndex].severity}
+                    </span>
+                  </div>
+                  
+                  <p className="text-slate-400 text-base md:text-lg font-light leading-relaxed mb-6 italic">
+                    "{exploits[currentIndex].desc}"
+                  </p>
+                  
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-600 uppercase tracking-widest">
+                       <Terminal size={12} />
+                       <span>Reference: {exploits[currentIndex].cve}</span>
                     </div>
-                    <p className="text-center text-[10px] text-neon-red/60 uppercase tracking-widest mt-4">
-                        We eliminate the vulnerability variable {'->'} Risk drops to zero
-                    </p>
-                </motion.div>
-
-                {/* The Stack */}
-                <div className="relative w-full max-w-2xl min-h-[300px] flex flex-col items-center justify-start pt-10">
-                    {exploits.map((item, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ y: 50, opacity: 0, scale: 0.9 }}
-                            whileInView={{ y: index * 40, opacity: 1 - (index * 0.15), scale: 1 - (index * 0.05) }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.2 }}
-                            className="absolute top-0 w-full bg-[#0a0000] border border-neon-red shadow-[0_0_20px_rgba(239,68,68,0.15)] p-6 rounded-xl flex items-start gap-4"
-                            style={{ zIndex: 10 - index }}
-                        >
-                            <div className="p-3 bg-neon-red/10 rounded border border-neon-red/30 text-neon-red shrink-0">
-                                <AlertTriangle size={24} />
-                            </div>
-                            <div className="flex-grow">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-white font-bold text-lg font-display tracking-tight">{item.title}</h3>
-                                    <span className="bg-neon-red text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-widest animate-pulse">
-                                        {item.severity}
-                                    </span>
-                                </div>
-                                <p className="text-neon-red/80 text-sm font-mono leading-relaxed mb-4">
-                                    {item.desc}
-                                </p>
-                                <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500">
-                                    <Terminal size={12} />
-                                    <span>ID: {item.cve}</span>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                    {/* Fake 3rd card for depth */}
-                    <div className="absolute top-0 translate-y-20 scale-90 w-[95%] h-24 bg-neon-red/5 border border-neon-red/20 rounded-xl -z-10" />
+                    <div className="h-[1px] w-12 bg-white/10" />
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-600 uppercase tracking-widest">
+                       <Activity size={12} />
+                       <span>Vector: Remote Execution</span>
+                    </div>
+                  </div>
                 </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-                {/* CTA */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="mt-28 md:mt-12"
-                >
-                    <button
-                        onClick={handleNeutralize}
-                        className="group relative px-8 py-4 bg-transparent overflow-hidden rounded-sm transition-all duration-300"
-                    >
-                        <div className="absolute inset-0 border border-neon-red group-hover:bg-neon-red transition-all duration-300" />
-                        <div className="absolute inset-0 bg-neon-red/10 blur-xl opacity-50 group-hover:opacity-100 transition-opacity" />
+          {/* Dots Navigation */}
+          <div className="flex justify-center gap-3 mt-8">
+            {exploits.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                  currentIndex === i ? 'bg-neon-purple w-6' : 'bg-slate-800'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
 
-                        <span className="relative z-10 flex items-center gap-3 text-sm font-bold tracking-widest text-white uppercase group-hover:text-black transition-colors">
-                            <Zap size={16} className="fill-white group-hover:fill-black transition-colors" />
-                            Neutralize these vectors
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                        </span>
-                    </button>
-                </motion.div>
+        {/* The Action Button (STOP) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-20"
+        >
+          <button 
+            onClick={handleAction}
+            className="group relative px-10 py-5 bg-transparent border-[3px] border-white transition-all duration-300 hover:bg-red-950/10 hover:border-red-600"
+          >
+            <span className="relative z-10 flex items-center gap-3 text-sm md:text-base font-bold tracking-[0.2em] text-white uppercase group-hover:text-red-500 transition-colors">
+              STOP EXPLOITATION — TIME TO ACT 🛑
+            </span>
+          </button>
+        </motion.div>
 
-            </div>
-        </section>
-    );
+        {/* Peacefully Firm Footer Text */}
+        <p className="mt-12 text-[10px] font-mono text-slate-700 tracking-[0.5em] uppercase text-center max-w-md mx-auto leading-relaxed">
+          Architectural Finality is the only defense against infinite vulnerability.
+        </p>
+
+      </div>
+    </section>
+  );
 };
 
 export default ZeroDayFeed;
